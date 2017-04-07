@@ -1,0 +1,143 @@
+<?php
+/*************************************************
+ * Titan-2 Mini Framework
+ * Session Library
+ *
+ * Author 	: Turan Karatuğ
+ * Web 		: http://www.titanphp.com
+ * Docs 	: http://kilavuz.titanphp.com 
+ * Github	: http://github.com/tkaratug/titan2
+ * License	: MIT	
+ *
+ *************************************************/
+namespace System\Libs\Session;
+
+use System\Kernel\Import;
+
+class Session
+{
+	// Config variable
+	protected $config;
+
+	public function __construct()
+	{
+		// Getting session settings
+		$this->config = Import::config('app');
+
+		// Checking cookie_httponly setting
+		if ($this->config['session']['cookie_httponly'] === true)
+			ini_set('session.cookie_httponly', 1);
+
+		// Checking use_only_cookies setting
+		if ($this->config['session']['use_only_cookies'] === true)
+			ini_set('session.use_only_cookies', 1);
+
+		// Setting max. lifetime
+		ini_set('session.gc_maxlifetime', $this->config['session']['lifetime']);
+		session_set_cookie_params($this->config['session']['lifetime']);
+
+		// Initializing
+		$this->init();
+	}
+
+	/**
+	 * Initialize Session
+	 *
+	 * @return void
+	 */
+	private function init()
+	{
+		if (!isset($_SESSION)) {
+			session_start();
+			$this->set('session_hash', $this->generateHash());
+		} else {
+			if ($this->get('session_hash') != $this->generateHash())
+				$this->destroy();
+		}
+	}
+
+	/**
+	 * Set session variable
+	 *
+	 * @param string $storage
+	 * @param mixed $content
+	 * @return void
+	 */
+	public function set($storage, $content)
+	{
+		if (is_array($content)) {
+			foreach ($storage as $key => $value) {
+				$_SESSION[$key] = $value;
+			}
+		} else {
+			$_SESSION[$storage] = $content;
+		}
+	}
+
+	/**
+	 * Get session variable
+	 *
+	 * @param string $storage
+	 * @return mixed
+	 */
+	public function get($storage)
+	{
+		return $_SESSION[$storage];
+	}
+
+	/**
+	 * Get all session content
+	 *
+	 * @return array
+	 */
+	public function all()
+	{
+		return $_SESSION;
+	}
+
+	/**
+	 * Check if session variable is exist
+	 *
+	 * @param string $storage
+	 * @return boolean
+	 */
+	public function has($storage)
+	{
+		return isset($_SESSION[$storage]);
+	}
+
+	/**
+	 * Delete session
+	 *
+	 * @param string nullable $storage
+	 * @return void
+	 */
+	public function delete($storage = null)
+	{
+		if (is_null($storage))
+			session_unset();
+		else
+			unset($_SESSION[$storage]);
+	}
+
+	/**
+	 * Session destroy
+	 *
+	 * @return void
+	 */
+	public function destroy()
+	{
+		session_destroy();
+	}
+
+	/**
+	 * Generate Hash for Hijacking Security
+	 *
+	 * @return string
+	 */
+	private function generateHash()
+	{
+		return md5(sha1(md5($_SERVER['REMOTE_ADDR'] . $this->config['session']['encryption_key'] . $_SERVER['HTTP_USER_AGENT'])));
+	}
+
+}
