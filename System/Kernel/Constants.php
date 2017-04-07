@@ -46,3 +46,6 @@ define('ENV', 'development');
 
 // Framework Version
 define('VERSION', '2.0.0');
+
+// Default Timezone
+define('TIMEZONE', 'Europe/Istanbul');

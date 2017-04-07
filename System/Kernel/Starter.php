@@ -27,4 +27,4 @@ if (ENV == 'production') {
 }
 
 // Set default timezone
-date_default_timezone_set('Europe/Istanbul');
+date_default_timezone_set(TIMEZONE);

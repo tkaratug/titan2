@@ -39,7 +39,7 @@ class Cache
 		$this->config = Import::config('app');
 
 		// Inıtializing
-		$this->path 		= '../App/' . $this->config['cache']['path'];
+		$this->path 		= APP_DIR . $this->config['cache']['path'];
 		$this->extension 	= $this->config['cache']['extension'];
 		$this->expire 		= $this->config['cache']['expire'];
 	}
