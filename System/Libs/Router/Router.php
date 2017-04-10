@@ -351,6 +351,11 @@ class Router
 		self::$notFoundCallback = $fn;
 	}
 
+	/**
+	 * List all routes
+	 *
+	 * @return string
+	 */
 	public static function listRoutes()
 	{
 		return dd(self::$afterRoutes);
