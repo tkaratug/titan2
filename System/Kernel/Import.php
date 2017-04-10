@@ -59,7 +59,7 @@ class Import
 	 * @param string $file
 	 * @return mixed
 	 */
-	public static function file($file)
+	public function file($file)
 	{
 		if (file_exists($file . '.php'))
 			return require $file . '.php';
@@ -75,7 +75,7 @@ class Import
 	 * @param string $file
 	 * @return mixed
 	 */
-	public static function config($file)
+	public function config($file)
 	{
 		if (file_exists(APP_DIR . 'Config/' . ucwords($file) . '.php'))
 			return require APP_DIR . 'Config/' . ucwords($file) . '.php';
