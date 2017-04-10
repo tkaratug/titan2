@@ -12,6 +12,11 @@
  *************************************************/
 use System\Libs\Router\Router as Route;
 
+Route::set404(function(){
+	header('HTTP/1.1 404 Not Found');
+	View::render('errors.404');
+});
+
 Route::get('/', 'Home@index', ['namespace' => 'Frontend']);
 
 Route::group('/frontend', function(){
