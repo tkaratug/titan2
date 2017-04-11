@@ -65,7 +65,8 @@ class Kernel
 
 		// Create Aliases
 		foreach ($app['facades'] as $key => $value) {
-			class_alias($value, $key);
+			if (!class_exists($key))
+				class_alias($value, $key);
 		}
 	}
 
