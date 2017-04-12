@@ -175,3 +175,19 @@ if (!function_exists('csrf_check')) {
         return false;
     }
 }
+
+/**
+ * Get assets
+ *
+ * @param string $file
+ * @return string
+ */
+if (!function_exists('get_asset')) {
+    function get_asset($file)
+    {       
+        if (file_exists(ROOT_DIR . 'Public/Resources/' . $file))
+            return RESOURCES_DIR . $file;
+        else
+            throw new System\Libs\Exception\ExceptionHandler('Dosya bulunamadı', '<b>Asset : </b> ' . $file);
+    }
+}
