@@ -198,6 +198,33 @@ class Router
 		// Set Middlewares
 		if (!empty($params)) {
 
+			// If namespace defined
+			if (array_key_exists('namespace', $params)) {
+				$methods = 'GET|POST|PUT|DELETE|OPTIONS|PATCH|HEAD';
+
+				foreach (explode('|', $methods) as $method) {
+
+					if (array_key_exists($method, self::$afterRoutes)) {
+
+						foreach (self::$afterRoutes[$method] as $key => $value) {
+
+							$patternExists = strpos($value['pattern'], strtolower($params['namespace']));
+
+							if ($patternExists !== false) {
+								$fnParts 			= explode('App\Controllers', $value['fn']);
+								$fnWithNameSpace	= 'App\Controllers\\' . $params['namespace'] . $fnParts[1];
+								self::$afterRoutes[$method][$key]['fn'] = $fnWithNameSpace;
+							}
+							
+						}
+
+					}
+
+				}
+
+			}
+
+			// If middleware defined
 			if (array_key_exists('middleware', $params)) {
 				$methods = 'GET|POST|PUT|DELETE|OPTIONS|PATCH|HEAD';
 
