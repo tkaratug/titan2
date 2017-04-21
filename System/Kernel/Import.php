@@ -54,6 +54,25 @@ class Import
 	}
 
 	/**
+	 * Include model file
+	 *
+	 * @param string $file
+	 * @return void
+	 */
+	public function model($file)
+	{
+		$filePath = APP_DIR . 'Models/' . $file . '.php';
+
+		if (file_exists($filePath)) {
+			require_once $filePath;
+			$class = 'App\\Models\\' . $file;
+			return new $class;
+		} else
+			throw new ExceptionHandler('Dosya bulunamadı.', '<b>Model : </b>' . $file);
+			
+	}
+
+	/**
 	 * Include custom file
 	 *
 	 * @param string $file
