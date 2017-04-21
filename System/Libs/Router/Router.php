@@ -208,7 +208,7 @@ class Router
 
 						foreach (self::$afterRoutes[$method] as $key => $value) {
 
-							$patternExists = strpos($value['pattern'], strtolower($params['namespace']));
+							$patternExists = strpos($value['pattern'], $baseRoute);
 
 							if ($patternExists !== false) {
 								$fnParts 			= explode('App\Controllers', $value['fn']);
