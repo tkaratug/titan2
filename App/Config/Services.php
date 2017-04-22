@@ -36,6 +36,7 @@ return [
 		'Html'						=> 'System\Libs\Html\Html',
 		'Form'						=> 'System\Libs\Html\Form',
 		'DB'						=> 'System\Libs\Database\DB',
+		'Model'						=> 'System\Libs\Database\Model',
 	],
 
 	/**
@@ -62,6 +63,7 @@ return [
 		'Html'						=> 'System\Facades\Html',
 		'Form'						=> 'System\Facades\Form',
 		'DB'						=> 'System\Facades\DB',
+		'Model'						=> 'System\Facades\Model',
 	],
 
 	/**

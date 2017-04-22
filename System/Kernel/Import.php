@@ -59,13 +59,18 @@ class Import
 	 * @param string $file
 	 * @return void
 	 */
-	public function model($file)
+	public static function model($file, $namespace = null)
 	{
-		$filePath = APP_DIR . 'Models/' . $file . '.php';
+		if (is_null($namespace)) {
+			$filePath 	= APP_DIR . 'Models/' . $file . '.php';
+			$class 		= 'App\\Models\\' . $file;
+		} else {
+			$filePath 	= APP_DIR . 'Models/' . ucfirst($namespace) . '/' . $file . '.php';
+			$class 		= 'App\\Models\\' . ucfirst($namespace) . '\\' . $file;
+		}
 
 		if (file_exists($filePath)) {
 			require_once $filePath;
-			$class = 'App\\Models\\' . $file;
 			return new $class;
 		} else
 			throw new ExceptionHandler('Dosya bulunamadı.', '<b>Model : </b>' . $file);
