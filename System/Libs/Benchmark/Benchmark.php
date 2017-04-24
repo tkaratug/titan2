@@ -44,7 +44,7 @@ class Benchmark
 	public function end()
 	{
 		$this->endTime 		= microtime(true);
-		$this->memoryUsage 	= memory_get_usage(true);
+		$this->memoryUsage 	= memory_get_usage();
 	}
 
 	/**
@@ -82,7 +82,7 @@ class Benchmark
 	 */
 	public function getMemoryPeak($raw = false, $format = null)
 	{
-		$this->memoryPeak = memory_get_peak_usage(true);
+		$this->memoryPeak = memory_get_peak_usage();
 
 		return $raw ? $this->memoryPeak : $this->readableSize($this->memoryPeak, $format);
 	}

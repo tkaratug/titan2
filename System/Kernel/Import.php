@@ -62,10 +62,10 @@ class Import
 	public static function model($file, $namespace = null)
 	{
 		if (is_null($namespace)) {
-			$filePath 	= APP_DIR . 'Models/' . $file . '.php';
+			$filePath 	= MODEL_DIR . $file . '.php';
 			$class 		= 'App\\Models\\' . $file;
 		} else {
-			$filePath 	= APP_DIR . 'Models/' . ucfirst($namespace) . '/' . $file . '.php';
+			$filePath 	= MODEL_DIR . ucfirst($namespace) . '/' . $file . '.php';
 			$class 		= 'App\\Models\\' . ucfirst($namespace) . '\\' . $file;
 		}
 
