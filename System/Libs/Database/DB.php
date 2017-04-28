@@ -967,6 +967,16 @@ class DB
 	}
 
 	/**
+	 * Returns record count
+	 *
+	 * @return integer
+	 */
+	public function numRows()
+	{
+		return $this->numRows;
+	}
+
+	/**
 	 * Throw error messages
 	 *
 	 * @return void
