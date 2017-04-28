@@ -5,9 +5,9 @@
  *
  * Author 	: Turan Karatuğ
  * Web 		: http://www.titanphp.com
- * Docs 	: http://kilavuz.titanphp.com 
+ * Docs 	: http://kilavuz.titanphp.com
  * Github	: http://github.com/tkaratug/titan2
- * License	: MIT	
+ * License	: MIT
  *
  *************************************************/
 namespace System\Libs\Database;
@@ -24,9 +24,6 @@ class DB
 
 	// Select statement
 	protected $select 	= '*';
-
-	// From statement
-	protected $from		= null;
 
 	// Table name
 	protected $table	= null;
@@ -51,6 +48,9 @@ class DB
 
 	// Last instert id
 	protected $insertId	= null;
+
+	// Custom query
+	protected $custom 	= null;
 
 	// SQL Statement
 	protected $sql		= null;
@@ -134,9 +134,9 @@ class DB
 	 * @param string $table
 	 * @return $this
 	 */
-	public function from($table)
+	public function table($table)
 	{
-		$this->from = 'FROM ' . $this->prefix . $table;
+		$this->table = $this->prefix . $table;
 
 		return $this;
 	}
@@ -672,18 +672,53 @@ class DB
 		}
 	}
 
-	/** 
-	 * Select a table for Insert, Update and Delete operations
+	/**
+	 * Execute a query
 	 *
-	 * @param string $table
-	 * @return $this
+	 * @param string $query
+	 * @return object
 	 */
-	public function table($table)
+	private function _query($query)
 	{
-		$this->table = $table;
+		$this->_reset();
 
-		return $this;
+		return $this->pdo->query($query);
 	}
+
+	/**
+	 * Prepare a query
+	 *
+	 * @return void
+	 */
+	private function _prepare()
+	{
+		if (is_null($this->custom))
+			$this->sql = 'SELECT ' . $this->select . ' FROM ' . $this->table . ' ' . $this->join . ' ' . $this->where . ' ' . $this->groupBy . ' ' . $this->having . ' ' . $this->orderBy . ' ' . $this->limit;
+	}
+
+	/**
+	 * Execute a custom query
+	 *
+	 * @param string $query
+	 * @return mixed
+	 */
+	 public function customQuery($query)
+	 {
+		 $this->custom 	= true;
+		 $this->sql 	= $query;
+
+		 if (stristr($query, 'SELECT')) {
+			return $this;
+		} else {
+			$run = $this->pdo->query($query);
+			if (!$run) {
+				$this->error = $this->pdo->errorInfo()[2];
+				$this->getError();
+			} else {
+				return $run;
+			}
+		}
+	 }
 
 	/**
 	 * Insert a row to table
@@ -763,7 +798,7 @@ class DB
 			// reset
 			$this->_reset();
 
-			return $query->rowCount();	
+			return $query->rowCount();
 		} catch(PDOException $e)
 		{
 			$this->error = $e->getMessage();
@@ -912,29 +947,6 @@ class DB
 	}
 
 	/**
-	 * Execute a query
-	 *
-	 * @param string $query
-	 * @return object
-	 */
-	private function _query($query)
-	{
-		$this->_reset();
-
-		return $this->pdo->query($query);
-	}
-
-	/**
-	 * Prepare a query
-	 *
-	 * @return void
-	 */
-	private function _prepare()
-	{
-		$this->sql = 'SELECT ' . $this->select . ' ' . $this->from . ' ' . $this->join . ' ' . $this->where . ' ' . $this->groupBy . ' ' . $this->having . ' ' . $this->orderBy . ' ' . $this->limit;
-	}
-
-	/**
 	 * Returns last executed query statement
 	 *
 	 * @return string
@@ -952,7 +964,7 @@ class DB
 	public function getError()
 	{
 		if (null !== $this->error)
-			throw new ExceptionHandler('DB Hatası', $this->error);		
+			throw new ExceptionHandler('DB Hatası', $this->error);
 	}
 
 	/**
@@ -963,7 +975,7 @@ class DB
 	private function _reset()
 	{
 		$this->select 		= '*';
-		$this->from			= null;
+		$this->table		= null;
 		$this->where		= null;
 		$this->limit		= null;
 		$this->join			= null;
@@ -971,6 +983,7 @@ class DB
 		$this->groupBy		= null;
 		$this->having		= null;
 		$this->insertId		= null;
+		$this->custom 		= null;
 		$this->error		= null;
 		$this->numRows		= 0;
 		$this->grouped 		= 0;
