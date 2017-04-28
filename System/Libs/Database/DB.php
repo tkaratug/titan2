@@ -957,6 +957,16 @@ class DB
 	}
 
 	/**
+	 * Returns last insert id
+	 *
+	 * @return integer
+	 */
+	public function lastInsertId()
+	{
+		return $this->insertId;
+	}
+
+	/**
 	 * Throw error messages
 	 *
 	 * @return void
@@ -982,9 +992,7 @@ class DB
 		$this->orderBy		= null;
 		$this->groupBy		= null;
 		$this->having		= null;
-		$this->insertId		= null;
 		$this->custom 		= null;
-		$this->error		= null;
 		$this->numRows		= 0;
 		$this->grouped 		= 0;
 	}
