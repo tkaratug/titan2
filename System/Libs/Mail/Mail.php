@@ -74,7 +74,7 @@ class Mail extends \PHPMailer
 			$this->Username = $config['username'];
 
 		if(array_key_exists('userpass', $config))
-			$this->Password = $config['password'];
+			$this->Password = $config['userpass'];
 
 		if(array_key_exists('isHtml', $config))
 			$this->isHTML($config['isHtml']);
