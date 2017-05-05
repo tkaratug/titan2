@@ -80,19 +80,12 @@ class Session
 	 * @param string $storage
 	 * @return mixed
 	 */
-	public function get($storage)
+	public function get($storage = null)
 	{
-		return $_SESSION[$storage];
-	}
-
-	/**
-	 * Get all session content
-	 *
-	 * @return array
-	 */
-	public function all()
-	{
-		return $_SESSION;
+		if (is_null($storage))
+			return $_SESSION;
+		else
+			return $_SESSION[$storage];
 	}
 
 	/**
