@@ -131,6 +131,46 @@ class Session
 	}
 
 	/**
+	 * Set flash message
+	 *
+	 * @param string $message
+	 * @param string nullable $url
+	 * @return void
+	 */
+	public function setFlash($message, $url = null)
+	{
+		$this->set('flash', $message);
+
+		if (!is_null($url)) {
+			header("Location: $url");
+			exit();
+		}
+	}
+
+	/**
+	 * Get flash message
+	 *
+	 * @return string
+	 */
+	public function getFlash()
+	{
+		$this->get('flash');
+		$this->delete('flash');
+
+		return $flash;
+	}
+
+	/**
+	 * Check if the flash message exists
+	 *
+	 * @return boolean
+	 */
+	public function hasFlash()
+	{
+		return $this->has('flash');
+	}
+
+	/**
 	 * Generate Hash for Hijacking Security
 	 *
 	 * @return string
