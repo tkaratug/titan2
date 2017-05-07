@@ -86,7 +86,7 @@ class Router
         		foreach ($params['middleware'] as $middleware) {
         			self::$beforeRoutes[$method][] = [
 						'pattern'	=> $pattern,
-						'fn'		=> 'App\\Middlewares\\' . $middleware . '@next'
+						'fn'		=> 'App\\Middlewares\\' . $middleware . '@handle'
 					];
         		}
         	}
@@ -233,12 +233,12 @@ class Router
 					foreach (explode('|', $methods) as $method) {
 						self::$beforeRoutes[$method][] = [
 							'pattern'	=> $baseRoute,
-							'fn'		=> 'App\\Middlewares\\' . $middleware . '@next'
+							'fn'		=> 'App\\Middlewares\\' . $middleware . '@handle'
 						];
 
 						self::$beforeRoutes[$method][] = [
 							'pattern'	=> $baseRoute . '/.*',
-							'fn'		=> 'App\\Middlewares\\' . $middleware . '@next'
+							'fn'		=> 'App\\Middlewares\\' . $middleware . '@handle'
 						];
 					}
 
@@ -262,7 +262,7 @@ class Router
 		foreach (explode('|', $methods) as $method) {
             self::$beforeRoutes[$method][] = array(
                 'pattern' => $pattern,
-                'fn' => 'App\\Middlewares\\' . $fn . '@next'
+                'fn' => 'App\\Middlewares\\' . $fn . '@handle'
             );
         }
 	}

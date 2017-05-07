@@ -4,7 +4,7 @@ namespace App\Middlewares;
 class Auth
 {
 
-	public static function next()
+	public static function handle()
 	{
 		echo 'Erişim Engellendi!';
 		exit();
