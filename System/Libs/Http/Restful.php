@@ -88,4 +88,14 @@ class Restful
         return Curl::responseBody();
     }
 
+    /**
+     * Returns status code
+     *
+     * @return integer
+     */
+    public function statusCode()
+    {
+        return Curl::responseHeader('Status-Code');
+    }
+
 }
