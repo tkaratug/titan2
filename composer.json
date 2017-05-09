@@ -23,5 +23,8 @@
 			"App\\": "App",
 			"System\\": "System"
 		}
+	},
+	"config": {
+		"preferred-install": "dist"
 	}
 }
