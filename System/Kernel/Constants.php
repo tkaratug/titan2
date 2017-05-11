@@ -45,7 +45,7 @@ define('RESOURCES_DIR', PUBLIC_DIR . 'Resources' . DS);
 define('ENV', 'development');
 
 // Framework Version
-define('VERSION', '2.0.0');
+define('VERSION', '2.0.1');
 
 // Default Timezone
 define('TIMEZONE', 'Europe/Istanbul');
