@@ -260,9 +260,9 @@ class Request
 	public function baseUrl($url = null)
 	{
  		if (is_null($url))
- 			return $this->getScheme() . '://' . $this->getHost() . dirname($this->getRequestUri());
- 		else
- 			return $this->getScheme() . '://' . $this->getHost() . rtrim(dirname($this->getRequestUri()), '/') . '/' . $url;
+	    	return $this->getScheme() . '://' . $this->getHost();
+		else
+			return $this->getScheme() . '://' . rtrim($this->getHost(), '/') . '/' . $url;
 	}
 
 	/**

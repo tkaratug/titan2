@@ -201,36 +201,15 @@ if (!function_exists('get_asset')) {
 if (!function_exists('base_url')) {
     function base_url($url = null)
     {
-        if (is_null($url))
-            return stripos($_SERVER['SERVER_PROTOCOL'], 'https') === true ? 'https://' : 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['REQUEST_URI']);
-        else
-            return stripos($_SERVER['SERVER_PROTOCOL'], 'https') === true ? 'https://' : 'http://' . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['REQUEST_URI']), '/') . '/' . $url;
-    }
-}
-
-/**
- * Get site url
- *
- * @return string
- */
-if (!function_exists('site_url')) {
-    function site_url()
-    {
-        if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
+        if (stripos($_SERVER['SERVER_PROTOCOL'], 'https') === true)
             $protocol = 'https';
         else
             $protocol = 'http';
 
-        $host = $_SERVER['HTTP_HOST'];
-        $request_uri_full = $_SERVER['REQUEST_URI'];
-        $last_slash_pos = strrpos($request_uri_full, "/");
-
-        if ($last_slash_pos === FALSE)
-            $request_uri_sub = $request_uri_full;
+        if (is_null($url))
+            return $protocol . "://" . $_SERVER['HTTP_HOST'];
         else
-            $request_uri_sub = substr($request_uri_full, 0, $last_slash_pos + 1);
-
-        return $protocol . "://" . $host . $request_uri_sub;
+            return $protocol . "://" . rtrim($_SERVER['HTTP_HOST'], '/') . '/' . $url;
     }
 }
 
