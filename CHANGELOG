@@ -1,5 +1,5 @@
 v2.0.1
 	- [Yeni] Html kütüphanesine, keywords(), description(), openGraph() ve twitterCards() methodları eklendi.
 	- [Yeni] Date kütüphanesi eklendi.
-	- [Yeni] base_url(), site_url() ve current_url() fonksiyonları eklendi.
+	- [Yeni] base_url() ve current_url() fonksiyonları eklendi.
 	- [Düzeltme] Request kütüphanesindeki getScheme() ve baseUrl() methodlarında düzenlemeler yapıldı.
