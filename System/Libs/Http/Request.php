@@ -228,7 +228,7 @@ class Request
 	 */
 	public function getScheme()
 	{
-		return $this->server('REQUEST_SCHEME');
+		return stripos($this->server('SERVER_PROTOCOL'), 'https') === true ? 'https' : 'http';
 	}
 
 	/**
@@ -254,11 +254,15 @@ class Request
 	/**
 	 * Get Base URL
 	 *
+	 * @param string $url
 	 * @return string
 	 */
-	public function baseUrl()
+	public function baseUrl($url = null)
 	{
-		return $this->getScheme() . '://' . $this->getHost() . dirname($this->getRequestUri());
+ 		if (is_null($url))
+ 			return $this->getScheme() . '://' . $this->getHost() . dirname($this->getRequestUri());
+ 		else
+ 			return $this->getScheme() . '://' . $this->getHost() . rtrim(dirname($this->getRequestUri()), '/') . '/' . $url;
 	}
 
 	/**
@@ -326,7 +330,7 @@ class Request
 		return split(',', $this->headers()['Accept'])[0];
 	}
 
-	/** 
+	/**
 	 * Get Locales
 	 *
 	 * @return array

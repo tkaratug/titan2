@@ -60,6 +60,84 @@ class Html
 	}
 
 	/**
+	 * Create meta keywords
+	 *
+	 * @param string $content
+	 * @return string
+	 */
+	public function keywords($content)
+	{
+		return '<meta name="keywords" content="' . $content . '" />';
+	}
+
+	/**
+	 * Create meta description
+	 *
+	 * @param string $content
+	 * @return string
+	 */
+	public function description($content)
+	{
+		return '<meta name="description" content="' . $content . '" />';
+	}
+
+	/**
+	 * Create facebook open graph meta tags
+	 *
+	 * @param string|array $url
+	 * @param string $type
+	 * @param string $title
+	 * @param string $descr
+	 * @param string $image
+	 * @return string
+	*/
+	public function openGraph($url, $type = null, $title = null, $descr = null, $image = null)
+	{
+		$response = '';
+		if (is_array($url)) {
+			foreach ($url as $key => $val) {
+				$response .= '<meta property="og:' . $key . '" content="' . $val . '" />' . "\n\t";
+			}
+		} else {
+			$response .= '<meta property="og:url" content="' . $url . '" />' . "\n\t";
+			$response .= '<meta property="og:type" content="' . $type . '" />' . "\n\t";
+			$response .= '<meta property="og:title" content="' . $title . '" />' . "\n\t";
+			$response .= '<meta property="og:description" content="' . $descr . '" />' . "\n\t";
+			$response .= '<meta property="og:image" content="' . $image . '" />' . "\n\t";
+		}
+
+		return $response;
+	}
+
+	/**
+	 * Create twitter cards meta tags
+	 *
+	 * @param string|array $card
+	 * @param string $url
+	 * @param string $title
+	 * @param string $descr
+	 * @param string $image
+	 * @return string
+	*/
+	public function twitterCards($card, $url = null, $title = null, $descr = null, $image = null)
+	{
+		$response = '';
+		if (is_array($card)) {
+			foreach ($card as $key => $val) {
+				$response .= '<meta name="twitter:' . $key . '" content="' . $val . '" />' . "\n\t";
+			}
+		} else {
+			$response .= '<meta name="twitter:card" content="' . $card . '" />' . "\n\t";
+			$response .= '<meta name="twitter:url" content="' . $url . '" />' . "\n\t";
+			$response .= '<meta name="twitter:title" content="' . $title . '" />' . "\n\t";
+			$response .= '<meta name="twitter:description" content="' . $descr . '" />' . "\n\t";
+			$response .= '<meta name="twitter:image" content="' . $image . '" />' . "\n\t";
+		}
+
+		return $response;
+	}
+
+	/**
 	 * Generate a Html image element
 	 *
 	 * @param string $url
