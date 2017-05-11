@@ -37,6 +37,7 @@ return [
 		'Form'						=> 'System\Libs\Html\Form',
 		'DB'						=> 'System\Libs\Database\DB',
 		'Model'						=> 'System\Libs\Database\Model',
+		'Date'						=> 'System\Libs\Date\Date',
 	],
 
 	/**
@@ -64,6 +65,7 @@ return [
 		'Form'						=> 'System\Facades\Form',
 		'DB'						=> 'System\Facades\DB',
 		'Model'						=> 'System\Facades\Model',
+		'Date'						=> 'System\Facades\Date',
 	],
 
 	/**
