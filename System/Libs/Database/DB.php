@@ -693,7 +693,7 @@ class DB
 	private function _prepare()
 	{
 		if (is_null($this->custom))
-			$this->sql = 'SELECT ' . $this->select . ' FROM ' . $this->table . ' ' . $this->join . ' ' . $this->where . ' ' . $this->groupBy . ' ' . $this->having . ' ' . $this->orderBy . ' ' . $this->limit;
+			$this->sql = rtrim('SELECT ' . $this->select . ' FROM ' . $this->table . ' ' . $this->join . ' ' . $this->where . ' ' . $this->groupBy . ' ' . $this->having . ' ' . $this->orderBy . ' ' . $this->limit);
 	}
 
 	/**
