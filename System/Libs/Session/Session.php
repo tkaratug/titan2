@@ -63,9 +63,9 @@ class Session
 	 * @param mixed $content
 	 * @return void
 	 */
-	public function set($storage, $content)
+	public function set($storage, $content = null)
 	{
-		if (is_array($content)) {
+		if (is_array($storage)) {
 			foreach ($storage as $key => $value) {
 				$_SESSION[$key] = $value;
 			}
@@ -147,7 +147,7 @@ class Session
 	 */
 	public function getFlash()
 	{
-		$this->get('flash');
+		$flash = $this->get('flash');
 		$this->delete('flash');
 
 		return $flash;
