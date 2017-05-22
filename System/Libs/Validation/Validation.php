@@ -101,7 +101,7 @@ class Validation
                     		$this->errors[] = lang('validation', $filter . '_error', ['%s' => $this->labels[$key], '%t' => $this->labels[$params]]);
                     } else {
                     	if ($this->$filter($this->data[$key], $params) === false)
-                            $this->errors[] = lang('validation', $filter . '_error', ['%s' => $this->labels[$key], '%t' => $this->labels[$params]]);
+                            $this->errors[] = lang('validation', $filter . '_error', ['%s' => $this->labels[$key], '%t' => $params]);
                     }
 				} else {
 					if ($this->$rule($this->data[$key]) === false)
