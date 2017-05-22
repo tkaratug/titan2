@@ -234,9 +234,9 @@ class Form
 		if (!empty($options)) {
 			foreach ($options as $key => $val) {
 				if (!is_null($selected) && $selected == $key)
-					$dropdown .= '<option vaue="' . $key . '" selected>' . $val . '</option>';
+					$dropdown .= '<option value="' . $key . '" selected>' . $val . '</option>';
 				else
-					$dropdown .= '<option vaue="' . $key . '">' . $val . '</option>';
+					$dropdown .= '<option value="' . $key . '">' . $val . '</option>';
 			}
 		}
 
@@ -272,11 +272,11 @@ class Form
 			foreach ($options as $key => $val) {
 				if (!empty($selected)) {
 					if (in_array($key, $selected))
-						$dropdown .= '<option vaue="' . $key . '" selected>' . $val . '</option>';
+						$dropdown .= '<option value="' . $key . '" selected>' . $val . '</option>';
 					else
-						$dropdown .= '<option vaue="' . $key . '">' . $val . '</option>';
+						$dropdown .= '<option value="' . $key . '">' . $val . '</option>';
 				} else {
-					$dropdown .= '<option vaue="' . $key . '">' . $val . '</option>';
+					$dropdown .= '<option value="' . $key . '">' . $val . '</option>';
 				}
 			}
 		}
