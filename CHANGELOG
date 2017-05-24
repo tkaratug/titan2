@@ -1,3 +1,9 @@
+v2.0.2
+	- [Yeni] link_to() fonksiyonu eklendi.
+	- [Düzeltme] index.php ve .htaccess dosyaları root dizine taşındı.
+	- [Düzeltme] Resources dizini içerisindeki css, js ve img dizinleri Public dizinine taşındı.
+	- [Düzeltme] Resources dizini kaldırıldı.
+
 v2.0.1
 	- [Yeni] Html kütüphanesine, keywords(), description(), openGraph() ve twitterCards() methodları eklendi.
 	- [Yeni] Date kütüphanesi eklendi.

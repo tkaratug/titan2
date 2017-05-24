@@ -5,9 +5,9 @@
  *
  * Author   : Turan Karatuğ
  * Web      : http://www.titanphp.com
- * Docs     : http://kilavuz.titanphp.com 
+ * Docs     : http://kilavuz.titanphp.com
  * Github   : http://github.com/tkaratug/titan2
- * License  : MIT   
+ * License  : MIT
  *
  *************************************************/
 
@@ -15,15 +15,15 @@
  * Debug Helper
  */
 if (!function_exists('dd')) {
-	function dd($data, $stop = false)
-	{
-		echo '<pre>';
-		print_r($data);
-		echo '</pre>';
+    function dd($data, $stop = false)
+    {
+        echo '<pre>';
+        print_r($data);
+        echo '</pre>';
 
-		if ($stop === true)
-			die();
-	}
+        if ($stop === true)
+            die();
+    }
 }
 
 /**
@@ -57,10 +57,10 @@ if (!function_exists('set_lang')) {
         $language = Config::get('app', 'general', 'default_lang');
 
         if (!is_string($lang))
-        	return false;
+            return false;
 
         if (empty($lang))
-        	$lang = $language;
+            $lang = $language;
 
         Session::set(md5('lang'), $lang);
     }
@@ -82,7 +82,7 @@ if ( ! function_exists('lang') ) {
         $config = Config::get('app', 'general', 'languages');
 
         if (!is_string($file) || !is_string($key))
-        	return false;
+            return false;
 
         $appLangDir = APP_DIR . 'Languages/' . ucwords($config[get_lang()]) . '/' . ucwords($file) . '.php';
         $sysLangDir = SYSTEM_DIR . 'Languages/' . ucwords($config[get_lang()]) . '/' . ucwords($file) . '.php';
@@ -92,7 +92,7 @@ if ( ! function_exists('lang') ) {
         elseif (file_exists($sysLangDir))
             require_once $sysLangDir;
         else
-        	throw new System\Libs\Exception\ExceptionHandler('Dosya bulunamadı', '<b>Language : </b> ' . $file);
+            throw new System\Libs\Exception\ExceptionHandler('Dosya bulunamadı', '<b>Language : </b> ' . $file);
 
         $zone = strtolower($file);
 
@@ -184,9 +184,9 @@ if (!function_exists('csrf_check')) {
  */
 if (!function_exists('get_asset')) {
     function get_asset($file)
-    {       
-        if (file_exists(ROOT_DIR . 'Public/Resources/' . $file))
-            return RESOURCES_DIR . $file;
+    {
+        if (file_exists(ROOT_DIR . '/Public/' . $file))
+            return PUBLIC_DIR . $file;
         else
             throw new System\Libs\Exception\ExceptionHandler('Dosya bulunamadı', '<b>Asset : </b> ' . $file);
     }
@@ -222,5 +222,17 @@ if (!function_exists('current_url')) {
     function current_url()
     {
         return (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+    }
+}
+
+/**
+ * Make internal link
+ *
+ * @return string
+ */
+if (!function_exists('link_to')) {
+    function link_to($url)
+    {
+        return BASE_DIR . '/' . $url;
     }
 }
