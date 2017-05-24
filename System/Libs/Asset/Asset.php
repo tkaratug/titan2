@@ -5,9 +5,9 @@
  *
  * Author 	: Turan Karatuğ
  * Web 		: http://www.titanphp.com
- * Docs 	: http://kilavuz.titanphp.com 
+ * Docs 	: http://kilavuz.titanphp.com
  * Github	: http://github.com/tkaratug/titan2
- * License	: MIT	
+ * License	: MIT
  *
  *************************************************/
 namespace System\Libs\Asset;
@@ -34,10 +34,10 @@ class Asset
 			$this->assets['header']['css'][] = '<link rel="stylesheet" type="text/css" href="' . $url . '">';
 		} else {
 			$part	= explode('.css', $file);
-			$url 	= RESOURCES_DIR . 'css/' . $part[0] . '.css' . $part[1];
+			$url 	= PUBLIC_DIR . 'css/' . $part[0] . '.css' . $part[1];
 
 			// Check if css file is exist
-			if (!file_exists(RESOURCES_DIR . 'css/' . $part[0] . '.css'))
+			if (!file_exists(PUBLIC_DIR . 'css/' . $part[0] . '.css'))
 				throw new ExceptionHandler('Dosya bulunamadı', '<b>CSS : </b>' . $file);
 
 			$this->assets['header']['css'][] = '<link rel="stylesheet" type="text/css" href="' . $url . '">';
@@ -58,7 +58,7 @@ class Asset
 			$url = $file;
 			$this->assets[$location]['js'][] = '<script type="text/javascript" src="' . $url . '"></script>';
 		} else {
-			$url = RESOURCES_DIR . 'js/' . $file;
+			$url = PUBLIC_DIR . 'js/' . $file;
 
 			if (!file_exists($url))
 				throw new ExceptionHandler('Dosya bulunamadı', '<b>JS : </b>' . $file);

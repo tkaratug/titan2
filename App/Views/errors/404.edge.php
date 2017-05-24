@@ -54,12 +54,12 @@
 			font-weight: 300;
 		}
 	</style>
-	<link rel="shortcut icon" sizes="16x16" href="Resources/img/favicon.png" />
+	<link rel="shortcut icon" sizes="16x16" href="{{ PUBLIC_DIR }}img/favicon.png" />
 </head>
 <body>
 
 	<div id="logo">
-		<img src="{!! RESOURCES_DIR !!}img/titan.png" width="150" />
+		<img src="{{ PUBLIC_DIR }}img/titan.png" width="150" />
 	</div>
 	<div id="container">
 		<h3>404!</h3>
