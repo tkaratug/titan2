@@ -79,6 +79,22 @@ class Restful
     }
 
     /**
+     * Define Request Header
+     *
+     * @param array|string $header
+     * @return array|string
+     */
+    public function setHeader($header, $value = null)
+    {
+        if (!is_null($header))
+            Curl::setHeader($header, $value);
+        else
+            throw new ExceptionHandler("Parametre hatası", "Header bilgisi gerekli.");
+
+        return $this;
+    }
+
+    /**
      * Returns response
      *
      * @return string

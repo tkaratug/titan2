@@ -5,9 +5,9 @@
  *
  * Author 	: Turan Karatuğ
  * Web 		: http://www.titanphp.com
- * Docs 	: http://kilavuz.titanphp.com 
+ * Docs 	: http://kilavuz.titanphp.com
  * Github	: http://github.com/tkaratug/titan2
- * License	: MIT	
+ * License	: MIT
  *
  *************************************************/
 return [
@@ -38,6 +38,8 @@ return [
 		'DB'						=> 'System\Libs\Database\DB',
 		'Model'						=> 'System\Libs\Database\Model',
 		'Date'						=> 'System\Libs\Date\Date',
+		'Upload'					=> 'System\Libs\Upload\Upload',
+		'Image'						=> 'System\Libs\Image\Image',
 	],
 
 	/**
@@ -66,6 +68,8 @@ return [
 		'DB'						=> 'System\Facades\DB',
 		'Model'						=> 'System\Facades\Model',
 		'Date'						=> 'System\Facades\Date',
+		'Upload'					=> 'System\Facades\Upload',
+		'Image'						=> 'System\Facades\Image',
 	],
 
 	/**

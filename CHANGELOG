@@ -1,3 +1,10 @@
+v2.0.3
+	- [Yeni] public_path() fonksiyonu eklendi.
+	- [Yeni] File Upload kütüphanesi eklendi.
+	- [Yeni] Image Manipulation kütüphanesi eklendi.
+	- [Yeni] Restful kütüphanesine, header tanımlama [setHeader()] methodu eklendi.
+	- [Yeni] BaseController desteği eklendi.
+
 v2.0.2
 	- [Yeni] link_to() fonksiyonu eklendi.
 	- [Düzeltme] index.php ve .htaccess dosyaları root dizine taşındı.

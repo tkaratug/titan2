@@ -193,6 +193,22 @@ if (!function_exists('get_asset')) {
 }
 
 /**
+ * Get files inside Public directory
+ *
+ * @param string $file
+ * @return string
+ */
+if (!function_exists('public_path')) {
+    function public_path($file)
+    {
+        if (file_exists(ROOT_DIR . '/Public/' . $file))
+            return ROOT_DIR . '/Public/' . $file;
+        else
+            throw new System\Libs\Exception\ExceptionHandler('Dosya bulunamadı', '<b>Public : </b> ' . $file);
+    }
+}
+
+/**
  * Get base url
  *
  * @param string $url
