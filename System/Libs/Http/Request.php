@@ -5,9 +5,9 @@
  *
  * Author 	: Turan Karatuğ
  * Web 		: http://www.titanphp.com
- * Docs 	: http://kilavuz.titanphp.com 
+ * Docs 	: http://kilavuz.titanphp.com
  * Github	: http://github.com/tkaratug/titan2
- * License	: MIT	
+ * License	: MIT
  *
  *************************************************/
 namespace System\Libs\Http;
@@ -105,7 +105,7 @@ class Request
 	 * @param string $param
 	 * @return string|array
 	 */
-	public function get($param = null, $filter = false)
+	public function get($param = null, $filter = true)
 	{
 		if (is_null($param))
 			return $this->getVars;
@@ -119,7 +119,7 @@ class Request
 	 * @param string $param
 	 * @return string|array
 	 */
-	public function post($param = null, $filter = false)
+	public function post($param = null, $filter = true)
 	{
 		if (is_null($param))
 			return $this->postVars;
@@ -133,7 +133,7 @@ class Request
 	 * @param string $param
 	 * @param boolean $filter
 	 */
-	public function put($param = null, $filter = false)
+	public function put($param = null, $filter = true)
 	{
 		parse_str(file_get_contents("php://input"), $_PUT);
 
@@ -149,7 +149,7 @@ class Request
 	 * @param string $param
 	 * @param boolean $filter
 	 */
-	public function delete($param = null, $filter = false)
+	public function delete($param = null, $filter = true)
 	{
 		parse_str(file_get_contents("php://input"), $_DELETE);
 

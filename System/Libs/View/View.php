@@ -5,9 +5,9 @@
  *
  * Author 	: Turan Karatuğ
  * Web 		: http://www.titanphp.com
- * Docs 	: http://kilavuz.titanphp.com 
+ * Docs 	: http://kilavuz.titanphp.com
  * Github	: http://github.com/tkaratug/titan2
- * License	: MIT	
+ * License	: MIT
  *
  *************************************************/
 namespace System\Libs\View;
@@ -18,6 +18,9 @@ use Windwalker\Edge\Loader\EdgeFileLoader;
 
 class View
 {
+	// Active Theme
+	private $theme = null;
+
 	/**
 	 * Render View File
 	 *
@@ -38,7 +41,26 @@ class View
 		else
 			$edge = new Edge($loader, null, new EdgeFileCache(APP_DIR . '/Storage/Cache'));
 
-		echo $edge->render($file, $vars);
+		if (is_null($this->theme))
+			echo $edge->render($file, $vars);
+		else
+			echo $edge->render($this->theme . '.' . $file, $vars);
+	}
 
+	/**
+	 * Set Activated Theme
+	 *
+	 * @param string $theme
+	 * @return $this
+	 */
+	public function theme($theme)
+	{
+		if (file_exists(APP_DIR . 'Views/' . $theme)) {
+			$this->theme = $theme;
+		} else {
+			throw new \System\Libs\Exception\ExceptionHandler("Hata", "Tema dizini bulunamadı. { $theme }");
+		}
+
+		return $this;
 	}
 }

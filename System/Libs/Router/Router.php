@@ -5,9 +5,9 @@
  *
  * Author 	: Turan Karatuğ
  * Web 		: http://www.titanphp.com
- * Docs 	: http://kilavuz.titanphp.com 
+ * Docs 	: http://kilavuz.titanphp.com
  * Github	: http://github.com/tkaratug/titan2
- * License	: MIT	
+ * License	: MIT
  *
  *************************************************/
 namespace System\Libs\Router;
@@ -57,7 +57,7 @@ class Router
 
 	/**
 	 * Store a route and a handling function to be executed when accessed using one of the specified methods
-	 * 
+	 *
 	 * @param string $methods
 	 * @param string $pattern
 	 * @param object|callable $fn
@@ -215,7 +215,7 @@ class Router
 								$fnWithNameSpace	= 'App\Controllers\\' . $params['namespace'] . $fnParts[1];
 								self::$afterRoutes[$method][$key]['fn'] = $fnWithNameSpace;
 							}
-							
+
 						}
 
 					}
@@ -229,7 +229,7 @@ class Router
 				$methods = 'GET|POST|PUT|DELETE|OPTIONS|PATCH|HEAD';
 
 				foreach ($params['middleware'] as $middleware) {
-					
+
 					foreach (explode('|', $methods) as $method) {
 						self::$beforeRoutes[$method][] = [
 							'pattern'	=> $baseRoute,
@@ -304,7 +304,7 @@ class Router
 		if ($_SERVER['REQUEST_METHOD'] == 'HEAD') {
             ob_start();
             $method = 'GET';
-        } 
+        }
         // If it's a POST request, check for a method override header
         elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $headers = self::getRequestHeaders();
@@ -345,9 +345,9 @@ class Router
             } else {
                 header($_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found');
                 throw new ExceptionHandler("Hata", "Controller bulunamadı");
-                
+
             }
-        } 
+        }
         // If a route was handled, perform the finish callback (if any)
         else {
             if ($callback) {
@@ -389,6 +389,16 @@ class Router
 	}
 
 	/**
+	 * Get route list
+	 *
+	 * @return array
+	 */
+	public static function getRoutes()
+	{
+		return self::$afterRoutes;
+	}
+
+	/**
 	 * Handle a set of routes: if a match is found, execute the relating handling function
 	 *
 	 * @param array $routes
@@ -416,7 +426,7 @@ class Router
 					// We have a following parameter: take the substring from the current param position until the next one's position
 					if (isset($matches[$index + 1]) && isset($matches[$index + 1][0]) && is_array($matches[$index + 1][0])) {
                         return trim(substr($match[0][0], 0, $matches[$index + 1][0][1] - $match[0][1]), '/');
-                    } 
+                    }
                     // We have no following parameters: return the whole lot
                     else {
                     	return (isset($match[0][0]) ? trim($match[0][0], '/') : null);
@@ -426,7 +436,7 @@ class Router
 				// Call the handling function with the URL parameters if the desired input is callable
 				if (is_callable($route['fn'])) {
                     call_user_func_array($route['fn'], $params);
-                } 
+                }
                 // if not, check the existence of special parameters
                 elseif (stripos($route['fn'], '@') !== false) {
                 	// explode segments of given route

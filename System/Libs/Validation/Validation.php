@@ -5,9 +5,9 @@
  *
  * Author   : Turan Karatuğ
  * Web      : http://www.titanphp.com
- * Docs     : http://kilavuz.titanphp.com 
+ * Docs     : http://kilavuz.titanphp.com
  * Github   : http://github.com/tkaratug/titan2
- * License  : MIT   
+ * License  : MIT
  *
  *************************************************/
 namespace System\Libs\Validation;
@@ -34,9 +34,9 @@ class Validation
 	 */
 	public function rules($rules)
 	{
-		foreach ($rules as $key => $value) {	
-			$this->labels[$value['field']] 	= $value['label'];
-			$this->rules[$value['field']]	= $value['rules'];
+		foreach ($rules as $key => $value) {
+			$this->labels[$key] = $value['label'];
+			$this->rules[$key]	= $value['rules'];
 		}
 	}
 
@@ -63,7 +63,7 @@ class Validation
 	public function bulkData($data)
 	{
 		foreach ($data as $key => $value) {
-			$this->data[$value['field']] = $value['data'];
+			$this->data[$key] = $value;
 		}
 	}
 
@@ -87,7 +87,7 @@ class Validation
 	public function isValid()
 	{
 		foreach ($this->rules as $key => $value) {
-			
+
 			$rules = explode('|', $value);
 
 			foreach ($rules as $rule) {
@@ -491,5 +491,5 @@ class Validation
             return false;
         }
     }
-	
+
 }

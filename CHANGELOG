@@ -1,3 +1,9 @@
+v2.0.4
+	- [Yeni] Console desteği eklendi.
+	- [Düzeltme] Validation kütüphanesindeki rules() ve bulkData() methodları iyileştirildi.
+	- [Düzeltme] Request kütüphanesindeki get(), post(), put(), delete() methodlarının filtreleme özelliği varsayılan "true" olarak değiştirildi.
+	- [Düzeltme] View kütüphanesine kullanılacak temayı tanımlama desteği eklendi.
+
 v2.0.3
 	- [Yeni] public_path() fonksiyonu eklendi.
 	- [Yeni] File Upload kütüphanesi eklendi.
