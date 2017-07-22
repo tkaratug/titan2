@@ -5,9 +5,9 @@
  *
  * Author 	: Turan Karatuğ
  * Web 		: http://www.titanphp.com
- * Docs 	: http://kilavuz.titanphp.com 
+ * Docs 	: http://kilavuz.titanphp.com
  * Github	: http://github.com/tkaratug/titan2
- * License	: MIT	
+ * License	: MIT
  *
  *************************************************/
 namespace System\Libs\Cache;
@@ -81,9 +81,9 @@ class Cache
 	 * @param string $key
 	 * @return string
 	 */
-	public function read($key)
+	public function read($key, $filename = null)
 	{
-		$cacheContent = $this->_loadCache();
+		$cacheContent = $this->_loadCache($filename);
 		if (!isset($cacheContent[$key]['data']))
 			return null;
 		else
@@ -217,10 +217,11 @@ class Cache
 	 *
 	 * @return string|bool
 	 */
-	private function _getCacheDir()
+	private function _getCacheDir($filename = null)
 	{
 		if ($this->_checkCacheDir() === true) {
-			$filename = preg_replace('/[^0-9a-z\.\_\-]/i', '', strtolower($this->getFileName()));
+			if (is_null($filename))
+				$filename = preg_replace('/[^0-9a-z\.\_\-]/i', '', strtolower($this->getFileName()));
 			return $this->getPath() . '/' . $this->_hashFile($filename) . $this->getExtension();
 		} else {
 			return false;
@@ -232,15 +233,15 @@ class Cache
 	 *
 	 * @return string|bool
 	 */
-	private function _loadCache()
+	private function _loadCache($filename = null)
 	{
 		if ($this->_getCacheDir() !== false) {
-			if(file_exists($this->_getCacheDir())) {
-				$file = file_get_contents($this->_getCacheDir());
+			if(file_exists($this->_getCacheDir($filename))) {
+				$file = file_get_contents($this->_getCacheDir($filename));
 				return json_decode($file, true);
 			} else {
 				return false;
-			}			
+			}
 		} else {
 			return false;
 		}
@@ -266,7 +267,7 @@ class Cache
 		}
 	}
 
-	/** 
+	/**
 	 * Hash cache file name
 	 *
 	 * @param string $filename

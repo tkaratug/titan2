@@ -5,9 +5,9 @@
  *
  * Author 	: Turan Karatuğ
  * Web 		: http://www.titanphp.com
- * Docs 	: http://kilavuz.titanphp.com 
+ * Docs 	: http://kilavuz.titanphp.com
  * Github	: http://github.com/tkaratug/titan2
- * License	: MIT	
+ * License	: MIT
  *
  *************************************************/
 namespace System\Kernel;
@@ -32,7 +32,7 @@ class Import
 			extract($data);
 			require_once $filePath;
 		} else {
-			throw new ExceptionHandler('Dosya bulunamadı.', '<b>View : </b>' . $file);			
+			throw new ExceptionHandler('Dosya bulunamadı.', '<b>View : </b>' . $file);
 		}
 	}
 
@@ -50,7 +50,7 @@ class Import
 			require_once $filePath;
 		else
 			throw new ExceptionHandler('Dosya bulunamadı.', '<b>Helper : </b>' . $file);
-			
+
 	}
 
 	/**
@@ -74,7 +74,7 @@ class Import
 			return new $class;
 		} else
 			throw new ExceptionHandler('Dosya bulunamadı.', '<b>Model : </b>' . $file);
-			
+
 	}
 
 	/**
@@ -89,8 +89,8 @@ class Import
 			return require $file . '.php';
 		else
 			throw new ExceptionHandler('Dosya bulunamadı.', '<b>File : </b>' . $file . '.php');
-			
-		
+
+
 	}
 
 	/**
@@ -105,7 +105,7 @@ class Import
 			return require APP_DIR . 'Config/' . ucwords($file) . '.php';
 		else
 			throw new ExceptionHandler('Dosya bulunamadı.', '<b>Config : </b>' . APP_DIR . 'Config/' . $file . '.php');
-			
+
 	}
 
 }

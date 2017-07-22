@@ -5,9 +5,9 @@
  *
  * Author 	: Turan Karatuğ
  * Web 		: http://www.titanphp.com
- * Docs 	: http://kilavuz.titanphp.com 
+ * Docs 	: http://kilavuz.titanphp.com
  * Github	: http://github.com/tkaratug/titan2
- * License	: MIT	
+ * License	: MIT
  *
  *************************************************/
 namespace System\Libs\Database;
@@ -32,7 +32,7 @@ class Model
 			return $this->modelCollection[$model];
 		else {
 			$db = Import::model($model, $namespace);
-			$this->modelCollection[$model] = new $db;
+			$this->modelCollection[$model] = $db;
 
 			return $this->modelCollection[$model];
 		}
