@@ -44,12 +44,12 @@ class Import
 	 */
 	public function helper($file)
 	{
-		$filePath = APP_DIR . 'Helpers/' . $file . '.php';
+		$filePath = APP_DIR . 'Helpers/' . ucfirst($file) . '.php';
 
 		if (file_exists($filePath))
 			require_once $filePath;
 		else
-			throw new ExceptionHandler('Dosya bulunamadı.', '<b>Helper : </b>' . $file);
+			throw new ExceptionHandler('Dosya bulunamadı.', '<b>Helper : </b>' . ucfirst($file));
 
 	}
 
@@ -62,18 +62,18 @@ class Import
 	public static function model($file, $namespace = null)
 	{
 		if (is_null($namespace)) {
-			$filePath 	= MODEL_DIR . $file . '.php';
-			$class 		= 'App\\Models\\' . $file;
+			$filePath 	= MODEL_DIR . ucfirst($file) . '.php';
+			$class 		= 'App\\Models\\' . ucfirst($file);
 		} else {
-			$filePath 	= MODEL_DIR . ucfirst($namespace) . '/' . $file . '.php';
-			$class 		= 'App\\Models\\' . ucfirst($namespace) . '\\' . $file;
+			$filePath 	= MODEL_DIR . ucfirst($namespace) . '/' . ucfirst($file) . '.php';
+			$class 		= 'App\\Models\\' . ucfirst($namespace) . '\\' . ucfirst($file);
 		}
 
 		if (file_exists($filePath)) {
 			require_once $filePath;
 			return new $class;
 		} else
-			throw new ExceptionHandler('Dosya bulunamadı.', '<b>Model : </b>' . $file);
+			throw new ExceptionHandler('Dosya bulunamadı.', '<b>Model : </b>' . ucfirst($file));
 
 	}
 
@@ -104,7 +104,7 @@ class Import
 		if (file_exists(APP_DIR . 'Config/' . ucwords($file) . '.php'))
 			return require APP_DIR . 'Config/' . ucwords($file) . '.php';
 		else
-			throw new ExceptionHandler('Dosya bulunamadı.', '<b>Config : </b>' . APP_DIR . 'Config/' . $file . '.php');
+			throw new ExceptionHandler('Dosya bulunamadı.', '<b>Config : </b>' . APP_DIR . 'Config/' . ucfirst($file) . '.php');
 
 	}
 

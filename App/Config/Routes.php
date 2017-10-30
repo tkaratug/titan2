@@ -17,18 +17,16 @@ Route::set404(function(){
 	View::render('errors.404');
 });
 
-Route::get('/', 'Home@index', ['namespace' => 'Frontend']);
-
-Route::group('/frontend', function(){
-
-	Route::get('/', 'Home@index', ['namespace' => 'Frontend']);
-	Route::get('/home', 'Home@index', ['namespace' => 'Frontend']);
-
+Route::namespace('frontend')->group(function(){
+	Route::get('/', 'Home@index');
 });
 
-Route::group('/backend', function(){
+Route::prefix('frontend')->namespacer('frontend')->group(function(){
+	Route::get('/', 'Home@index');
+	Route::get('/home', 'Home@index');
+});
 
-	Route::get('/', 'Dashboard@index', ['namespace' => 'Backend']);
-	Route::get('/dashboard', 'Dashboard@index', ['namespace' => 'Backend']);
-
-}, ['middleware' => ['Auth']]);
+Route::prefix('backend')->namespacer('backend')->middleware(['auth'])->group(function(){
+	Route::get('/', 'Dashboard@index');
+	Route::get('/dashboard', 'Dashboard@index');
+});

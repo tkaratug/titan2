@@ -86,8 +86,6 @@ class Console
                 } else {
                     return $this->getColoredString('Gecersiz komut. "' . $params[0] . '"', 'white', 'red');
                 }
-            } else if ($params[0] == 'routes') {
-                return $this->getRoutes();
             } else {
                 return $this->getColoredString('Gecersiz komut. "' . $params[0] . '"', 'white', 'red');
             }
@@ -113,8 +111,6 @@ class Console
                $this->getColoredString('[clear:cache]', 'light_blue') . "\t\t" . $this->getColoredString('/App/Storage/Cache dizinini temizlemek icin kullanilir.') . "\n" .
                $this->getColoredString('[clear:logs]', 'light_blue') . "\t\t" . $this->getColoredString('/App/Storage/Logs dizinini temizlemek icin kullanilir.') . "\n" .
                $this->getColoredString('[clear:session]', 'light_blue') . "\t\t" . $this->getColoredString('Tum session verisini temizlemek icin kullanilir.') . "\n\n" .
-
-               $this->getColoredString('[routes]', 'light_blue') . "\t\t" . $this->getColoredString('Tum rotalari listelemek icin kullanilir.') . "\n\n" .
 
                $this->getColoredString('[-v]', 'light_blue') . "\t\t\t" . $this->getColoredString('Titan Web Framework versiyon bilgisini verir.') . "\n" .
                $this->getColoredString('[-h]', 'light_blue') . "\t\t\t" . $this->getColoredString('Tum console komutlari ile ilgili bilgi verir.') . "\n\n" .
@@ -344,27 +340,6 @@ class Console
         session_start();
         session_destroy();
         return $this->getColoredString('Tum session verisi silindi.', 'light_blue');
-    }
-
-    /**
-     * Get Route List
-     *
-     * @return string
-     */
-    private function getRoutes()
-    {
-        // Getting Routes
-		Import::config('routes');
-        $routes = Router::getRoutes();
-        $list   = '';
-
-        foreach ($routes as $method => $paths) {
-            foreach ($paths as $key => $val) {
-                $list .= str_pad($method, 10) . str_pad($val['pattern'], 30) . str_pad($val['fn'], 10) . "\n";
-            }
-        }
-
-        return $list;
     }
 
     /**

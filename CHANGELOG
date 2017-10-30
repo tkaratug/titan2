@@ -1,3 +1,7 @@
+v.2.0.5
+	- [Yeni] Router Kütüphanesi tamamen yenilendi. Domain tanımlama desteği eklendi.
+	- [Düzeltme] Import kütüphanesi içerisindeki yükleme hataları giderildi.
+
 v2.0.4
 	- [Yeni] Console desteği eklendi.
 	- [Düzeltme] Validation kütüphanesindeki rules() ve bulkData() methodları iyileştirildi.
