@@ -10,6 +10,8 @@
  *************************************************/
 namespace System\Libs\Router;
 
+use System\Libs\Exception\ExceptionHandler;
+
 class Router
 {
     // Routes
@@ -102,7 +104,7 @@ class Router
      *
      * @param string $namespace
      */
-    public static function namespacer($namespace)
+    public static function setNamespace($namespace)
     {
         // Set Namespace
         self::$namespace = $namespace;
@@ -277,7 +279,7 @@ class Router
             call_user_func(self::$notFound);
         } else {
             header($_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found');
-            throw new \Exception("Hata: Controller bulunamadı");
+            throw new ExceptionHandler("Hata", "Controller bulunamadı");
         }
     }
 
@@ -465,7 +467,15 @@ class Router
     public static function __callStatic($method, $args)
     {
         if ($method == 'namespace') {
-            self::namespacer($args[0]);
+            self::setNamespace($args[0]);
+            return new self;
+        }
+    }
+
+    public function __call($method, $args)
+    {
+        if ($method == 'namespace') {
+            self::setNamespace($args[0]);
             return new self;
         }
     }

@@ -21,12 +21,12 @@ Route::namespace('frontend')->group(function(){
 	Route::get('/', 'Home@index');
 });
 
-Route::prefix('frontend')->namespacer('frontend')->group(function(){
+Route::prefix('frontend')->namespace('frontend')->group(function(){
 	Route::get('/', 'Home@index');
 	Route::get('/home', 'Home@index');
 });
 
-Route::prefix('backend')->namespacer('backend')->middleware(['auth'])->group(function(){
+Route::prefix('backend')->namespace('backend')->middleware(['auth'])->group(function(){
 	Route::get('/', 'Dashboard@index');
 	Route::get('/dashboard', 'Dashboard@index');
 });

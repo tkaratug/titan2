@@ -6,7 +6,7 @@
  * Author 	: Turan Karatuğ
  * Web 		: http://www.titanphp.com
  * Docs 	: http://kilavuz.titanphp.com
- * Version 	: 2.0.5
+ * Version 	: 2.0.6
  * Github	: http://github.com/tkaratug/titan2
  * License	: MIT
  *

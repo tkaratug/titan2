@@ -1,4 +1,9 @@
-v.2.0.5
+v2.0.6
+	- [Yeni] Router kütüphanesine multiple request method ile rota tanımlama desteği eklendi.
+	- [Yeni] Upload kütüphanesine, dosya ismi belirleyebilmek için filename() methodu eklendi.
+	- [Düzeltme] Router kütüphanesindeki namespace tanımlama hatası giderildi.
+
+v2.0.5
 	- [Yeni] Router Kütüphanesi tamamen yenilendi. Domain tanımlama desteği eklendi.
 	- [Düzeltme] Import kütüphanesi içerisindeki yükleme hataları giderildi.
 
