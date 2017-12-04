@@ -1,10 +1,11 @@
 v2.0.7
-	- [Yeni] Router kütüphanesine ip kısıtlama desteği sağlayan için ip() methodu eklendi.
-	- [Yeni] Router kütüphanesine ssl desteği sağlayan ssl() methodu eklendi.
-	- [Yeni] Request kütüphanesine patch methodu ile gelen verilere erişmeyi sağlayan patch() methodu eklendi.
-	- [Yeni] Request kütüphanesine tüm request verisine erişmeyi sağlayan all() methodu eklendi.
+	- [Yeni] Router kütüphanesine, ip kısıtlama desteği sağlayan ip() methodu eklendi.
+	- [Yeni] Router kütüphanesine, ssl desteği sağlayan ssl() methodu eklendi.
+	- [Yeni] Request kütüphanesine, patch methodu ile gelen verilere erişmeyi sağlayan patch() methodu eklendi.
+	- [Yeni] Request kütüphanesine, tüm request verisine erişmeyi sağlayan all() methodu eklendi.
 	- [Yeni] Tüm request verisine erişmeyi sağlayan input() fonksiyonu eklendi.
 	- [Yeni] URL Slug oluşturmayı sağlayan slug() fonksiyonu eklendi.
+	- [Sonlandırma] Asset Kütüphanesi kaldırıldı ve desteği sonlandırıldı.
 
 v2.0.6
 	- [Yeni] Router kütüphanesine multiple request method ile rota tanımlama desteği eklendi.
