@@ -100,6 +100,17 @@ class Request
 	}
 
 	/**
+	 * Get All Inputs
+	 *
+	 * @param boolean $filter
+	 * @return array
+	 */
+	public function all($filter = true)
+	{
+		return $this->filter($_REQUEST, $filter);
+	}
+
+	/**
 	 * Get Variables
 	 *
 	 * @param string $param
@@ -141,6 +152,23 @@ class Request
 			return $_PUT;
 		else
 			return $this->filter($_PUT[$param], $filter);
+	}
+
+	/**
+	 * Patch Variables
+	 *
+	 * @param string $param
+	 * @param boolean $filter
+	 * @return string|array
+	 */
+	public function patch($param = null, $filter = true)
+	{
+		parse_str(file_get_contents('php://input'), $_PATCH);
+
+		if ($param == null)
+			return $_PATCH;
+		else
+			return $this->filter($_PATCH[$param], $filter);
 	}
 
 	/**
