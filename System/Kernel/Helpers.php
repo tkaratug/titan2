@@ -34,7 +34,7 @@ if (!function_exists('dd')) {
 if (!function_exists('get_lang')) {
     function get_lang()
     {
-        $lang = Config::get('app', 'general', 'default_lang');
+        $lang = config('app', 'general', 'default_lang');
 
         if (!Session::has(md5('lang'))) {
             Session::set(md5('lang'), $lang);
@@ -54,7 +54,7 @@ if (!function_exists('get_lang')) {
 if (!function_exists('set_lang')) {
     function set_lang($lang = '')
     {
-        $language = Config::get('app', 'general', 'default_lang');
+        $language = config('app', 'general', 'default_lang');
 
         if (!is_string($lang))
             return false;
@@ -79,7 +79,7 @@ if ( ! function_exists('lang') ) {
     {
         global $lang;
 
-        $config = Config::get('app', 'general', 'languages');
+        $config = config('app', 'general', 'languages');
 
         if (!is_string($file) || !is_string($key))
             return false;
@@ -254,37 +254,52 @@ if (!function_exists('link_to')) {
 }
 
 /**
- * Reach All Input Data
+ * Reach All Request Data
  *
  * @param string|array/null $params
  * @return array|string
  */
-if (!function_exists('input')) {
-    function input($params = null)
+if (!function_exists('request')) {
+    function request($params = null)
     {
         $requestMethod = Request::getRequestMethod();
 
         switch ($requestMethod) {
-            case 'GET'      : $input = Request::get(); break;
-            case 'POST'     : $input = Request::post(); break;
-            case 'PUT'      : $input = Request::put(); break;
-            case 'PATCH'    : $input = Request::patch(); break;
-            case 'DELETE'   : $input = Request::delete(); break;
-            default         : $input = Request::all();
+            case 'GET'      : $request = Request::get(); break;
+            case 'POST'     : $request = Request::post(); break;
+            case 'PUT'      : $request = Request::put(); break;
+            case 'PATCH'    : $request = Request::patch(); break;
+            case 'DELETE'   : $request = Request::delete(); break;
+            default         : $request = Request::all();
         }
 
         if (is_null($params)) {
-            return $input;
+            return $request;
         } else {
             if (is_array($params)) {
                 foreach ($params as $param) {
-                    $data[$param] = $input[$param];
+                    $data[$param] = $request[$param];
                 }
                 return $data;
             } else {
-                return $input[$params];
+                return $request[$params];
             }
         }
+    }
+}
+
+/**
+ * Get Config Parameters
+ *
+ * @param string $file
+ * @param string $key
+ * @param string $val
+ * @return mixed
+ */
+if (!function_exists('config')) {
+    function config($file, $key = null, $val = null)
+    {
+        return Config::get($file, $key, $val);
     }
 }
 

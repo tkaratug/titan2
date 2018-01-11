@@ -12,7 +12,6 @@
  *************************************************/
 namespace System\Kernel;
 
-use System\Libs\Http\Request;
 use System\Libs\Router\Router;
 use System\Facades\Facade;
 use Whoops\Run as WhoopsRun;

@@ -448,7 +448,7 @@ class Request
 	 */
 	public function isReferral()
 	{
-		if (null !== $this->server('HTTP_REFERER') || $this->server('HTTP_REFERRER') == '')
+		if (null !== $this->server('HTTP_REFERER') || $this->server('HTTP_REFERER') == '')
 			return false;
 		else
 			return true;
@@ -461,7 +461,7 @@ class Request
 	 */
 	public function getReferrer()
 	{
-		return ($this->isReferral()) ? trim($this->server('HTTP_REFERRER')) : '';
+		return ($this->isReferral()) ? trim($this->server('HTTP_REFERER')) : '';
 	}
 
 	/**

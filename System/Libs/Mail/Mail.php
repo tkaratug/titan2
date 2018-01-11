@@ -12,8 +12,6 @@
  *************************************************/
 namespace System\Libs\Mail;
 
-use Config;
-
 require 'PHPMailerAutoload.php';
 
 class Mail extends \PHPMailer
@@ -26,7 +24,7 @@ class Mail extends \PHPMailer
 		parent::__construct();
 
 		// E-Mail Config
-		$this->config = Config::get('app', 'email');
+		$this->config = config('app', 'email');
 
 		// Setting SMTP Protocol
 		$this->isSMTP();

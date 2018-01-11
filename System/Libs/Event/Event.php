@@ -12,7 +12,6 @@
  *************************************************/
 namespace System\Libs\Event;
 
-use Config;
 use System\Libs\Exception\ExceptionHandler;
 
 class Event
@@ -28,7 +27,7 @@ class Event
 	 */
 	public function trigger($event, $method = 'handle', $params = [])
 	{
-		$listeners 	= Config::get('app', 'listeners');
+		$listeners 	= config('app', 'listeners');
 
 		foreach ($listeners[$event] as $listener) {
 

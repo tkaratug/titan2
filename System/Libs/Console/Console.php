@@ -190,7 +190,7 @@ class Console
             return $this->getColoredString('Controller zaten mevcut:', 'red') . "\t" . $this->getColoredString($location);
         } else {
             $file       = fopen ($location, 'w');
-            $content    = "<?php\nnamespace $namespace;\n\nuse View;\n\nclass $class\n{\n\n\tpublic function index()\n\t{\n\t\t\n\t}\n\n}";
+            $content    = "<?php\nnamespace $namespace;\n\nuse App\\Controllers\\BaseController;\nuse View;\n\nclass $class extends BaseController\n{\n\n\tpublic function index()\n\t{\n\t\t\n\t}\n\n}";
             fwrite ($file, $content);
             fclose($file);
 
