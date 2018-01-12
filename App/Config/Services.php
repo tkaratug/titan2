@@ -39,6 +39,7 @@ return [
 		'Date'				=> System\Libs\Date\Date::class,
 		'Upload'			=> System\Libs\Upload\Upload::class,
 		'Image'				=> System\Libs\Image\Image::class,
+		'Hash'				=> System\Libs\Hashing\Hash::class,
 	],
 
 	/**
@@ -68,6 +69,7 @@ return [
 		'Date'				=> System\Facades\Date::class,
 		'Upload'			=> System\Facades\Upload::class,
 		'Image'				=> System\Facades\Image::class,
+		'Hash'				=> System\Facades\Hash::class,
 	],
 
 	/**
@@ -80,7 +82,7 @@ return [
 
 		'manual'	=> [
 			'Auth'			=> App\Middlewares\Auth::class,
-		]		
+		]
 	],
 
 	/**

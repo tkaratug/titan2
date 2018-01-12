@@ -1,7 +1,9 @@
 <?php
 namespace App\Controllers\Backend;
 
-class Dashboard
+use System\Kernel\Controller;
+
+class Dashboard extends Controller
 {
 
 	public function index()
