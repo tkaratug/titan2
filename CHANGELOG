@@ -1,6 +1,7 @@
 v2.0.8
 	- [Yeni] Default Middlewares desteği eklendi.
 	- [Yeni] Controller içinde middleware tanımlama özelliği eklendi.
+	- [Yeni] Hash kütüphanesi eklendi.
 	- [Yeni] Config dosyalarındaki ayarlara erişmeyi sağlayan config() fonksiyonu eklendi.
 	- [Düzeltme] input() fonksiyonunun ismi request() olarak değiştirildi.
 	- [Düzeltme] Request kütüphanesinde bulunan getReferrer() ve isReferral() methodlarındaki bug giderildi.
