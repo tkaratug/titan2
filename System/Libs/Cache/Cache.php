@@ -12,14 +12,10 @@
  *************************************************/
 namespace System\Libs\Cache;
 
-use System\Kernel\Import;
 use System\Kernel\Exception\ExceptionHandler;
 
 class Cache
 {
-
-	// Config variable
-	private $config;
 
 	// Name of cache file
 	private $filename;
@@ -35,13 +31,10 @@ class Cache
 
 	public function __construct()
 	{
-		// Get cache config
-		$this->config = Import::config('app');
-
 		// Inıtializing
-		$this->path 		= APP_DIR . $this->config['cache']['path'];
-		$this->extension 	= $this->config['cache']['extension'];
-		$this->expire 		= $this->config['cache']['expire'];
+		$this->path 		= APP_DIR . config('app', 'cache', 'path');
+		$this->extension 	= config('app', 'cache', 'extension');
+		$this->expire 		= config('app', 'cache', 'expire');
 	}
 
 	/**

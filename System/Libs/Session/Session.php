@@ -12,29 +12,22 @@
  *************************************************/
 namespace System\Libs\Session;
 
-use System\Kernel\Import;
-
 class Session
 {
-	// Config variable
-	protected $config;
 
 	public function __construct()
 	{
-		// Getting session settings
-		$this->config = Import::config('app');
-
 		// Checking cookie_httponly setting
-		if ($this->config['session']['cookie_httponly'] === true)
+		if (config('app', 'session', 'cookie_httponly') === true)
 			ini_set('session.cookie_httponly', 1);
 
 		// Checking use_only_cookies setting
-		if ($this->config['session']['use_only_cookies'] === true)
+		if (config('app', 'session', 'use_only_cookies') === true)
 			ini_set('session.use_only_cookies', 1);
 
 		// Setting max. lifetime
-		ini_set('session.gc_maxlifetime', $this->config['session']['lifetime']);
-		session_set_cookie_params($this->config['session']['lifetime']);
+		ini_set('session.gc_maxlifetime', config('app', 'session', 'lifetime'));
+		session_set_cookie_params(config('app', 'session', 'lifetime'));
 
 		// Initializing
 		$this->init();
@@ -170,7 +163,10 @@ class Session
 	 */
 	private function generateHash()
 	{
-		return md5(sha1(md5($_SERVER['REMOTE_ADDR'] . $this->config['session']['encryption_key'] . $_SERVER['HTTP_USER_AGENT'])));
+		if (array_key_exists('REMOTE_ADDR', $_SERVER) && array_key_exists('HTTP_USER_AGENT', $_SERVER))
+			return md5(sha1(md5($_SERVER['REMOTE_ADDR'] . config('app', 'session', 'encryption_key') . $_SERVER['HTTP_USER_AGENT'])));
+		else
+			return md5(sha1(md5(config('app', 'session', 'encryption_key'))));
 	}
 
 }

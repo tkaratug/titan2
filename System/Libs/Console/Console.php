@@ -364,7 +364,7 @@ class Console
 		// Add string and end coloring
 		$colored_string .=  $string . "\e[0m";
 
-		return $colored_string;
+		return $colored_string . "\n";
 	}
 
     /**
