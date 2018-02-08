@@ -159,7 +159,6 @@ class Console
         {
             case 'cache'        : return $this->clearCache(); break;
             case 'logs'         : return $this->clearLogs(); break;
-            case 'session'      : return $this->clearSession(); break;
             default             : return $this->getColoredString('"clear" komutu icin gecersiz parametre. "' . $params . '"', 'white', 'red');
         }
     }
@@ -328,18 +327,6 @@ class Console
     {
         array_map('unlink', glob("App/Storage/Logs/*"));
         return $this->getColoredString('Logs dizini bosaltildi.', 'light_blue');
-    }
-
-    /**
-     * Clear Session
-     *
-     * @return string
-     */
-    private function clearSession()
-    {
-        session_start();
-        session_destroy();
-        return $this->getColoredString('Tum session verisi silindi.', 'light_blue');
     }
 
     /**
