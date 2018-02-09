@@ -17,7 +17,7 @@ class Controller
     public function __construct()
     {
         // Run default middlewares
-		$this->middleware(config('Services', 'middlewares', 'default'), true);
+		$this->middleware(config('services.middlewares.default'), true);
     }
 
     /**
@@ -30,7 +30,7 @@ class Controller
 	protected function middleware(array $middlewares, bool $default = false)
 	{
 		if ($default === false) {
-			$list = config('Services', 'middlewares', 'manual');
+			$list = config('services.middlewares.manual');
 
 			foreach ($middlewares as $middleware) {
 				$middleware = ucfirst($middleware);

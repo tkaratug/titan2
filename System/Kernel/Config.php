@@ -5,37 +5,45 @@
  *
  * Author 	: Turan Karatuğ
  * Web 		: http://www.titanphp.com
- * Docs 	: http://kilavuz.titanphp.com 
+ * Docs 	: http://kilavuz.titanphp.com
  * Github	: http://github.com/tkaratug/titan2
- * License	: MIT	
+ * License	: MIT
  *
  *************************************************/
 namespace System\Kernel;
 
+use System\Libs\Exception\ExceptionHandler;
+
 class Config
 {
 
-	/** 
+	/**
 	 * Get config item
 	 *
-	 * @param string $file
-	 * @param string $key
-	 * @param string $val
-	 * @return array|string
+	 * @param string $params
+	 * @return mixed
 	 */
-	public function get($file, $key = null, $val = null)
+	public function get($params)
 	{
+		// Explode items
+		$keys 	= explode('.', $params);
+
+		// Set config file
+		$file 	= $keys[0];
+
+		// Get config file
 		$config = Import::config($file);
 
-		if (is_null($key)) {
-			return $config;
-		} else {
-			if (is_null($val)) {
-				return $config[$key];
-			} else {
-				return $config[$key][$val];
-			}
+		// Remove file item from array
+		array_shift($keys);
+
+		// Find the item that requested
+		foreach($keys as $key) {
+			$config = $config[$key];
 		}
+
+		// return the item
+		return $config;
 	}
 
 }

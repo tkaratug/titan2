@@ -5,9 +5,9 @@
  *
  * Author 	: Turan Karatuğ
  * Web 		: http://www.titanphp.com
- * Docs 	: http://kilavuz.titanphp.com 
+ * Docs 	: http://kilavuz.titanphp.com
  * Github	: http://github.com/tkaratug/titan2
- * License	: MIT	
+ * License	: MIT
  *
  *************************************************/
 namespace System\Libs\Cookie;
@@ -32,14 +32,20 @@ class Cookie
 	// Cookie http only
 	private $httpOnly;
 
+	// Cookie config items
+	private $config;
+
 	public function __construct()
 	{
+		// Getting cookie config items
+		$this->config		= config('app.cookie');
+
 		// Initializing settings
-		$this->seperator 	= config('app', 'cookie', 'seperator');
-		$this->path 		= config('app', 'cookie', 'path');
-		$this->domain 		= config('app', 'cookie', 'domain');
-		$this->secure 		= config('app', 'cookie', 'secure');
-		$this->httpOnly		= config('app', 'cookie', 'http_only');
+		$this->seperator 	= $this->config['seperator'];
+		$this->path 		= $this->config['path'];
+		$this->domain 		= $this->config['domain'];
+		$this->secure 		= $this->config['secure'];
+		$this->httpOnly		= $this->config['http_only'];
 	}
 
 	/**
@@ -111,8 +117,8 @@ class Cookie
 		if ($time > 0)
 			$time = time() + ($time*60*60);
 
-		if (config('app', 'cookie', 'cookie_security') === true)
-			setcookie($name, $value . $this->seperator . md5($value . config('app', 'cookie', 'encryption_key')), $time, $this->path, $this->domain, $this->secure, $this->httpOnly);
+		if ($this->config['cookie_security'] === true)
+			setcookie($name, $value . $this->seperator . md5($value . $this->config['encryption_key']), $time, $this->path, $this->domain, $this->secure, $this->httpOnly);
 		else
 			setcookie($name, $value, $time, $this->path, $this->domain, $this->secure, $this->httpOnly);
 	}
@@ -126,9 +132,9 @@ class Cookie
 	public function get($name)
 	{
 		if ($this->has($name)) {
-			if (config('app', 'cookie', 'cookie_security') === true)
+			if ($this->config['cookie_security'] === true)
 				$parts = explode($this->seperator, $_COOKIE[$name]);
-				if (md5($parts[0] . config('app', 'cookie', 'encryption_key')) == $parts[1])
+				if (md5($parts[0] . $this->config['encryption_key']) == $parts[1])
 					return $parts[0];
 				else
 					throw new ExceptionHandler("Hata", "Cookie içeriği değiştirilmiş");

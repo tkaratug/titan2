@@ -5,9 +5,9 @@
  *
  * Author 	: Turan Karatuğ
  * Web 		: http://www.titanphp.com
- * Docs 	: http://kilavuz.titanphp.com 
+ * Docs 	: http://kilavuz.titanphp.com
  * Github	: http://github.com/tkaratug/titan2
- * License	: MIT	
+ * License	: MIT
  *
  *************************************************/
 namespace System\Libs\Event;
@@ -27,7 +27,7 @@ class Event
 	 */
 	public function trigger($event, $method = 'handle', $params = [])
 	{
-		$listeners 	= config('app', 'listeners');
+		$listeners 	= config('app.listeners');
 
 		foreach ($listeners[$event] as $listener) {
 
@@ -36,9 +36,9 @@ class Event
 
 			if (!method_exists($listener, $method))
 				throw new ExceptionHandler('Listener sınıfına ait method bulunamadı.', $listener . '::' . $method . '()');
-				
+
 			call_user_func_array(array(new $listener, $method), $params);
-			
+
 		}
 	}
 

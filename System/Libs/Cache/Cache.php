@@ -31,10 +31,13 @@ class Cache
 
 	public function __construct()
 	{
+		// Getting cache config items
+		$config				= config('app.cache');
+
 		// Inıtializing
-		$this->path 		= APP_DIR . config('app', 'cache', 'path');
-		$this->extension 	= config('app', 'cache', 'extension');
-		$this->expire 		= config('app', 'cache', 'expire');
+		$this->path 		= APP_DIR . $config['path'];
+		$this->extension 	= $config['extension'];
+		$this->expire 		= $config['expire'];
 	}
 
 	/**

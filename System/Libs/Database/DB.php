@@ -15,7 +15,6 @@ namespace System\Libs\Database;
 use PDO;
 use PDOException;
 use System\Libs\Exception\ExceptionHandler;
-use Import;
 
 class DB
 {
@@ -67,7 +66,7 @@ class DB
 	// Group flag for where and having statements
 	protected $grouped 	= 0;
 
-	// Configurations
+	// DB config items
 	protected $config;
 
 	/**
@@ -77,7 +76,8 @@ class DB
 	 */
 	public function __construct()
 	{
-		$this->config = Import::config('database');
+		// Getting db config items
+		$this->config = config('database');
 
 		$this->config['db_driver']		= ($this->config['db_driver']) ? $this->config['db_driver'] : 'mysql';
 		$this->config['db_host']		= ($this->config['db_host']) ? $this->config['db_host'] : 'localhost';
