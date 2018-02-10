@@ -257,7 +257,7 @@ class Mail extends \PHPMailer
 	 */
 	public static function __callStatic($method, $args)
 	{
-		return call_user_func_array([$this, $method], $args);
+		return call_user_func_array([new \PHPMailer, $method], $args);
 	}
 
 	function __destruct()

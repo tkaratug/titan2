@@ -132,7 +132,7 @@ class Cookie
 	public function get($name)
 	{
 		if ($this->has($name)) {
-			if ($this->config['cookie_security'] === true)
+			if ($this->config['cookie_security'] === true) {
 				$parts = explode($this->seperator, $_COOKIE[$name]);
 				if (md5($parts[0] . $this->config['encryption_key']) == $parts[1])
 					return $parts[0];
@@ -141,6 +141,8 @@ class Cookie
 			} else {
 				return $_COOKIE[$name];
 			}
+		} else {
+			return false;
 		}
 	}
 
