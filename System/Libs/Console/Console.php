@@ -109,7 +109,6 @@ class Console
                $this->getColoredString('- Clear', 'yellow') . "\n" .
                $this->getColoredString('[clear:cache]', 'light_blue') . "\t\t" . $this->getColoredString('/App/Storage/Cache dizinini temizlemek icin kullanilir.') . "\n" .
                $this->getColoredString('[clear:logs]', 'light_blue') . "\t\t" . $this->getColoredString('/App/Storage/Logs dizinini temizlemek icin kullanilir.') . "\n" .
-               $this->getColoredString('[clear:session]', 'light_blue') . "\t\t" . $this->getColoredString('Tum session verisini temizlemek icin kullanilir.') . "\n\n" .
 
                $this->getColoredString('[-v]', 'light_blue') . "\t\t\t" . $this->getColoredString('Titan Web Framework versiyon bilgisini verir.') . "\n" .
                $this->getColoredString('[-h]', 'light_blue') . "\t\t\t" . $this->getColoredString('Tum console komutlari ile ilgili bilgi verir.') . "\n\n" .
