@@ -10,7 +10,7 @@ class Hash
      *
      * @var int
      */
-    protected $round = 10;
+    protected $cost = 10;
 
     /**
      * Hash the given value
@@ -21,9 +21,10 @@ class Hash
      */
     public function make($value, array $options = [])
     {
-        $cost = isset($options['rounds']) ? $options[$rounds] : $this->round;
+        if (!array_key_exists('cost', $options))
+            $options['cost'] = $this->cost;
 
-        $hash = password_hash($value, PASSWORD_DEFAULT, ['cost' => $cost]);
+        $hash = password_hash($value, PASSWORD_DEFAULT, $options);
 
         if ($hash === false)
             throw new ExceptionHandler('Hata', 'Bcrypt hash desteklenmiyor');
@@ -52,8 +53,9 @@ class Hash
      */
     public function needsRehash($hashedValue, array $options = [])
     {
-        $cost = isset($options['rounds']) ? $options['rounds'] : $this->round;
+        if (!array_key_exists('cost', $options))
+            $options['cost'] = $this->cost;
 
-        return password_needs_rehash($hashedValue, PASSWORD_DEFAULT, ['cost' => $cost]);
+        return password_needs_rehash($hashedValue, PASSWORD_DEFAULT, $options);
     }
 }
