@@ -183,10 +183,10 @@ if (!function_exists('csrf_check')) {
  * @return string
  */
 if (!function_exists('get_asset')) {
-    function get_asset($file)
+    function get_asset($file, $version = null)
     {
         if (file_exists(ROOT_DIR . '/Public/' . $file))
-            return PUBLIC_DIR . $file;
+            return (is_null($version)) ? PUBLIC_DIR . $file : PUBLIC_DIR . $file . '?' . $version;
         else
             throw new System\Libs\Exception\ExceptionHandler('Dosya bulunamadı', '<b>Asset : </b> ' . $file);
     }

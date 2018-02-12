@@ -2,9 +2,12 @@ v2.0.8
 	- [Yeni] Default Middlewares desteği eklendi.
 	- [Yeni] Controller içinde middleware tanımlama özelliği eklendi.
 	- [Yeni] Hash kütüphanesi eklendi.
+	- [Yeni] Pagination kütüphanesine, sayfalama stilleri için setUlClass(), setLiClass() ve setLiActiveClass() methodları eklendi.
 	- [Yeni] Config dosyalarındaki ayarlara erişmeyi sağlayan config() fonksiyonu eklendi.
+	- [Yeni] get_asset() Fonksiyonuna, asset versiyon bilgisi desteği eklendi.
 	- [Düzeltme] input() fonksiyonunun ismi request() olarak değiştirildi.
 	- [Düzeltme] Request kütüphanesinde bulunan getReferrer() ve isReferral() methodlarındaki bug giderildi.
+	- [Düzeltme] DB kütüphanesindeki table prefix hatası giderildi.
 
 v2.0.7
 	- [Yeni] Router kütüphanesine, ip kısıtlama desteği sağlayan ip() methodu eklendi.
