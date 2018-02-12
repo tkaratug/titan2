@@ -16,73 +16,81 @@ return [
 	 * Service Providers
 	 */
 	'providers'		=> [
-		'Import'					=> 'System\Kernel\Import',
-		'Config'					=> 'System\Kernel\Config',
-		'Request'					=> 'System\Libs\Http\Request',
-		'Response'					=> 'System\Libs\Http\Response',
-		'Curl'						=> 'System\Libs\Http\Curl',
-		'Restful'					=> 'System\Libs\Http\Restful',
-		'Event'						=> 'System\Libs\Event\Event',
-		'View'						=> 'System\Libs\View\View',
-		'Session'					=> 'System\Libs\Session\Session',
-		'Cookie'					=> 'System\Libs\Cookie\Cookie',
-		'Cache'						=> 'System\Libs\Cache\Cache',
-		'Benchmark'					=> 'System\Libs\Benchmark\Benchmark',
-		'Log'						=> 'System\Libs\Log\Log',
-		'Validation'				=> 'System\Libs\Validation\Validation',
-		'Pagination'				=> 'System\Libs\Pagination\Pagination',
-		'Mail'						=> 'System\Libs\Mail\Mail',
-		'Html'						=> 'System\Libs\Html\Html',
-		'Form'						=> 'System\Libs\Html\Form',
-		'DB'						=> 'System\Libs\Database\DB',
-		'Model'						=> 'System\Libs\Database\Model',
-		'Date'						=> 'System\Libs\Date\Date',
-		'Upload'					=> 'System\Libs\Upload\Upload',
-		'Image'						=> 'System\Libs\Image\Image',
+		'Import'			=> System\Kernel\Import::class,
+		'Config'			=> System\Kernel\Config::class,
+		'Request'			=> System\Libs\Http\Request::class,
+		'Response'			=> System\Libs\Http\Response::class,
+		'Curl'				=> System\Libs\Http\Curl::class,
+		'Restful'			=> System\Libs\Http\Restful::class,
+		'Event'				=> System\Libs\Event\Event::class,
+		'View'				=> System\Libs\View\View::class,
+		'Session'			=> System\Libs\Session\Session::class,
+		'Cookie'			=> System\Libs\Cookie\Cookie::class,
+		'Cache'				=> System\Libs\Cache\Cache::class,
+		'Benchmark'			=> System\Libs\Benchmark\Benchmark::class,
+		'Log'				=> System\Libs\Log\Log::class,
+		'Validation'		=> System\Libs\Validation\Validation::class,
+		'Pagination'		=> System\Libs\Pagination\Pagination::class,
+		'Mail'				=> System\Libs\Mail\Mail::class,
+		'Html'				=> System\Libs\Html\Html::class,
+		'Form'				=> System\Libs\Html\Form::class,
+		'DB'				=> System\Libs\Database\DB::class,
+		'Model'				=> System\Libs\Database\Model::class,
+		'Date'				=> System\Libs\Date\Date::class,
+		'Upload'			=> System\Libs\Upload\Upload::class,
+		'Image'				=> System\Libs\Image\Image::class,
+		'Hash'				=> System\Libs\Hashing\Hash::class,
 	],
 
 	/**
 	 * Facades
 	 */
 	'facades'		=> [
-		'Import'					=> 'System\Facades\Import',
-		'Config'					=> 'System\Facades\Config',
-		'Request'					=> 'System\Facades\Request',
-		'Response'					=> 'System\Facades\Response',
-		'Curl'						=> 'System\Facades\Curl',
-		'Restful'					=> 'System\Facades\Restful',
-		'Event'						=> 'System\Facades\Event',
-		'View'						=> 'System\Facades\View',
-		'Session'					=> 'System\Facades\Session',
-		'Cookie'					=> 'System\Facades\Cookie',
-		'Cache'						=> 'System\Facades\Cache',
-		'Benchmark'					=> 'System\Facades\Benchmark',
-		'Log'						=> 'System\Facades\Log',
-		'Validation'				=> 'System\Facades\Validation',
-		'Pagination'				=> 'System\Facades\Pagination',
-		'Mail'						=> 'System\Facades\Mail',
-		'Html'						=> 'System\Facades\Html',
-		'Form'						=> 'System\Facades\Form',
-		'DB'						=> 'System\Facades\DB',
-		'Model'						=> 'System\Facades\Model',
-		'Date'						=> 'System\Facades\Date',
-		'Upload'					=> 'System\Facades\Upload',
-		'Image'						=> 'System\Facades\Image',
+		'Import'			=> System\Facades\Import::class,
+		'Config'			=> System\Facades\Config::class,
+		'Request'			=> System\Facades\Request::class,
+		'Response'			=> System\Facades\Response::class,
+		'Curl'				=> System\Facades\Curl::class,
+		'Restful'			=> System\Facades\Restful::class,
+		'Event'				=> System\Facades\Event::class,
+		'View'				=> System\Facades\View::class,
+		'Session'			=> System\Facades\Session::class,
+		'Cookie'			=> System\Facades\Cookie::class,
+		'Cache'				=> System\Facades\Cache::class,
+		'Benchmark'			=> System\Facades\Benchmark::class,
+		'Log'				=> System\Facades\Log::class,
+		'Validation'		=> System\Facades\Validation::class,
+		'Pagination'		=> System\Facades\Pagination::class,
+		'Mail'				=> System\Facades\Mail::class,
+		'Html'				=> System\Facades\Html::class,
+		'Form'				=> System\Facades\Form::class,
+		'DB'				=> System\Facades\DB::class,
+		'Model'				=> System\Facades\Model::class,
+		'Date'				=> System\Facades\Date::class,
+		'Upload'			=> System\Facades\Upload::class,
+		'Image'				=> System\Facades\Image::class,
+		'Hash'				=> System\Facades\Hash::class,
 	],
 
 	/**
 	 * Middlewares
 	 */
 	'middlewares'	=> [
-		'Auth'						=> 'App\Middlewares\Auth',
+		'default'	=> [
+			'Csrf'			=> App\Middlewares\Csrf::class,
+		],
+
+		'manual'	=> [
+			'Auth'			=> App\Middlewares\Auth::class,
+		]
 	],
 
 	/**
 	 * Listeners
 	 */
 	'listeners'		=> [
-		'sampleEvent'				=> [
-			'App\Listeners\SampleListener',
+		'sampleEvent'		=> [
+			App\Listeners\SampleListener::class,
 		],
 	]
 

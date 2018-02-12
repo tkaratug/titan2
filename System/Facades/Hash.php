@@ -1,22 +1,30 @@
 <?php
 /*************************************************
  * Titan-2 Mini Framework
- * Simple and Modern Web Application Framework
+ * Facade of Hash Library
  *
  * Author 	: Turan Karatuğ
  * Web 		: http://www.titanphp.com
  * Docs 	: http://kilavuz.titanphp.com
- * Version 	: 2.0.8
  * Github	: http://github.com/tkaratug/titan2
  * License	: MIT
  *
  *************************************************/
+namespace System\Facades;
 
-// Require Composer Autoload
-require_once __DIR__ . '/vendor/autoload.php';
+use System\Facades\Facade;
 
-// Require Starter
-require_once __DIR__ . '/System/Kernel/Starter.php';
+class Hash extends Facade
+{
 
-// Run Kernel
-new System\Kernel\Kernel();
+	/**
+	 * Get the registered name of the component.
+	 *
+	 * @param string
+	 */
+	protected static function getFacadeAccessor()
+	{
+		return 'Hash';
+	}
+
+}

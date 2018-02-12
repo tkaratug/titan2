@@ -5,36 +5,34 @@
  *
  * Author 	: Turan Karatuğ
  * Web 		: http://www.titanphp.com
- * Docs 	: http://kilavuz.titanphp.com 
+ * Docs 	: http://kilavuz.titanphp.com
  * Github	: http://github.com/tkaratug/titan2
- * License	: MIT	
+ * License	: MIT
  *
  *************************************************/
 namespace System\Libs\Session;
 
-use System\Kernel\Import;
-
 class Session
 {
-	// Config variable
-	protected $config;
+	// Session config items
+	private $config;
 
 	public function __construct()
 	{
-		// Getting session settings
-		$this->config = Import::config('app');
+		// Getting session config items
+		$this->config = config('app.session');
 
 		// Checking cookie_httponly setting
-		if ($this->config['session']['cookie_httponly'] === true)
+		if ($this->config['cookie_httponly'] === true)
 			ini_set('session.cookie_httponly', 1);
 
 		// Checking use_only_cookies setting
-		if ($this->config['session']['use_only_cookies'] === true)
+		if ($this->config['use_only_cookies'] === true)
 			ini_set('session.use_only_cookies', 1);
 
 		// Setting max. lifetime
-		ini_set('session.gc_maxlifetime', $this->config['session']['lifetime']);
-		session_set_cookie_params($this->config['session']['lifetime']);
+		ini_set('session.gc_maxlifetime', $this->config['lifetime']);
+		session_set_cookie_params($this->config['lifetime']);
 
 		// Initializing
 		$this->init();
@@ -170,7 +168,10 @@ class Session
 	 */
 	private function generateHash()
 	{
-		return md5(sha1(md5($_SERVER['REMOTE_ADDR'] . $this->config['session']['encryption_key'] . $_SERVER['HTTP_USER_AGENT'])));
+		if (array_key_exists('REMOTE_ADDR', $_SERVER) && array_key_exists('HTTP_USER_AGENT', $_SERVER))
+			return md5(sha1(md5($_SERVER['REMOTE_ADDR'] . $this->config['encryption_key'] . $_SERVER['HTTP_USER_AGENT'])));
+		else
+			return md5(sha1(md5($this->config['encryption_key'])));
 	}
 
 }

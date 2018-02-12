@@ -5,9 +5,9 @@
  *
  * Author 	: Turan Karatuğ
  * Web 		: http://www.titanphp.com
- * Docs 	: http://kilavuz.titanphp.com 
+ * Docs 	: http://kilavuz.titanphp.com
  * Github	: http://github.com/tkaratug/titan2
- * License	: MIT	
+ * License	: MIT
  *
  *************************************************/
 namespace System\Libs\Pagination;
@@ -16,7 +16,7 @@ use System\Libs\Exception\ExceptionHandler;
 
 class Pagination
 {
-	
+
 	const NUM_PLACEHOLDER = '(:num)';
 
 	// Total items to paginate
@@ -35,13 +35,19 @@ class Pagination
 	protected $urlPattern;
 
 	// Max pages to show in page navigator
-	protected $maxPagesToShow = 10;
+	protected $maxPagesToShow 	= 10;
 
 	// Text of preovious page link
-	protected $previousText = 'Previous';
+	protected $previousText 	= 'Previous';
 
 	// Text of next page link
-	protected $nextText = 'Next';
+	protected $nextText 		= 'Next';
+
+	protected $ulClass 			= 'pagination';
+
+	protected $liClass 			= null;
+
+	protected $liActiveClass 	= 'active';
 
 	/**
 	 * Initialize Pagination
@@ -71,7 +77,7 @@ class Pagination
 		$this->numPages = ($this->itemsPerPage == 0 ? 0 : (int) ceil($this->totalItems/$this->itemsPerPage));
 	}
 
-	/** 
+	/**
 	 * Set Max. pages to show
 	 *
 	 * @param integer $maxPageToShow
@@ -84,7 +90,7 @@ class Pagination
 		$this->maxPagesToShow = $maxPagesToShow;
 	}
 
-	/** 
+	/**
 	 * Get max. pages to show
 	 *
 	 * @return integer
@@ -278,12 +284,12 @@ class Pagination
 			else
 				$slidingStart = $this->currentPage - $numAdjacents;
 
-			if ($slidingStart < 2) 
+			if ($slidingStart < 2)
 				$slidingStart = 2;
 
 			$slidingEnd = $slidingStart + $this->maxPagesToShow - 3;
 
-			if ($slidingEnd >= $this->numPages) 
+			if ($slidingEnd >= $this->numPages)
 				$slidingEnd = $this->numPages - 1;
 
 			// Build the list of pages.
@@ -345,16 +351,16 @@ class Pagination
 		if ($this->numPages <= 1)
 			return '';
 
-		$html = '<ul class="pagination">';
+		$html = '<ul class="' . $this->ulClass . '">';
 
 		if ($this->getPrevUrl())
 			$html .= '<li><a href="' . $this->getPrevUrl() . '">&laquo; '. $this->previousText .'</a></li>';
 
 		foreach ($this->getPages() as $page) {
 			if ($page['url'])
-				$html .= '<li' . ($page['isCurrent'] ? ' class="active"' : '') . '><a href="' . $page['url'] . '">' . $page['num'] . '</a></li>';
+				$html .= '<li' . ($page['isCurrent'] ? ' class="' . $this->liActiveClass . '"' : '') . '><a href="' . $page['url'] . '">' . $page['num'] . '</a></li>';
 			else
-				$html .= '<li class="disabled"><span>' . $page['num'] . '</span></li>';
+				$html .= '<li' . (!is_null($this->liClass)) ? ' class="' . $this->liClass . '"' : '''><span>' . $page['num'] . '</span></li>';
 		}
 
 		if ($this->getNextUrl())
@@ -421,6 +427,24 @@ class Pagination
 	public function setNextText($text)
 	{
 		$this->nextText = $text;
+		return $this;
+	}
+
+	public function setUlClass($class)
+	{
+		$this->ulClass = $class;
+		return $this;
+	}
+
+	public function setLiClass($class)
+	{
+		$this->liClass = $class;
+		return $this;
+	}
+
+	public function setLiActiveClass($class)
+	{
+		$this->liActiveClass = $class;
 		return $this;
 	}
 

@@ -5,28 +5,26 @@
  *
  * Author 	: Turan Karatuğ
  * Web 		: http://www.titanphp.com
- * Docs 	: http://kilavuz.titanphp.com 
+ * Docs 	: http://kilavuz.titanphp.com
  * Github	: http://github.com/tkaratug/titan2
- * License	: MIT	
+ * License	: MIT
  *
  *************************************************/
 namespace System\Libs\Mail;
-
-use Config;
 
 require 'PHPMailerAutoload.php';
 
 class Mail extends \PHPMailer
 {
-
+	// Mail config items
 	protected $config = [];
 
 	public function __construct()
 	{
 		parent::__construct();
 
-		// E-Mail Config
-		$this->config = Config::get('app', 'email');
+		// Getting mail config items
+		$this->config = config('app.email');
 
 		// Setting SMTP Protocol
 		$this->isSMTP();
@@ -69,7 +67,7 @@ class Mail extends \PHPMailer
 
 		if(array_key_exists('port', $config))
 			$this->Port 	= $config['port'];
-		
+
 		if(array_key_exists('username', $config))
 			$this->Username = $config['username'];
 
@@ -85,7 +83,7 @@ class Mail extends \PHPMailer
 	 *
 	 * @param string $host
 	 * @return void
-	 */ 
+	 */
 	public function setHost($host)
 	{
 		$this->Host = $host;
@@ -112,7 +110,7 @@ class Mail extends \PHPMailer
 		$this->Port = $port;
 	}
 
-	/** 
+	/**
 	 * Get SMTP port
 	 *
 	 * @return integer
@@ -133,7 +131,7 @@ class Mail extends \PHPMailer
 		$this->Username = $username;
 	}
 
-	/** 
+	/**
 	 * Get SMTP username
 	 *
 	 * @return string
@@ -175,7 +173,7 @@ class Mail extends \PHPMailer
 		$this->Charset = $charset;
 	}
 
-	/** 
+	/**
 	 * Get SMTP charset
 	 *
 	 * @return string
@@ -218,7 +216,7 @@ class Mail extends \PHPMailer
 		$this->Subject = $subject;
 	}
 
-	/** 
+	/**
 	 * Set body of mail
 	 *
 	 * @param string $body
@@ -229,7 +227,7 @@ class Mail extends \PHPMailer
 		$this->Body = $body;
 	}
 
-	/** 
+	/**
 	 * Set alt body of mail
 	 *
 	 * @param string $altBody
@@ -240,7 +238,7 @@ class Mail extends \PHPMailer
 		$this->AltBody = $altBody;
 	}
 
-	/** 
+	/**
 	 * Get SMTP errors
 	 *
 	 * @return string
@@ -250,7 +248,7 @@ class Mail extends \PHPMailer
 		return $this->ErrorInfo;
 	}
 
-	/** 
+	/**
 	 * Call PhpMailer's methods
 	 *
 	 * @param string $method
@@ -259,7 +257,7 @@ class Mail extends \PHPMailer
 	 */
 	public static function __callStatic($method, $args)
 	{
-		return call_user_func_array([$this, $method], $args);
+		return call_user_func_array([new \PHPMailer, $method], $args);
 	}
 
 	function __destruct()

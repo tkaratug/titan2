@@ -12,7 +12,6 @@
  *************************************************/
 namespace System\Libs\Console;
 
-use System\Kernel\Import;
 use System\Libs\Router\Router;
 
 class Console
@@ -159,7 +158,6 @@ class Console
         {
             case 'cache'        : return $this->clearCache(); break;
             case 'logs'         : return $this->clearLogs(); break;
-            case 'session'      : return $this->clearSession(); break;
             default             : return $this->getColoredString('"clear" komutu icin gecersiz parametre. "' . $params . '"', 'white', 'red');
         }
     }
@@ -190,7 +188,7 @@ class Console
             return $this->getColoredString('Controller zaten mevcut:', 'red') . "\t" . $this->getColoredString($location);
         } else {
             $file       = fopen ($location, 'w');
-            $content    = "<?php\nnamespace $namespace;\n\nuse View;\n\nclass $class\n{\n\n\tpublic function index()\n\t{\n\t\t\n\t}\n\n}";
+            $content    = "<?php\nnamespace $namespace;\n\nuse System\\Kernel\\Controller;\nuse View;\n\nclass $class extends Controller\n{\n\n\tpublic function index()\n\t{\n\t\t\n\t}\n\n}";
             fwrite ($file, $content);
             fclose($file);
 
@@ -331,18 +329,6 @@ class Console
     }
 
     /**
-     * Clear Session
-     *
-     * @return string
-     */
-    private function clearSession()
-    {
-        session_start();
-        session_destroy();
-        return $this->getColoredString('Tum session verisi silindi.', 'light_blue');
-    }
-
-    /**
      * Returns colored string
      * @param string $string
      * @param string $foreground_color
@@ -364,7 +350,7 @@ class Console
 		// Add string and end coloring
 		$colored_string .=  $string . "\e[0m";
 
-		return $colored_string;
+		return $colored_string . "\n";
 	}
 
     /**
