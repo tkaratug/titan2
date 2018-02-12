@@ -19,7 +19,7 @@ use System\Libs\Exception\ExceptionHandler;
 class DB
 {
 	// PDO instance
-	public $pdo = null;
+	public $pdo 		= null;
 
 	// Select statement
 	protected $select 	= '*';
@@ -732,7 +732,7 @@ class DB
 		if (is_null($this->table))
 			throw new ExceptionHandler('DB Hatası', 'INSERT işlemi yapılacak tablo seçilmedi.');
 
-		$insert_sql = 'INSERT INTO ' . $this->prefix . $this->table . ' SET ';
+		$insert_sql = 'INSERT INTO ' . $this->table . ' SET ';
 
 		$col 		= [];
 		$val 		= [];
@@ -773,7 +773,7 @@ class DB
 		if (is_null($this->table))
 			throw new ExceptionHandler('DB Hatası', 'UPDATE işlemi yapılacak tablo seçilmedi.');
 
-		$update_sql = 'UPDATE ' . $this->prefix . $this->table . ' SET ';
+		$update_sql = 'UPDATE ' . $this->table . ' SET ';
 
 		$col 	= [];
 		$val 	= [];
@@ -815,7 +815,7 @@ class DB
 		if (is_null($this->table))
 			throw new ExceptionHandler('DB Hatası', 'DELETE işlemi yapılacak tablo seçilmedi.');
 
-		$delete_sql	= 'DELETE FROM ' . $this->prefix . $this->table . ' ' . $this->where;
+		$delete_sql	= 'DELETE FROM ' . $this->table . ' ' . $this->where;
 		$this->sql 	= $delete_sql;
 
 		try {

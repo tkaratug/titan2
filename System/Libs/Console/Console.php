@@ -12,7 +12,6 @@
  *************************************************/
 namespace System\Libs\Console;
 
-use System\Kernel\Import;
 use System\Libs\Router\Router;
 
 class Console

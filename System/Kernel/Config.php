@@ -12,8 +12,6 @@
  *************************************************/
 namespace System\Kernel;
 
-use System\Libs\Exception\ExceptionHandler;
-
 class Config
 {
 
