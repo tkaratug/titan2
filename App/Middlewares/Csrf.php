@@ -9,7 +9,7 @@ class Csrf
     public function handle()
     {
         if (Session::has('titan_token')) {
-            if (input('csrf_token') == Session::get('titan_token')) {
+            if (request('csrf_token') == Session::get('titan_token')) {
                 Session::delete('titan_token');
                 return true;
             } else {
