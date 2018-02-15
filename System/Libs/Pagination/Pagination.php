@@ -360,7 +360,7 @@ class Pagination
 			if ($page['url'])
 				$html .= '<li' . ($page['isCurrent'] ? ' class="' . $this->liActiveClass . '"' : '') . '><a href="' . $page['url'] . '">' . $page['num'] . '</a></li>';
 			else
-				$html .= '<li' . (!is_null($this->liClass)) ? ' class="' . $this->liClass . '"' : '''><span>' . $page['num'] . '</span></li>';
+				$html .= '<li' . (!is_null($this->liClass) ? ' class="' . $this->liClass . '"' : '') . '><span>' . $page['num'] . '</span></li>';
 		}
 
 		if ($this->getNextUrl())
