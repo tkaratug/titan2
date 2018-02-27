@@ -90,6 +90,15 @@ class Validation
 
 			$rules = explode('|', $value);
 
+			if (in_array('nullable', $rules)) {
+			    $nullableFieldKey = array_search('nullable', $rules);
+			    unset($rules[$nullableFieldKey]);
+
+			    $nullable = true;
+            } else {
+			    $nullable = false;
+            }
+
 			foreach ($rules as $rule) {
 				if (strpos($rule, ',')) {
 					$group  = explode(',', $rule);
@@ -104,8 +113,13 @@ class Validation
                             $this->errors[] = lang('validation', $filter . '_error', ['%s' => $this->labels[$key], '%t' => $params]);
                     }
 				} else {
-					if ($this->$rule($this->data[$key]) === false)
-                        $this->errors[] = lang('validation', $rule . '_error', $this->labels[$key]);
+				    if ($nullable === true) {
+				        if ($this->nullable($this->data[$key]) === false && $this->$rule($this->data[$key]) === false)
+				            $this->errors[] = lang('validation', $rule . '_error', $this->labels[$key]);
+                    } else {
+                        if ($this->$rule($this->data[$key]) === false)
+                            $this->errors[] = lang('validation', $rule . '_error', $this->labels[$key]);
+                    }
 				}
 			}
 
@@ -143,6 +157,21 @@ class Validation
     public function errors()
     {
     	return $this->errors;
+    }
+
+    /**
+     * Nullable Field Control
+     *
+     * @param string $data
+     * @return boolean
+     */
+    protected function nullable($data)
+    {
+        if (empty($data) || is_null($data) || $data == '') {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
