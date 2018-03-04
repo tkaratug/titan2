@@ -27,7 +27,7 @@ class Event
 	 */
 	public function trigger($event, $method = 'handle', $params = [])
 	{
-		$listeners 	= config('app.listeners');
+		$listeners 	= config('services.listeners');
 
 		foreach ($listeners[$event] as $listener) {
 
