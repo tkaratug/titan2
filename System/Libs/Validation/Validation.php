@@ -90,6 +90,15 @@ class Validation
 
 			$rules = explode('|', $value);
 
+			if (in_array('nullable', $rules)) {
+			    $nullableFieldKey = array_search('nullable', $rules);
+			    unset($rules[$nullableFieldKey]);
+
+			    $nullable = true;
+            } else {
+			    $nullable = false;
+            }
+
 			foreach ($rules as $rule) {
 				if (strpos($rule, ',')) {
 					$group  = explode(',', $rule);
@@ -100,12 +109,22 @@ class Validation
                     	if ($this->matches($this->data[$key], $this->data[$params]) === false)
                     		$this->errors[] = lang('validation', $filter . '_error', ['%s' => $this->labels[$key], '%t' => $this->labels[$params]]);
                     } else {
-                    	if ($this->$filter($this->data[$key], $params) === false)
-                            $this->errors[] = lang('validation', $filter . '_error', ['%s' => $this->labels[$key], '%t' => $params]);
+                        if ($nullable === true) {
+                            if ($this->nullable($this->data[$key]) === false && $this->$filter($this->data[$key], $params) === false)
+                                $this->errors[] = lang('validation', $filter . '_error', ['%s' => $this->labels[$key], '%t' => $params]);
+                        } else {
+                            if ($this->$filter($this->data[$key], $params) === false)
+                                $this->errors[] = lang('validation', $filter . '_error', ['%s' => $this->labels[$key], '%t' => $params]);
+                        }
                     }
 				} else {
-					if ($this->$rule($this->data[$key]) === false)
-                        $this->errors[] = lang('validation', $rule . '_error', $this->labels[$key]);
+				    if ($nullable === true) {
+				        if ($this->nullable($this->data[$key]) === false && $this->$rule($this->data[$key]) === false)
+				            $this->errors[] = lang('validation', $rule . '_error', $this->labels[$key]);
+                    } else {
+                        if ($this->$rule($this->data[$key]) === false)
+                            $this->errors[] = lang('validation', $rule . '_error', $this->labels[$key]);
+                    }
 				}
 			}
 
@@ -146,6 +165,24 @@ class Validation
     }
 
     /**
+     * Nullable Field Control
+     *
+     * @param string $data
+     * @return boolean
+     */
+    protected function nullable($data)
+    {
+        return is_array($data) ? (empty($data) === true) : (trim($data) === '');
+        /*
+        if (empty($data) || is_null($data) || $data == '') {
+            return true;
+        } else {
+            return false;
+        }
+        */
+    }
+
+    /**
      * Required Field Control
      *
      * @param string $data
@@ -153,11 +190,7 @@ class Validation
      */
     protected function required($data)
     {
-        if (!empty($data) && !is_null($data) && $data !== '') {
-            return true;
-        } else {
-            return false;
-        }
+        return is_array($data) ? (empty($data) === false) : (trim($data) !== '');
     }
 
     /**
@@ -168,11 +201,7 @@ class Validation
      */
     protected function numeric($data)
     {
-        if (is_int($data) || is_numeric($data)) {
-            return true;
-        } else {
-            return false;
-        }
+        return is_numeric($data);
     }
 
     /**
@@ -183,11 +212,7 @@ class Validation
      */
     protected function email($email)
     {
-        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            return true;
-        } else {
-            return false;
-        }
+        return filter_var($email, FILTER_VALIDATE_EMAIL);
     }
 
     /**
@@ -199,11 +224,7 @@ class Validation
      */
     protected function min_len($data, $length)
     {
-        if (strlen(trim($data)) < $length) {
-            return false;
-        } else {
-            return true;
-        }
+        return (strlen(trim($data)) < $length) === false;
     }
 
     /**
@@ -215,11 +236,7 @@ class Validation
      */
     protected function max_len($data, $length)
     {
-        if (strlen(trim($data)) > $length) {
-            return false;
-        } else {
-            return true;
-        }
+        return (strlen(trim($data)) > $length) === false;
     }
 
     /**
@@ -231,11 +248,7 @@ class Validation
      */
     protected function exact_len($data, $length)
     {
-        if (strlen(trim($data)) == $length) {
-            return true;
-        } else {
-            return false;
-        }
+        return (strlen(trim($data)) == $length) !== false;
     }
 
     /**
@@ -294,11 +307,7 @@ class Validation
      */
     protected function integer($data)
     {
-        if (is_int($data)) {
-            return true;
-        } else {
-            return false;
-        }
+        return filter_var($data, FILTER_VALIDATE_INT);
     }
 
     /**
@@ -309,11 +318,9 @@ class Validation
      */
     protected function boolean($data)
     {
-        if ($data === true || $data === false) {
-            return true;
-        } else {
-            return false;
-        }
+        $acceptable = [true, false, 0, 1, '0', '1'];
+
+        return in_array($data, $acceptable, true);
     }
 
     /**
@@ -324,11 +331,7 @@ class Validation
      */
     protected function float($data)
     {
-        if (is_float($data)) {
-            return true;
-        } else {
-            return false;
-        }
+        return filter_var($data, FILTER_VALIDATE_FLOAT);
     }
 
     /**
@@ -339,11 +342,7 @@ class Validation
      */
     protected function valid_url($url)
     {
-        if (filter_var($url, FILTER_VALIDATE_URL)) {
-            return true;
-        } else {
-            return false;
-        }
+        return filter_var($url, FILTER_VALIDATE_URL);
     }
 
     /**
@@ -354,11 +353,7 @@ class Validation
      */
     protected function valid_ip($ip)
     {
-        if(filter_var($ip, FILTER_VALIDATE_IP)) {
-            return true;
-        } else {
-            return false;
-        }
+        return filter_var($ip, FILTER_VALIDATE_IP);
     }
 
     /**
@@ -369,11 +364,7 @@ class Validation
      */
     protected function valid_ipv4($ip)
     {
-        if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
-            return true;
-        } else {
-            return false;
-        }
+        return filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
     }
 
     /**
@@ -384,11 +375,7 @@ class Validation
      */
     protected function valid_ipv6($ip)
     {
-        if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
-            return true;
-        } else {
-            return false;
-        }
+        return filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
     }
 
     /**
@@ -437,11 +424,7 @@ class Validation
      */
     protected function contains($data, $part)
     {
-        if (strpos($data, $part) !== false) {
-            return true;
-        } else {
-            return false;
-        }
+        return strpos($data, $part) !== false;
     }
 
     /**
@@ -453,11 +436,7 @@ class Validation
      */
     protected function min_numeric($data, $min)
     {
-        if (is_numeric($data) && is_numeric($min) && $data >= $min) {
-            return true;
-        } else {
-            return false;
-        }
+        return (is_numeric($data) && is_numeric($min) && $data >= $min) !== false;
     }
 
     /**
@@ -469,11 +448,7 @@ class Validation
      */
     protected function max_numeric($data, $max)
     {
-        if (is_numeric($data) && is_numeric($max) && $data <= $max) {
-            return true;
-        } else {
-            return false;
-        }
+        return (is_numeric($data) && is_numeric($max) && $data <= $max) !== false;
     }
 
     /**
@@ -485,11 +460,7 @@ class Validation
      */
     protected function matches($data, $field)
     {
-        if ($data == $field) {
-            return true;
-        } else {
-            return false;
-        }
+        return ($data == $field) !== false;
     }
 
 }

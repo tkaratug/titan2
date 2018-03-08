@@ -58,7 +58,7 @@ class Console
     /**
      * Run command
      * @param array $params
-     * @return voic
+     * @return string
      */
     public function run($params)
     {

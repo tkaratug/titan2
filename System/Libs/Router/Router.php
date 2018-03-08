@@ -40,7 +40,10 @@ class Router
 
     // Groups
     private static $groups      = [];
-    
+
+    // Names
+    private static $names       = [];
+
     // Group Counter
     private static $groupped    = 0;
 
@@ -207,7 +210,7 @@ class Router
         }
 
         $uri        = $pattern;
-        $pattern    = str_replace(array_keys(self::$patterns), array_values(self::$patterns), $pattern);
+        $pattern    = preg_replace('/[\[{\(].*[\]}\)]/U', '([^/]+)', $pattern);
         $pattern    = '/^' . str_replace('/', '\/', $pattern) . '$/';
 
         if (is_callable($callback)) {
@@ -297,7 +300,7 @@ class Router
 
                     break;
                 }
-                
+
             }
 
         }
@@ -497,6 +500,7 @@ class Router
     public static function post($pattern, $callback)
     {
         self::route('POST', $pattern, $callback);
+        return new self;
     }
 
     /**
@@ -508,6 +512,7 @@ class Router
     public static function patch($pattern, $callback)
     {
         self::route('PATCH', $pattern, $callback);
+        return new self;
     }
 
     /**
@@ -519,6 +524,7 @@ class Router
     public static function delete($pattern, $callback)
     {
         self::route('DELETE', $pattern, $callback);
+        return new self;
     }
 
     /**
@@ -530,6 +536,7 @@ class Router
     public static function put($pattern, $callback)
     {
         self::route('PUT', $pattern, $callback);
+        return new self;
     }
 
     /**
@@ -541,8 +548,9 @@ class Router
     public static function options($pattern, $callback)
     {
         self::route('OPTIONS', $pattern, $callback);
+        return new self;
     }
-	
+
 	/**
 	 * Add a Route Using Multiple Methods
 	 *
@@ -558,6 +566,60 @@ class Router
 	}
 
     /**
+     * Set regular expression for parameters in the querystring
+     *
+     * @param array $expressions
+     */
+    public function where($expressions)
+    {
+        $routeKey= array_search(end(self::$routes), self::$routes);
+        $pattern = self::_parseUri(self::$routes[$routeKey]['uri'], $expressions);
+        $pattern = '/' . implode('/', $pattern);
+        $pattern = '/^' . str_replace('/', '\/', $pattern) . '$/';
+
+        self::$routes[$routeKey]['pattern'] = $pattern;
+
+        return new self;
+    }
+
+    /**
+     * Set name for a route
+     *
+     * @param string $name
+     * @param array $params
+     */
+    public static function name($name, $params = [])
+    {
+        $routeKey = array_search(end(self::$routes), self::$routes);
+        self::$routes[$routeKey]['name'] = $name;
+
+        return new self;
+    }
+
+    /**
+     * Get url based on named route
+     *
+     * @param string $name
+     * @param array $params
+     * @return string
+     */
+    public static function getUrl($name, $params = [])
+    {
+        foreach (self::$routes as $route) {
+            if (array_key_exists('name', $route) && $route['name'] == $name) {
+                $uri = $route['uri'];
+                if (!empty($params)) {
+                    $pattern = self::_parseUri($uri, $params);
+                    $pattern = implode('/', $pattern);
+                }
+                break;
+            }
+        }
+
+        return $pattern;
+    }
+
+    /**
      * List All Routes
      *
      * @return array
@@ -565,6 +627,30 @@ class Router
     public static function getRoutes()
     {
         return self::$routes;
+    }
+
+    /**
+     * Parse url with parameters
+     *
+     * @param string $uri
+     * @param array $expressions
+     * @return array
+     */
+    private static function _parseUri($uri, $expressions = [])
+    {
+        $pattern    = explode('/', ltrim($uri, '/'));
+        foreach ($pattern as $key => $val) {
+            if(preg_match('/[\[{\(].*[\]}\)]/U', $val, $matches)) {
+                foreach ($matches as $match) {
+                    $matchKey = substr($match, 1, -1);
+                    if (array_key_exists($matchKey, $expressions)) {
+                        $pattern[$key] = $expressions[$matchKey];
+                    }
+                }
+            }
+        }
+
+        return $pattern;
     }
 
     /**

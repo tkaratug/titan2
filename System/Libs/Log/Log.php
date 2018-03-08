@@ -5,9 +5,9 @@
  *
  * Author 	: Turan Karatuğ
  * Web 		: http://www.titanphp.com
- * Docs 	: http://kilavuz.titanphp.com 
+ * Docs 	: http://kilavuz.titanphp.com
  * Github	: http://github.com/tkaratug/titan2
- * License	: MIT	
+ * License	: MIT
  *
  *************************************************/
 namespace System\Libs\Log;
@@ -19,8 +19,8 @@ class Log
 	/**
 	 * Save log as emergency
 	 *
-	 * @param mixed $message
-	 * @return void;
+	 * @param string $message
+	 * @throws \Exception
 	 */
 	public function emergency($message)
 	{
@@ -30,8 +30,8 @@ class Log
 	/**
 	 * Save log as alert
 	 *
-	 * @param mixed $message
-	 * @return void;
+	 * @param string $message
+	 * @throws \Exception
 	 */
 	public function alert($message)
 	{
@@ -41,8 +41,8 @@ class Log
 	/**
 	 * Save log as critical
 	 *
-	 * @param mixed $message
-	 * @return void;
+	 * @param string $message
+	 * @throws \Exception
 	 */
 	public function critical($message)
 	{
@@ -52,8 +52,8 @@ class Log
 	/**
 	 * Save log as error
 	 *
-	 * @param mixed $message
-	 * @return void;
+	 * @param string $message
+	 * @throws \Exception
 	 */
 	public function error($message)
 	{
@@ -63,8 +63,8 @@ class Log
 	/**
 	 * Save log as warning
 	 *
-	 * @param mixed $message
-	 * @return void;
+	 * @param string $message
+	 * @throws \Exception
 	 */
 	public function warning($message)
 	{
@@ -74,8 +74,8 @@ class Log
 	/**
 	 * Save log as notice
 	 *
-	 * @param mixed $message
-	 * @return void;
+	 * @param string $message
+	 * @throws \Exception
 	 */
 	public function notice($message)
 	{
@@ -85,8 +85,8 @@ class Log
 	/**
 	 * Save log as info
 	 *
-	 * @param mixed $message
-	 * @return void;
+	 * @param string $message
+	 * @throws \Exception
 	 */
 	public function info($message)
 	{
@@ -96,21 +96,21 @@ class Log
 	/**
 	 * Save log as debug
 	 *
-	 * @param mixed $message
-	 * @return void;
+	 * @param string $message
+	 * @throws \Exception
 	 */
 	public function debug($message)
 	{
 		$this->write('debug', $message);
 	}
 
-	/**
-	 * Write logs to file
-	 *
-	 * @param string $level
-	 * @param mixed $message
-	 * @return void;
-	 */
+    /**
+     * Write logs to file
+     *
+     * @param string $level
+     * @param string $message
+     * @throws \Exception
+     */
 	protected function write($level, $message)
 	{
 		if (is_array($message))
@@ -120,12 +120,12 @@ class Log
 		$this->save($logText);
 	}
 
-	/**
-	 * Save Log
-	 *
-	 * @param string $logText
-	 * @return void
-	 */
+    /**
+     * Save Log
+     *
+     * @param string $logText
+     * @throws \Exception
+     */
 	protected function save($logText)
 	{
 		$fileName 	= 'Log_' . date('Y-m-d') . '.log';

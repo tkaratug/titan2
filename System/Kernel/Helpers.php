@@ -302,6 +302,20 @@ if (!function_exists('config')) {
 }
 
 /**
+ * Get URL of the Named Route
+ *
+ * @param string $name
+ * @param array $params
+ * @return string
+ */
+if (!function_exists('route')) {
+    function route($name, $params = [])
+    {
+        return link_to(System\Libs\Router\Router::getUrl($name, $params));
+    }
+}
+
+/**
  * URL Slug Generator
  *
  * @param string $str
