@@ -1,3 +1,6 @@
+v2.1.1
+	- [Düzeltme] Database kütüphanesinde bulunan in() ve notIn() methodlarındaki bug giderildi.
+
 v2.1.0
 	- [Yeni] Named route desteği eklendi.
 	- [Yeni] İsimlendirilen rotaların url'ini döndüren route() fonksiyonu eklendi.

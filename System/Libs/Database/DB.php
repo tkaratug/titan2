@@ -257,16 +257,19 @@ class DB
 	 * @param string $logic
 	 * @return $this
 	 */
-	public function where($column, $op = '=', $value = '', $logic = 'AND')
+	public function where($column, $op = '=', $value = '', $logic = 'AND', $noEscape = false)
 	{
+		if ($noEscape === false)
+			$value = $this->_escape($value);
+
 		if (is_null($this->where))
-			$this->where = 'WHERE ' . $column . $op . $this->_escape($value);
+			$this->where = 'WHERE ' . $column . $op . $value;
 		else {
 			if ($this->grouped > 0) {
-				$this->where .= ' ' . $column . $op . $this->_escape($value);
+				$this->where .= ' ' . $column . $op . $value;
 				$this->grouped = 0;
 			} else {
-				$this->where .= ' ' . $logic . ' ' . $column . $op . $this->_escape($value);
+				$this->where .= ' ' . $logic . ' ' . $column . $op . $value;
 			}
 		}
 
@@ -507,7 +510,7 @@ class DB
 		}
 		$in_list = '(' . rtrim($in_list, ',') . ')';
 
-		$this->where($column, 'IN', $in_list, $logic);
+		$this->where($column, ' IN ', $in_list, $logic, true);
 
 		return $this;
 	}
@@ -543,7 +546,7 @@ class DB
 		}
 		$in_list = '(' . rtrim($in_list, ',') . ')';
 
-		$this->where($column, 'NOT IN', $in_list, $logic);
+		$this->where($column, ' NOT IN ', $in_list, $logic, true);
 
 		return $this;
 	}
