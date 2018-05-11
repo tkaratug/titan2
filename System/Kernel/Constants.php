@@ -42,7 +42,7 @@ define('PUBLIC_DIR', BASE_DIR . DS . 'Public' . DS);
 define('ENV', 'development');
 
 // Framework Version
-define('VERSION', '2.1.1');
+define('VERSION', '2.2.0');
 
 // Default Timezone
 define('TIMEZONE', 'Europe/Istanbul');

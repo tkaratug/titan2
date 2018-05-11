@@ -34,7 +34,7 @@ class Model
 		if ($namespace !== null)
 			$this->namespace = $namespace;
 
-		$model 		= base64_encode($model);
+		$model = base64_encode($model);
 
 		if ($this->namespace !== null) {
 			$namespace	= base64_encode($this->namespace);
@@ -48,6 +48,9 @@ class Model
 		else {
 			$db = Import::model($key);
 			$this->modelCollection[$key] = $db;
+
+			// Reset namespace
+			$this->namespace = null;
 
 			return $this->modelCollection[$key];
 		}
