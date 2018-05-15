@@ -608,10 +608,8 @@ class Router
         foreach (self::$routes as $route) {
             if (array_key_exists('name', $route) && $route['name'] == $name) {
                 $uri = $route['uri'];
-                if (!empty($params)) {
-                    $pattern = self::_parseUri($uri, $params);
-                    $pattern = implode('/', $pattern);
-                }
+                $pattern = self::_parseUri($uri, $params);
+                $pattern = implode('/', $pattern);
                 break;
             }
         }
