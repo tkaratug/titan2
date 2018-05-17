@@ -75,7 +75,7 @@ class Request
 		if (is_null($param))
 			return $this->serverVars;
 		else
-			return $this->serverVars[$param];
+			return (isset($this->serverVars[$param]) ? $this->serverVars[$param] : null);
 	}
 
 	/**
