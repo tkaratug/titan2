@@ -75,7 +75,7 @@ class Request
 		if (is_null($param))
 			return $this->serverVars;
 		else
-			return $this->serverVars[$param];
+			return $this->serverVars[$param] ?? null;
 	}
 
 	/**
@@ -409,7 +409,7 @@ class Request
 	 */
 	public function isSecure()
 	{
-		if (null !== $this->server('https'))
+		if (null !== $this->server('HTTPS'))
             return true;
 
         if (null !== $this->server('HTTP_X_FORWARDED_PROTO') && $this->server('HTTP_X_FORWARDED_PROTO') == 'https')
