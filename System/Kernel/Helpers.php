@@ -217,7 +217,7 @@ if (!function_exists('public_path')) {
 if (!function_exists('base_url')) {
     function base_url($url = null)
     {
-        if (stripos($_SERVER['SERVER_PROTOCOL'], 'https') === true)
+        if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
             $protocol = 'https';
         else
             $protocol = 'http';

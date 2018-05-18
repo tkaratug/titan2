@@ -502,8 +502,12 @@ class Request
 	{
 		if (is_null($data))
 			return null;
-		else
-			return ($filter === true) ? $this->xssClean($data) : trim($data);
+		else {
+			if is_array($data)
+				return $filter === true ? array_map($this->xssClean, $data) : array_map('trim', $data);
+			else
+				return $filter === true ? $this->xssClean($data) : trim($data);
+		}
 	}
 
 	/**
