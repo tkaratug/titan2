@@ -40,6 +40,7 @@ return [
 		'Upload'			=> System\Libs\Upload\Upload::class,
 		'Image'				=> System\Libs\Image\Image::class,
 		'Hash'				=> System\Libs\Hashing\Hash::class,
+		'Jwt'				=> System\Libs\Tools\Jwt::class,
 	],
 
 	/**
@@ -70,6 +71,7 @@ return [
 		'Upload'			=> System\Facades\Upload::class,
 		'Image'				=> System\Facades\Image::class,
 		'Hash'				=> System\Facades\Hash::class,
+		'Jwt'				=> System\Facades\Jwt::class,
 	],
 
 	/**

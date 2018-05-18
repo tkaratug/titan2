@@ -19,6 +19,9 @@ class Model
 	// Model Collection
 	private $modelCollection = [];
 
+	// Default Namespace
+	private $namespace		 = null;
+
 	/**
 	 * Return instance of model
 	 *
@@ -28,14 +31,42 @@ class Model
 	 */
 	public function run($model, $namespace = null)
 	{
-		if (array_key_exists($model, $this->modelCollection))
-			return $this->modelCollection[$model];
-		else {
-			$db = Import::model($model, $namespace);
-			$this->modelCollection[$model] = $db;
+		if ($namespace !== null)
+			$this->namespace = $namespace;
 
-			return $this->modelCollection[$model];
+		$model = base64_encode($model);
+
+		if ($this->namespace !== null) {
+			$namespace	= base64_encode($this->namespace);
+			$key 		= $model . '.' . $namespace;
+		} else {
+			$key		= $model;
 		}
+
+		if (array_key_exists($key, $this->modelCollection))
+			return $this->modelCollection[$key];
+		else {
+			$db = Import::model($key);
+			$this->modelCollection[$key] = $db;
+
+			// Reset namespace
+			$this->namespace = null;
+
+			return $this->modelCollection[$key];
+		}
+	}
+
+	/**
+	 * Set namespace
+	 * 
+	 * @param string $namespace
+	 * @return $this
+	 */
+	public function namespace($namespace)
+	{
+		$this->namespace = $namespace;
+
+		return $this;
 	}
 
 }

@@ -217,7 +217,7 @@ if (!function_exists('public_path')) {
 if (!function_exists('base_url')) {
     function base_url($url = null)
     {
-        if (stripos($_SERVER['SERVER_PROTOCOL'], 'https') === true)
+        if (isset($_SERVER['HTTPS']))
             $protocol = 'https';
         else
             $protocol = 'http';
@@ -312,6 +312,19 @@ if (!function_exists('route')) {
     function route($name, $params = [])
     {
         return link_to(System\Libs\Router\Router::getUrl($name, $params));
+    }
+}
+
+/**
+ * Create a new piped item from a given value.
+ *
+ * @param mixed $value
+ * @return System\Libs\Tools\Item
+ */
+if (!function_exists('take')) {
+    function take($value)
+    {
+        return new System\Libs\Tools\Item($value);
     }
 }
 
