@@ -91,7 +91,6 @@ class Validation
 	public function isValid()
 	{
 		foreach ($this->rules as $key => $value) {
-
 			$rules = explode('|', $value);
 
 			if (in_array('nullable', $rules)) {
