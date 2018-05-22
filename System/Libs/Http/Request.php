@@ -75,7 +75,7 @@ class Request
 		if (is_null($param))
 			return $this->serverVars;
 		else
-			return $this->serverVars[$param];
+			return $this->serverVars[$param] ?? null;
 	}
 
 	/**
@@ -212,7 +212,7 @@ class Request
 		if (is_null($param))
 			return $this->filesVars;
 		else
-			return $this->filesVars[$param];
+			return $this->filesVars[$param] ?? null;
 	}
 
 	/**
@@ -409,7 +409,7 @@ class Request
 	 */
 	public function isSecure()
 	{
-		if (null !== $this->server('https'))
+		if (null !== $this->server('HTTPS'))
             return true;
 
         if (null !== $this->server('HTTP_X_FORWARDED_PROTO') && $this->server('HTTP_X_FORWARDED_PROTO') == 'https')
@@ -502,8 +502,12 @@ class Request
 	{
 		if (is_null($data))
 			return null;
-		else
-			return ($filter === true) ? $this->xssClean($data) : trim($data);
+		else {
+			if (is_array($data))
+				return $filter === true ? array_map([$this, 'xssClean'], $data) : array_map('trim', $data);
+			else
+				return $filter === true ? $this->xssClean($data) : trim($data);
+		}
 	}
 
 	/**
