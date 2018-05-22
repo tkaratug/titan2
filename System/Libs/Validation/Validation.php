@@ -111,23 +111,23 @@ class Validation
 
                     if ($filter == 'matches') {
                     	if ($this->matches($this->data[$key], $this->data[$params]) === false)
-                    		$this->errors[] = lang('validation', $filter . '_error', ['%s' => $this->labels[$key], '%t' => $this->labels[$params]]);
+                    		$this->errors[$key] = lang('validation', $filter . '_error', ['%s' => $this->labels[$key], '%t' => $this->labels[$params]]);
                     } else {
                         if ($nullable === true) {
                             if ($this->nullable($this->data[$key]) === false && $this->$filter($this->data[$key], $params) === false)
-                                $this->errors[] = lang('validation', $filter . '_error', ['%s' => $this->labels[$key], '%t' => $params]);
+                                $this->errors[$key] = lang('validation', $filter . '_error', ['%s' => $this->labels[$key], '%t' => $params]);
                         } else {
                             if ($this->$filter($this->data[$key], $params) === false)
-                                $this->errors[] = lang('validation', $filter . '_error', ['%s' => $this->labels[$key], '%t' => $params]);
+                                $this->errors[$key] = lang('validation', $filter . '_error', ['%s' => $this->labels[$key], '%t' => $params]);
                         }
                     }
 				} else {
 				    if ($nullable === true) {
 				        if ($this->nullable($this->data[$key]) === false && $this->$rule($this->data[$key]) === false)
-				            $this->errors[] = lang('validation', $rule . '_error', $this->labels[$key]);
+				            $this->errors[$key] = lang('validation', $rule . '_error', $this->labels[$key]);
                     } else {
                         if ($this->$rule($this->data[$key]) === false)
-                            $this->errors[] = lang('validation', $rule . '_error', $this->labels[$key]);
+                            $this->errors[$key] = lang('validation', $rule . '_error', $this->labels[$key]);
                     }
 				}
 			}
