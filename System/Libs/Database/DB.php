@@ -105,6 +105,7 @@ class DB
 			$this->pdo->exec("SET NAMES '" . $this->config['db_charset'] . "' COLLATE '" . $this->config['db_collation'] . "'");
 			$this->pdo->exec("SET CHARACTER SET '" . $this->config['db_charset'] . "'");
 			$this->pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
+            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		}
 		catch(PDOException $e)
 		{
