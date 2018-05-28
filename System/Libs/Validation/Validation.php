@@ -114,20 +114,49 @@ class Validation
                     		$this->errors[$key] = lang('validation', $filter . '_error', ['%s' => $this->labels[$key], '%t' => $this->labels[$params]]);
                     } else {
                         if ($nullable === true) {
-                            if ($this->nullable($this->data[$key]) === false && $this->$filter($this->data[$key], $params) === false)
-                                $this->errors[$key] = lang('validation', $filter . '_error', ['%s' => $this->labels[$key], '%t' => $params]);
+                            if (is_array($this->data[$key])) {
+                                foreach ($this->data[$key] as $k => $v) {
+                                    if ($this->nullable($v) === false && $this->$filter($v, $params) === false)
+                                        $this->errors[$key][$k] = lang('validation', $filter . '_error', ['%s' => $k, '%t' => $params]);
+                                }
+                            } else {
+                                if ($this->nullable($this->data[$key]) === false && $this->$filter($this->data[$key], $params) === false)
+                                    $this->errors[$key] = lang('validation', $filter . '_error', ['%s' => $this->labels[$key], '%t' => $params]);
+                            }
                         } else {
-                            if ($this->$filter($this->data[$key], $params) === false)
-                                $this->errors[$key] = lang('validation', $filter . '_error', ['%s' => $this->labels[$key], '%t' => $params]);
+                            if (is_array($this->data[$key])) {
+                                foreach ($this->data[$key] as $k => $v) {
+                                    if ($this->$filter($v, $params) === false)
+                                        $this->errors[$key][$k] = lang('validation', $filter . '_error', ['%s' => $k, '%t' => $params]);
+                                }
+                            } else {
+                                if ($this->$filter($this->data[$key], $params) === false)
+                                    $this->errors[$key] = lang('validation', $filter . '_error', ['%s' => $this->labels[$key], '%t' => $params]);
+                            }
                         }
                     }
 				} else {
 				    if ($nullable === true) {
-				        if ($this->nullable($this->data[$key]) === false && $this->$rule($this->data[$key]) === false)
-				            $this->errors[$key] = lang('validation', $rule . '_error', $this->labels[$key]);
+                        if (is_array($this->data[$key])) {
+                            foreach ($this->data[$key] as $k => $v) {
+                                if ($this->nullable($v) === false && $this->$rule($v) === false)
+                                    $this->errors[$key][$k] = lang('validation', $rule . '_error', $k);
+                            }
+                        } else {
+                            if ($this->nullable($this->data[$key]) === false && $this->$rule($this->data[$key]) === false)
+				                $this->errors[$key] = lang('validation', $rule . '_error', $this->labels[$key]);
+                        }
                     } else {
-                        if ($this->$rule($this->data[$key]) === false)
-                            $this->errors[$key] = lang('validation', $rule . '_error', $this->labels[$key]);
+                        if (is_array($this->data[$key])) {
+                            foreach ($this->data[$key] as $k => $v) {
+                                if ($this->$rule($v) === false)
+                                    $this->errors[$key][$k] = lang('validation', $rule . '_error', $k);
+                            }
+                        } else {
+                            if ($this->$rule($this->data[$key]) === false)
+                                $this->errors[$key] = lang('validation', $rule . '_error', $this->labels[$key]);
+                        }
+                        
                     }
 				}
 			}
