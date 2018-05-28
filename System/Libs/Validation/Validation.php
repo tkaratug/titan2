@@ -126,8 +126,15 @@ class Validation
 				        if ($this->nullable($this->data[$key]) === false && $this->$rule($this->data[$key]) === false)
 				            $this->errors[$key] = lang('validation', $rule . '_error', $this->labels[$key]);
                     } else {
-                        if ($this->$rule($this->data[$key]) === false)
-                            $this->errors[$key] = lang('validation', $rule . '_error', $this->labels[$key]);
+                        if (is_array($this->data[$key])) {
+							foreach ($this->data[$key] as $k => $v) {
+								if ($this->$rule($this->data[$key][$k]) === false)
+		                            $this->errors[$key] = lang('validation', $rule . '_error', $this->labels[$key]);
+							}
+ 						}else{
+							if ($this->$rule($this->data[$key]) === false)
+								$this->errors[$key] = lang('validation', $rule . '_error', $this->labels[$key]);
+						}
                     }
 				}
 			}
