@@ -12,9 +12,10 @@
  *************************************************/
 namespace System\Libs\Mail;
 
-require 'PHPMailerAutoload.php';
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
-class Mail extends \PHPMailer
+class Mail extends PHPMailer
 {
 	// Mail config items
 	protected $config = [];
@@ -257,7 +258,7 @@ class Mail extends \PHPMailer
 	 */
 	public static function __callStatic($method, $args)
 	{
-		return call_user_func_array([new \PHPMailer, $method], $args);
+		return call_user_func_array([new PHPMailer, $method], $args);
 	}
 
 	function __destruct()
