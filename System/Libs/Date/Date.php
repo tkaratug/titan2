@@ -857,7 +857,7 @@
     			return lang('date', 'seconds_ago', $second);
     		}
     	} else if ($minute < 60) {
-    		return lang('date', 'minues_ago', $minute);
+    		return lang('date', 'minutes_ago', $minute);
     	} else if ($hour < 24) {
     		return lang('date', 'hours_ago', $hour);
     	} else if ($day < 7) {
