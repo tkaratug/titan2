@@ -1,5 +1,5 @@
 <?php
-namespace System\Libs\Tools;
+namespace System\Libs\Http;
 
 use System\Libs\Exception\ExceptionHandler;
 
