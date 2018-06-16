@@ -316,19 +316,6 @@ if (!function_exists('route')) {
 }
 
 /**
- * Create a new piped item from a given value.
- *
- * @param mixed $value
- * @return System\Libs\Tools\Item
- */
-if (!function_exists('take')) {
-    function take($value)
-    {
-        return new System\Libs\Tools\Item($value);
-    }
-}
-
-/**
  * URL Slug Generator
  *
  * @param string $str
