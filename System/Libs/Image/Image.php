@@ -723,7 +723,7 @@
      {
          if (headers_sent()) {
              $this->error = lang('image', 'headers_sent');
-             return $false;
+             return false;
          } else {
              header("Content-type: image/{$this->extension}");
              $this->_outputImage();

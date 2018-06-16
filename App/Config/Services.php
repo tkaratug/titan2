@@ -22,6 +22,7 @@ return [
 		'Response'			=> System\Libs\Http\Response::class,
 		'Curl'				=> System\Libs\Http\Curl::class,
 		'Restful'			=> System\Libs\Http\Restful::class,
+		'Jwt'				=> System\Libs\Http\Jwt::class,
 		'Event'				=> System\Libs\Event\Event::class,
 		'View'				=> System\Libs\View\View::class,
 		'Session'			=> System\Libs\Session\Session::class,
@@ -52,6 +53,7 @@ return [
 		'Response'			=> System\Facades\Response::class,
 		'Curl'				=> System\Facades\Curl::class,
 		'Restful'			=> System\Facades\Restful::class,
+		'Jwt'				=> System\Facades\Jwt::class,
 		'Event'				=> System\Facades\Event::class,
 		'View'				=> System\Facades\View::class,
 		'Session'			=> System\Facades\Session::class,
@@ -76,9 +78,7 @@ return [
 	 * Middlewares
 	 */
 	'middlewares'	=> [
-		'default'	=> [
-			'Csrf'			=> App\Middlewares\Csrf::class,
-		],
+		'default'	=> [],
 
 		'manual'	=> [
 			'Auth'			=> App\Middlewares\Auth::class,

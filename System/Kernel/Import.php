@@ -54,19 +54,24 @@ class Import
 	}
 
 	/**
-	 * Include model file
+	 * Include model
 	 *
-	 * @param string $file
+	 * @param string $key
 	 * @return void
 	 */
-	public static function model($file, $namespace = null)
+	public static function model($key)
 	{
-		if (is_null($namespace)) {
-			$filePath 	= MODEL_DIR . ucfirst($file) . '.php';
-			$class 		= 'App\\Models\\' . ucfirst($file);
-		} else {
+		if (strpos($key, '.')) {
+			$model 		= explode('.', $key);
+			$file		= base64_decode($model[0]);
+			$namespace	= base64_decode($model[1]);
+
 			$filePath 	= MODEL_DIR . ucfirst($namespace) . '/' . ucfirst($file) . '.php';
 			$class 		= 'App\\Models\\' . ucfirst($namespace) . '\\' . ucfirst($file);
+		} else {
+			$file		= base64_decode($key);
+			$filePath 	= MODEL_DIR . ucfirst($file) . '.php';
+			$class 		= 'App\\Models\\' . ucfirst($file);
 		}
 
 		if (file_exists($filePath)) {

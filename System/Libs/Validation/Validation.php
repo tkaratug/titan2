@@ -30,13 +30,17 @@ class Validation
 	 * Define Validation Rules
 	 *
 	 * @param array $rules
+     * @param array $params
 	 * @return void
 	 */
-	public function rules($rules)
+	public function rules($rules, $params = [])
 	{
 		foreach ($rules as $key => $value) {
 			$this->labels[$key] = $value['label'];
-			$this->rules[$key]	= $value['rules'];
+            $this->rules[$key]	= $value['rules'];
+            
+            if (!empty($params))
+                $this->data[$key] = $params[$key];
 		}
 	}
 
@@ -107,23 +111,52 @@ class Validation
 
                     if ($filter == 'matches') {
                     	if ($this->matches($this->data[$key], $this->data[$params]) === false)
-                    		$this->errors[] = lang('validation', $filter . '_error', ['%s' => $this->labels[$key], '%t' => $this->labels[$params]]);
+                    		$this->errors[$key] = lang('validation', $filter . '_error', ['%s' => $this->labels[$key], '%t' => $this->labels[$params]]);
                     } else {
                         if ($nullable === true) {
-                            if ($this->nullable($this->data[$key]) === false && $this->$filter($this->data[$key], $params) === false)
-                                $this->errors[] = lang('validation', $filter . '_error', ['%s' => $this->labels[$key], '%t' => $params]);
+                            if (is_array($this->data[$key])) {
+                                foreach ($this->data[$key] as $k => $v) {
+                                    if ($this->nullable($v) === false && $this->$filter($v, $params) === false)
+                                        $this->errors[$key][$k] = lang('validation', $filter . '_error', ['%s' => $k, '%t' => $params]);
+                                }
+                            } else {
+                                if ($this->nullable($this->data[$key]) === false && $this->$filter($this->data[$key], $params) === false)
+                                    $this->errors[$key] = lang('validation', $filter . '_error', ['%s' => $this->labels[$key], '%t' => $params]);
+                            }
                         } else {
-                            if ($this->$filter($this->data[$key], $params) === false)
-                                $this->errors[] = lang('validation', $filter . '_error', ['%s' => $this->labels[$key], '%t' => $params]);
+                            if (is_array($this->data[$key])) {
+                                foreach ($this->data[$key] as $k => $v) {
+                                    if ($this->$filter($v, $params) === false)
+                                        $this->errors[$key][$k] = lang('validation', $filter . '_error', ['%s' => $k, '%t' => $params]);
+                                }
+                            } else {
+                                if ($this->$filter($this->data[$key], $params) === false)
+                                    $this->errors[$key] = lang('validation', $filter . '_error', ['%s' => $this->labels[$key], '%t' => $params]);
+                            }
                         }
                     }
 				} else {
 				    if ($nullable === true) {
-				        if ($this->nullable($this->data[$key]) === false && $this->$rule($this->data[$key]) === false)
-				            $this->errors[] = lang('validation', $rule . '_error', $this->labels[$key]);
+                        if (is_array($this->data[$key])) {
+                            foreach ($this->data[$key] as $k => $v) {
+                                if ($this->nullable($v) === false && $this->$rule($v) === false)
+                                    $this->errors[$key][$k] = lang('validation', $rule . '_error', $k);
+                            }
+                        } else {
+                            if ($this->nullable($this->data[$key]) === false && $this->$rule($this->data[$key]) === false)
+				                $this->errors[$key] = lang('validation', $rule . '_error', $this->labels[$key]);
+                        }
                     } else {
-                        if ($this->$rule($this->data[$key]) === false)
-                            $this->errors[] = lang('validation', $rule . '_error', $this->labels[$key]);
+                        if (is_array($this->data[$key])) {
+                            foreach ($this->data[$key] as $k => $v) {
+                                if ($this->$rule($v) === false)
+                                    $this->errors[$key][$k] = lang('validation', $rule . '_error', $k);
+                            }
+                        } else {
+                            if ($this->$rule($this->data[$key]) === false)
+                                $this->errors[$key] = lang('validation', $rule . '_error', $this->labels[$key]);
+                        }
+                        
                     }
 				}
 			}

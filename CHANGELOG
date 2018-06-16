@@ -1,3 +1,16 @@
+v2.2.0
+	- [Yeni] JWT kütüphanesi eklendi.
+	- [Yeni] Validation kütüphanesinde, form verilerinin request() methodu ile topluca tanımlanması sağlandı.
+	- [Yeni] Validation kütüphanesinde, array form elemanlarının da dikkate alınması sağlandı.
+	- [Düzeltme] PHPMailer kütüphanesi, composer'a eklendi.
+	- [Düzeltme] Farklı namespace'lerde aynı isimli Model tanımlama ile ilgili hata giderildi.
+	- [Düzeltme] Model'de namespace tanımlandığında, diğer modelleri de etkileme hatası giderildi.
+	- [Düzetlem] route() fonksiyonunun ikinci parametre almadığı durumlarda verdiği hata giderildi.
+	- [Düzeltme] Request kütüphanesinde, server header'larındaki warning hataları giderildi.
+	- [Düzeltme] Request kütüphanesindeki filter() methodunda, dizi elemanlarını da filtreleyen düzenleme yapıldı.
+	- [Düzeltme] base_url() methodundaki http/https detect hatası giderildi.
+	- [Düzeltme] Image kütüphanesinde, show() methodundaki return hatası giderildi.
+
 v2.1.1
 	- [Düzeltme] Database kütüphanesinde bulunan in() ve notIn() methodlarındaki bug giderildi.
 
