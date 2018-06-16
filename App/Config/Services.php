@@ -78,9 +78,7 @@ return [
 	 * Middlewares
 	 */
 	'middlewares'	=> [
-		'default'	=> [
-			'Csrf'			=> App\Middlewares\Csrf::class,
-		],
+		'default'	=> [],
 
 		'manual'	=> [
 			'Auth'			=> App\Middlewares\Auth::class,
