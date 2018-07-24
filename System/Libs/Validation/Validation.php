@@ -30,13 +30,20 @@ class Validation
 	 * Define Validation Rules
 	 *
 	 * @param array $rules
+	 * @param array request() function
 	 * @return void
 	 */
-	public function rules($rules)
+	public function rules($rules,$request_data = null)
 	{
 		foreach ($rules as $key => $value) {	
 			$this->labels[$value['field']] 	= $value['label'];
 			$this->rules[$value['field']]	= $value['rules'];
+		}
+		
+		if($request_data !== null){
+			foreach ($request_data as $data_key => $data_value) {
+				$this->data[$data_key] = $data_value;
+			}
 		}
 	}
 
