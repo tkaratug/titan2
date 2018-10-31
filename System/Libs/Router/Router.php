@@ -94,7 +94,9 @@ class Router
             self::$domain       = self::$groups[self::$groupped-1]['domain'];
             self::$ip           = self::$groups[self::$groupped-1]['ip'];
             self::$ssl          = self::$groups[self::$groupped-1]['ssl'];
-        } else {
+        } 
+        self::$groupped--;
+        if(self::$groupped < 0){
             // Reset Base Route
             self::$baseRoute    = '/';
 
@@ -112,11 +114,10 @@ class Router
 
             // Reset SSL
             self::$ssl          = false;
-
-            // Reset Group Counter
-            self::$groupped     = 0;
         }
-        self::$groupped--;
+        // Reset Group Counter
+                self::$groupped     = 0;
+        
     }
 
     /**
