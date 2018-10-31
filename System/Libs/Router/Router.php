@@ -85,7 +85,7 @@ class Router
         // Call the Callable
         call_user_func($callback);
 
-        self::$groupped--;
+        
 
         if (self::$groupped > 0) {
             self::$baseRoute    = self::$groups[self::$groupped-1]['baseRoute'];
@@ -116,6 +116,7 @@ class Router
             // Reset Group Counter
             self::$groupped     = 0;
         }
+        self::$groupped--;
     }
 
     /**
