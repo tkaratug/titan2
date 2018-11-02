@@ -743,6 +743,8 @@
          $pathinfo  = pathinfo($destination);
          $extension = (array_key_exists('extension', $pathinfo)) ? strtolower($pathinfo['extension']) : $this->extension;
 
+         $this->_reset();
+
          if ($extension == 'jpg' || $extension == 'jpeg')
             imagejpeg($this->image, $destination, $this->quality);
          else if ($extension == 'png') {
@@ -751,6 +753,16 @@
              imagegif($this->image, $destination);
          } else {
              return false;
+         }
+     }
+
+     /**
+      * Reset class variables
+      */
+     private function _reset()
+     {
+         foreach (get_class_vars(get_class($this)) as $name => $default) {
+             $this -> $name = $default;
          }
      }
 
