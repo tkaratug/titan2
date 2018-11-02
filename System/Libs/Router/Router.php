@@ -96,7 +96,7 @@ class Router
             self::$ssl          = self::$groups[self::$groupped-1]['ssl'];
         } 
         self::$groupped--;
-        if(self::$groupped < 0){
+        if(self::$groupped <= 0){
             // Reset Base Route
             self::$baseRoute    = '/';
 
