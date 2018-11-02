@@ -115,8 +115,6 @@ class Router
             // Reset SSL
             self::$ssl          = false;
         }
-        // Reset Group Counter
-                self::$groupped     = 0;
         
     }
 
