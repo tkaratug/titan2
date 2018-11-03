@@ -12,8 +12,6 @@
  *************************************************/
 namespace System\Libs\Http;
 
-use System\Libs\Exception\ExceptionHandler;
-
 class Request
 {
 	// 'Get' Variables
