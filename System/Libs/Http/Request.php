@@ -12,6 +12,8 @@
  *************************************************/
 namespace System\Libs\Http;
 
+use System\Libs\Exception\ExceptionHandler;
+
 class Request
 {
 	// 'Get' Variables
@@ -121,7 +123,7 @@ class Request
 		if (is_null($param))
 			return $this->getVars;
 		else
-			return $this->filter($this->getVars[$param], $filter);
+			return isset($this->getVars[$param]) ? $this->filter($this->getVars[$param], $filter) : false;
 	}
 
 	/**
@@ -135,7 +137,7 @@ class Request
 		if (is_null($param))
 			return $this->postVars;
 		else
-			return $this->filter($this->postVars[$param], $filter);
+			return isset($this->postVars[$param]) ? $this->filter($this->postVars[$param], $filter) : false;
 	}
 
 	/**
@@ -151,7 +153,7 @@ class Request
 		if ($param == null)
 			return $_PUT;
 		else
-			return $this->filter($_PUT[$param], $filter);
+			return isset($_PUT[$param]) ? $this->filter($_PUT[$param], $filter) : false;
 	}
 
 	/**
@@ -168,7 +170,7 @@ class Request
 		if ($param == null)
 			return $_PATCH;
 		else
-			return $this->filter($_PATCH[$param], $filter);
+			return isset($_PATCH[$param]) ? $this->filter($_PATCH[$param], $filter) : false;
 	}
 
 	/**
@@ -184,7 +186,7 @@ class Request
 		if ($param == null)
 			return $_DELETE;
 		else
-			return $this->filter($_DELETE[$param], $filter);
+			return isset($_DELETE[$param]) ? $this->filter($_DELETE[$param], $filter) : false;
 	}
 
 	/**
@@ -198,7 +200,7 @@ class Request
 		if (is_null($param))
 			return $this->cookieVars;
 		else
-			return $this->cookieVars[$param];
+			return isset($this->cookieVars[$param]) ? $this->cookieVars[$param] : false;
 	}
 
 	/**
@@ -212,7 +214,7 @@ class Request
 		if (is_null($param))
 			return $this->filesVars;
 		else
-			return $this->filesVars[$param];
+			return isset($this->filesVars[$param]) ? $this->filesVars[$param] : false;
 	}
 
 	/**
@@ -226,7 +228,7 @@ class Request
 		if (is_null($param))
 			return $this->globalVars;
 		else
-			return $this->globalVars[$param];
+			return isset($this->globalVars[$param]) ? $this->globalVars[$param] : false;
 	}
 
 	/**
@@ -355,7 +357,7 @@ class Request
 	 */
 	public function getContentType()
 	{
-		return split(',', $this->headers()['Accept'])[0];
+		return explode(',', $this->headers()['Accept'])[0];
 	}
 
 	/**
@@ -381,6 +383,7 @@ class Request
 	/**
 	 * Check if the requested method is of specified type
 	 *
+     * @param string $method
 	 * @return string
 	 */
 	public function isMethod($method)
@@ -471,8 +474,6 @@ class Request
 	 */
 	public function getIp()
 	{
-		$ipaddress = '';
-
 		if (getenv('HTTP_CLIENT_IP'))
 			$ipaddress = getenv('HTTP_CLIENT_IP');
 		else if (getenv('HTTP_X_FORWARDED_FOR'))
