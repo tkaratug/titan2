@@ -195,16 +195,20 @@ if (!function_exists('get_asset')) {
 /**
  * Get files inside Public directory
  *
- * @param string $file
+ * @param string|null $file
  * @return string
  */
 if (!function_exists('public_path')) {
-    function public_path($file)
+    function public_path($file = null)
     {
-        if (file_exists(ROOT_DIR . '/Public/' . $file))
-            return ROOT_DIR . '/Public/' . $file;
-        else
-            throw new System\Libs\Exception\ExceptionHandler('Dosya bulunamadı', '<b>Public : </b> ' . $file);
+        if ($file !== null) {
+            if (file_exists(ROOT_DIR . '/Public/' . $file))
+                return ROOT_DIR . '/Public/' . $file;
+            else
+                throw new System\Libs\Exception\ExceptionHandler('Dosya bulunamadı', '<b>Public : </b> ' . $file);
+        }
+        
+        return ROOT_DIR . '/Public/';
     }
 }
 

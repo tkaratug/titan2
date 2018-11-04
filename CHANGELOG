@@ -1,3 +1,9 @@
+v2.2.1
+	- [Düzeltme] public_path() fonksiyonuna parametre verilmezse, Public pathini döndürmesi sağlandı.
+	- [Düzeltme] Image kütüphanesinde, default değerleri resetleyen düzenleme yapıldı.
+	- [Düzeltme] Event kütüphanesindeki listener, action ve parametre tanımlama ile ilgili methodlar yenilendi.
+	- [Düzeltme] Routing kütüphanesindeki gruplama hatası giderildi.
+
 v2.2.0
 	- [Yeni] JWT kütüphanesi eklendi.
 	- [Yeni] Validation kütüphanesinde, form verilerinin request() methodu ile topluca tanımlanması sağlandı.
