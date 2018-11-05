@@ -61,15 +61,19 @@ class Router
         'middlewares'   => 'App\\Middlewares'
     ];
 
-    private function __construct() {}
-    private function __clone() {}
+    private function __construct()
+    {
+    }
+    private function __clone()
+    {
+    }
 
     /**
-     * Routing Groups
-     *
-     * @param callable $callback
-     */
-    public static function group($callback)
+    * Routing Groups
+    *
+    * @param callable $callback
+    */
+    public static function group(callable $callback)
     {
         self::$groupped++;
 
@@ -79,7 +83,7 @@ class Router
             'namespace'     => self::$namespace,
             'domain'        => self::$domain,
             'ip'            => self::$ip,
-            'ssl'           => self::$ssl
+            'ssl'           => self::$ssl,
         ];
 
         // Call the Callable
@@ -93,9 +97,7 @@ class Router
             self::$ip           = self::$groups[self::$groupped-1]['ip'];
             self::$ssl          = self::$groups[self::$groupped-1]['ssl'];
         }
-
         self::$groupped--;
-
         if (self::$groupped <= 0) {
             // Reset Base Route
             self::$baseRoute    = '/';
@@ -105,7 +107,6 @@ class Router
 
             // Reset Namespace
             self::$namespace    = '';
-
             // Reset Domain
             self::$domain       = '';
 
@@ -113,15 +114,16 @@ class Router
             self::$ip           = '';
 
             // Reset SSL
-            self::$ssl          = false;
+            self::$ssl      = false;
+            self::$groupped = 0;
         }
     }
 
     /**
-     * Defining Namespace
-     *
-     * @param string $namespace
-     */
+    * Defining Namespace
+    *
+    * @param string $namespace
+    */
     public static function setNamespace($namespace)
     {
         // Set Namespace
@@ -131,10 +133,10 @@ class Router
     }
 
     /**
-     * Defining Middlewares
-     *
-     * @param array $middlewares
-     */
+    * Defining Middlewares
+    *
+    * @param array $middlewares
+    */
     public static function middleware($middlewares)
     {
         foreach ($middlewares as $middleware) {
@@ -147,34 +149,34 @@ class Router
     }
 
     /**
-     * Defining Prefix
-     *
-     * @param string $prefix
-     */
+    * Defining Prefix
+    *
+    * @param string $prefix
+    */
     public static function prefix($prefix)
     {
         // Set Base Route
         self::$baseRoute    = '/' . $prefix;
-
         return new self;
     }
 
     /**
-     * Defining Domain
-     *
-     * @param string $domain
-     */
+    * Defining Domain
+    *
+    * @param string $domain
+    */
     public static function domain($domain)
     {
         self::$domain = $domain;
+
         return new self;
     }
 
     /**
-     * Defining Ip Address
-     *
-     * @param string|array $ip
-     */
+    * Defining Ip Address
+    *
+    * @param string|array $ip
+    */
     public static function ip($ip)
     {
         self::$ip = $ip;
@@ -182,8 +184,8 @@ class Router
     }
 
     /**
-     * Defining Request Scheme
-     */
+    * Defining Request Scheme
+    */
     public static function ssl()
     {
         self::$ssl = true;
@@ -191,21 +193,22 @@ class Router
     }
 
     /**
-     * Add Route
-     *
-     * @param string $method
-     * @param string $pattern
-     * @param string|callable $callback
-     */
+    * Add Route
+    *
+    * @param string $method
+    * @param string $pattern
+    * @param string|callable $callback
+    */
     public static function route($method, $pattern, $callback)
     {
-        if ($pattern == '/')
+        if ($pattern == '/') {
             $pattern    = self::$baseRoute . trim($pattern, '/');
-        else {
-            if (self::$baseRoute == '/')
+        } else {
+            if (self::$baseRoute == '/') {
                 $pattern    = self::$baseRoute . trim($pattern, '/');
-            else
+            } else {
                 $pattern    = self::$baseRoute . $pattern;
+            }
         }
 
         $uri        = $pattern;
@@ -215,46 +218,51 @@ class Router
         if (is_callable($callback)) {
             $closure = $callback;
         } elseif (stripos($callback, '@') !== false) {
-            if (self::$namespace)
+            if (self::$namespace) {
                 $closure = self::$namespaces['controllers'] . '\\' . ucfirst(self::$namespace) . '\\' . $callback;
-            else
+            } else {
                 $closure = self::$namespaces['controllers'] . '\\' . $callback;
+            }
         }
 
-		$routeArray = [
-			'uri'       => $uri,
-			'method'    => $method,
-			'pattern'   => $pattern,
-			'callback'  => $closure
-		];
+        $routeArray = [
+            'uri'       => $uri,
+            'method'    => $method,
+            'pattern'   => $pattern,
+            'callback'  => $closure
+        ];
 
-		if (self::$namespace)
-			$routeArray['namespace']    = ucfirst(self::$namespace);
+        if (self::$namespace) {
+            $routeArray['namespace']    = ucfirst(self::$namespace);
+        }
 
-		if (!empty(self::$middlewares))
-			$routeArray['middlewares']  = self::$middlewares;
+        if (!empty(self::$middlewares)) {
+            $routeArray['middlewares']  = self::$middlewares;
+        }
 
-		if (self::$domain)
-			$routeArray['domain']       = self::$domain;
+        if (self::$domain) {
+            $routeArray['domain']       = self::$domain;
+        }
 
-        if (self::$ip)
+        if (self::$ip) {
             $routeArray['ip']           = self::$ip;
+        }
 
-        if (self::$ssl)
+        if (self::$ssl) {
             $routeArray['ssl']          = self::$ssl;
+        }
 
-		self::$routes[] = $routeArray;
+        self::$routes[] = $routeArray;
     }
 
     /**
-     * Execute Routing
-     */
+    * Execute Routing
+    */
     public static function run()
     {
         $matched        = 0;
 
         foreach (self::$routes as $key => $val) {
-
             if (preg_match($val['pattern'], self::getCurrentUri(), $params)) {
 
                 // Checking domain
@@ -287,9 +295,8 @@ class Router
 
                     if (is_callable($val['callback'])) {
                         call_user_func_array($val['callback'], array_values($params));
-                    } else if (stripos($val['callback'], '@') !== false) {
+                    } elseif (stripos($val['callback'], '@') !== false) {
                         list($controller, $method) = explode('@', $val['callback']);
-
                         if (class_exists($controller)) {
                             call_user_func_array([new $controller, $method], array_values($params));
                         } else {
@@ -299,21 +306,20 @@ class Router
 
                     break;
                 }
-
             }
-
         }
 
-        if ($matched === 0)
+        if ($matched === 0) {
             self::pageNotFound();
+        }
     }
 
     /**
-     * Check Domain
-     *
-     * @param array $params
-     * @return bool
-     */
+    * Check Domain
+    *
+    * @param array $params
+    * @return bool
+    */
     private static function checkDomain($params)
     {
         if (array_key_exists('domain', $params)) {
@@ -328,11 +334,11 @@ class Router
     }
 
     /**
-     * Check Request Method
-     *
-     * @param array $params
-     * @return bool
-     */
+    * Check Request Method
+    *
+    * @param array $params
+    * @return bool
+    */
     private static function checkMethod($params)
     {
         if ($params['method'] !== self::getRequestMethod()) {
@@ -343,24 +349,26 @@ class Router
     }
 
     /**
-     * Check IP Address
-     *
-     * @param array $params
-     * @return bool
-     */
+    * Check IP Address
+    *
+    * @param array $params
+    * @return bool
+    */
     private static function checkIp($params)
     {
         if (array_key_exists('ip', $params)) {
             if (is_array($params['ip'])) {
-                if (!in_array($_SERVER['REMOTE_ADDR'], $params['ip']))
+                if (!in_array($_SERVER['REMOTE_ADDR'], $params['ip'])) {
                     return false;
-                else
+                } else {
                     return true;
+                }
             } else {
-                if ($_SERVER['REMOTE_ADDR'] != $params['ip'])
+                if ($_SERVER['REMOTE_ADDR'] != $params['ip']) {
                     return false;
-                else
+                } else {
                     return true;
+                }
             }
         } else {
             return true;
@@ -368,26 +376,27 @@ class Router
     }
 
     /**
-     * Check Request Scheme
-     *
-     * @param array $params
-     * @return bool
-     */
+    * Check Request Scheme
+    *
+    * @param array $params
+    * @return bool
+    */
     private static function checkSSL($params)
     {
         if (array_key_exists('ssl', $params) && $params['ssl'] === true) {
-            if ($_SERVER['REQUEST_SCHEME'] !== 'https')
+            if ($_SERVER['REQUEST_SCHEME'] !== 'https') {
                 return false;
-            else
+            } else {
                 return true;
+            }
         } else {
             return true;
         }
     }
 
     /**
-     * Page Not Found Redirection
-     */
+    * Page Not Found Redirection
+    */
     private static function pageNotFound()
     {
         if (self::$notFound && is_callable(self::$notFound)) {
@@ -399,10 +408,10 @@ class Router
     }
 
     /**
-     * Get Current URI
-     *
-     * @return string
-     */
+    * Get Current URI
+    *
+    * @return string
+    */
     public static function getCurrentUri()
     {
         // Get the current Request URI and remove rewrite base path from it
@@ -418,10 +427,10 @@ class Router
     }
 
     /**
-     * Get Base Path
-     *
-     * @return string
-     */
+    * Get Base Path
+    *
+    * @return string
+    */
     public static function getBasePath()
     {
         $scriptName = array_slice(explode('/', $_SERVER['SCRIPT_NAME']), 0, -1);
@@ -429,10 +438,10 @@ class Router
     }
 
     /**
-     * Get All Request Headers
-     *
-     * @return array
-     */
+    * Get All Request Headers
+    *
+    * @return array
+    */
     public static function getRequestHeaders()
     {
         // If getallheaders() is available, use that
@@ -452,10 +461,10 @@ class Router
     }
 
     /**
-     * Get Request Method
-     *
-     * @return string
-     */
+    * Get Request Method
+    *
+    * @return string
+    */
     public static function getRequestMethod()
     {
         // Take the method as found in $_SERVER
@@ -479,11 +488,11 @@ class Router
     }
 
     /**
-     * Add a Route Using Get Method
-     *
-     * @param string $pattern
-     * @param string|callable $callback
-     */
+    * Add a Route Using Get Method
+    *
+    * @param string $pattern
+    * @param string|callable $callback
+    */
     public static function get($pattern, $callback)
     {
         self::route('GET', $pattern, $callback);
@@ -491,11 +500,11 @@ class Router
     }
 
     /**
-     * Add a Route Using Post Method
-     *
-     * @param string $pattern
-     * @param string|callable $callback
-     */
+    * Add a Route Using Post Method
+    *
+    * @param string $pattern
+    * @param string|callable $callback
+    */
     public static function post($pattern, $callback)
     {
         self::route('POST', $pattern, $callback);
@@ -503,11 +512,11 @@ class Router
     }
 
     /**
-     * Add a Route Using Patch Method
-     *
-     * @param string $pattern
-     * @param string|callable $callback
-     */
+    * Add a Route Using Patch Method
+    *
+    * @param string $pattern
+    * @param string|callable $callback
+    */
     public static function patch($pattern, $callback)
     {
         self::route('PATCH', $pattern, $callback);
@@ -515,11 +524,11 @@ class Router
     }
 
     /**
-     * Add a Route Using Delete Method
-     *
-     * @param string $pattern
-     * @param string|callable $callback
-     */
+    * Add a Route Using Delete Method
+    *
+    * @param string $pattern
+    * @param string|callable $callback
+    */
     public static function delete($pattern, $callback)
     {
         self::route('DELETE', $pattern, $callback);
@@ -527,11 +536,11 @@ class Router
     }
 
     /**
-     * Add a Route Using Put Method
-     *
-     * @param string $pattern
-     * @param string|callable $callback
-     */
+    * Add a Route Using Put Method
+    *
+    * @param string $pattern
+    * @param string|callable $callback
+    */
     public static function put($pattern, $callback)
     {
         self::route('PUT', $pattern, $callback);
@@ -539,36 +548,36 @@ class Router
     }
 
     /**
-     * Add a Route Using Options Method
-     *
-     * @param string $pattern
-     * @param string|callable $callback
-     */
+    * Add a Route Using Options Method
+    *
+    * @param string $pattern
+    * @param string|callable $callback
+    */
     public static function options($pattern, $callback)
     {
         self::route('OPTIONS', $pattern, $callback);
         return new self;
     }
 
-	/**
-	 * Add a Route Using Multiple Methods
-	 *
-	 * @param array $methods
-	 * @param string $pattern
-	 * @param string|callable $callback
-	 */
-	public static function match($methods, $pattern, $callback)
-	{
-		foreach ($methods as $method) {
-			self::route(strtoupper($method), $pattern, $callback);
-		}
-	}
+    /**
+    * Add a Route Using Multiple Methods
+    *
+    * @param array $methods
+    * @param string $pattern
+    * @param string|callable $callback
+    */
+    public static function match($methods, $pattern, $callback)
+    {
+        foreach ($methods as $method) {
+            self::route(strtoupper($method), $pattern, $callback);
+        }
+    }
 
     /**
-     * Set regular expression for parameters in the querystring
-     *
-     * @param array $expressions
-     */
+    * Set regular expression for parameters in the querystring
+    *
+    * @param array $expressions
+    */
     public function where($expressions)
     {
         $routeKey= array_search(end(self::$routes), self::$routes);
@@ -582,11 +591,11 @@ class Router
     }
 
     /**
-     * Set name for a route
-     *
-     * @param string $name
-     * @param array $params
-     */
+    * Set name for a route
+    *
+    * @param string $name
+    * @param array $params
+    */
     public static function name($name, $params = [])
     {
         $routeKey = array_search(end(self::$routes), self::$routes);
@@ -596,12 +605,12 @@ class Router
     }
 
     /**
-     * Get url based on named route
-     *
-     * @param string $name
-     * @param array $params
-     * @return string
-     */
+    * Get url based on named route
+    *
+    * @param string $name
+    * @param array $params
+    * @return string
+    */
     public static function getUrl($name, $params = [])
     {
         foreach (self::$routes as $route) {
@@ -617,27 +626,27 @@ class Router
     }
 
     /**
-     * List All Routes
-     *
-     * @return array
-     */
+    * List All Routes
+    *
+    * @return array
+    */
     public static function getRoutes()
     {
         return self::$routes;
     }
 
     /**
-     * Parse url with parameters
-     *
-     * @param string $uri
-     * @param array $expressions
-     * @return array
-     */
+    * Parse url with parameters
+    *
+    * @param string $uri
+    * @param array $expressions
+    * @return array
+    */
     private static function _parseUri($uri, $expressions = [])
     {
         $pattern    = explode('/', ltrim($uri, '/'));
         foreach ($pattern as $key => $val) {
-            if(preg_match('/[\[{\(].*[\]}\)]/U', $val, $matches)) {
+            if (preg_match('/[\[{\(].*[\]}\)]/U', $val, $matches)) {
                 foreach ($matches as $match) {
                     $matchKey = substr($match, 1, -1);
                     if (array_key_exists($matchKey, $expressions)) {
@@ -651,10 +660,10 @@ class Router
     }
 
     /**
-     * Set the 404 handling function
-     *
-     * @param object|callable $callback
-     */
+    * Set the 404 handling function
+    *
+    * @param object|callable $callback
+    */
     public static function set404($callback)
     {
         self::$notFound = $callback;
