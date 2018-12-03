@@ -90,8 +90,8 @@ class Response
 	{
 		if (is_null($code))
 			return $this->statusCodes[$this->getStatusCode()];
-		else
-			return $this->statusCodes[$code];
+
+        return $this->statusCodes[$code];
 	}
 
 	/**

@@ -90,13 +90,14 @@ class Request
 
 		if (is_null($param))
 			return getallheaders();
-		else {
-			$headerResponse = [];
-			foreach ($headers as $key => $val) {
-				$headerResponse[$key] = $val;
-			}
-			return $headerResponse[ucwords($param)];
-		}
+
+        $headerResponse = [];
+
+        foreach ($headers as $key => $val) {
+            $headerResponse[$key] = $val;
+        }
+
+        return $headerResponse[ucwords($param)];
 	}
 
 	/**
@@ -120,8 +121,8 @@ class Request
 	{
 		if (is_null($param))
 			return $this->getVars;
-		else
-			return isset($this->getVars[$param]) ? $this->filter($this->getVars[$param], $filter) : false;
+
+        return isset($this->getVars[$param]) ? $this->filter($this->getVars[$param], $filter) : false;
 	}
 
 	/**
@@ -134,8 +135,8 @@ class Request
 	{
 		if (is_null($param))
 			return $this->postVars;
-		else
-			return isset($this->postVars[$param]) ? $this->filter($this->postVars[$param], $filter) : false;
+
+        return isset($this->postVars[$param]) ? $this->filter($this->postVars[$param], $filter) : false;
 	}
 
 	/**
@@ -150,8 +151,8 @@ class Request
 
 		if ($param == null)
 			return $_PUT;
-		else
-			return isset($_PUT[$param]) ? $this->filter($_PUT[$param], $filter) : false;
+
+        return isset($_PUT[$param]) ? $this->filter($_PUT[$param], $filter) : false;
 	}
 
 	/**
@@ -167,8 +168,8 @@ class Request
 
 		if ($param == null)
 			return $_PATCH;
-		else
-			return isset($_PATCH[$param]) ? $this->filter($_PATCH[$param], $filter) : false;
+
+        return isset($_PATCH[$param]) ? $this->filter($_PATCH[$param], $filter) : false;
 	}
 
 	/**
@@ -183,8 +184,8 @@ class Request
 
 		if ($param == null)
 			return $_DELETE;
-		else
-			return isset($_DELETE[$param]) ? $this->filter($_DELETE[$param], $filter) : false;
+
+        return isset($_DELETE[$param]) ? $this->filter($_DELETE[$param], $filter) : false;
 	}
 
 	/**
@@ -197,8 +198,8 @@ class Request
 	{
 		if (is_null($param))
 			return $this->cookieVars;
-		else
-			return isset($this->cookieVars[$param]) ? $this->cookieVars[$param] : false;
+
+        return isset($this->cookieVars[$param]) ? $this->cookieVars[$param] : false;
 	}
 
 	/**
@@ -211,8 +212,8 @@ class Request
 	{
 		if (is_null($param))
 			return $this->filesVars;
-		else
-			return isset($this->filesVars[$param]) ? $this->filesVars[$param] : false;
+
+        return isset($this->filesVars[$param]) ? $this->filesVars[$param] : false;
 	}
 
 	/**
@@ -225,8 +226,8 @@ class Request
 	{
 		if (is_null($param))
 			return $this->globalVars;
-		else
-			return isset($this->globalVars[$param]) ? $this->globalVars[$param] : false;
+
+        return isset($this->globalVars[$param]) ? $this->globalVars[$param] : false;
 	}
 
 	/**
@@ -289,8 +290,8 @@ class Request
 	{
  		if (is_null($url))
 	    	return $this->getScheme() . '://' . $this->getHost();
-		else
-			return $this->getScheme() . '://' . rtrim($this->getHost(), '/') . '/' . $url;
+
+        return $this->getScheme() . '://' . rtrim($this->getHost(), '/') . '/' . $url;
 	}
 
 	/**
@@ -333,19 +334,18 @@ class Request
 	 */
 	public function getQueryString($array = false)
 	{
-		if ($array === false) {
+		if ($array === false)
 			return $this->server('QUERY_STRING');
-		} else {
-			$qsParts	= explode('&', $this->server('QUERY_STRING'));
-			$qsArray 	= [];
 
-			foreach ($qsParts as $key => $value) {
-				$qsItems 				= explode('=', $value);
-				$qsArray[$qsItems[0]] 	= $qsItems[1];
-			}
+        $qsParts	= explode('&', $this->server('QUERY_STRING'));
+        $qsArray 	= [];
 
-			return $qsArray;
-		}
+        foreach ($qsParts as $key => $value) {
+            $qsItems 				= explode('=', $value);
+            $qsArray[$qsItems[0]] 	= $qsItems[1];
+        }
+
+        return $qsArray;
 	}
 
 	/**
@@ -397,10 +397,7 @@ class Request
 	 */
 	public function isAjax()
 	{
-		if (null !== $this->server('HTTP_X_REQUESTED_WITH') && strtolower($this->server('HTTP_X_REQUESTED_WITH')) === 'xmlhttprequest')
-			return true;
-		else
-			return false;
+		return null !== $this->server('HTTP_X_REQUESTED_WITH') && strtolower($this->server('HTTP_X_REQUESTED_WITH')) === 'xmlhttprequest';
 	}
 
 	/**
@@ -426,10 +423,7 @@ class Request
 	 */
 	public function isRobot()
 	{
-		if (null !== $this->server('HTTP_USER_AGENT') && preg_match('/bot|crawl|slurp|spider/i', $this->server('HTTP_USER_AGENT')))
-			return true;
-		else
-			return false;
+		return null !== $this->server('HTTP_USER_AGENT') && preg_match('/bot|crawl|slurp|spider/i', $this->server('HTTP_USER_AGENT'));
 	}
 
 	/**
@@ -451,8 +445,8 @@ class Request
 	{
 		if (null !== $this->server('HTTP_REFERER') || $this->server('HTTP_REFERER') == '')
 			return false;
-		else
-			return true;
+
+        return true;
 	}
 
 	/**
@@ -473,21 +467,24 @@ class Request
 	public function getIp()
 	{
 		if (getenv('HTTP_CLIENT_IP'))
-			$ipaddress = getenv('HTTP_CLIENT_IP');
-		else if (getenv('HTTP_X_FORWARDED_FOR'))
-			$ipaddress = getenv('HTTP_X_FORWARDED_FOR');
-		else if (getenv('HTTP_X_FORWARDED'))
-			$ipaddress = getenv('HTTP_X_FORWARDED');
-		else if (getenv('HTTP_FORWARDED_FOR'))
-			$ipaddress = getenv('HTTP_FORWARDED_FOR');
-		else if (getenv('HTTP_FORWARDED'))
-			$ipaddress = getenv('HTTP_FORWARDED');
-		else if (getenv('REMOTE_ADDR'))
-			$ipaddress = getenv('REMOTE_ADDR');
-		else
-			$ipaddress = 'UNKNOWN';
+			return getenv('HTTP_CLIENT_IP');
 
-		return $ipaddress;
+		if (getenv('HTTP_X_FORWARDED_FOR'))
+			return getenv('HTTP_X_FORWARDED_FOR');
+
+		if (getenv('HTTP_X_FORWARDED'))
+			return getenv('HTTP_X_FORWARDED');
+
+		if (getenv('HTTP_FORWARDED_FOR'))
+			return getenv('HTTP_FORWARDED_FOR');
+
+		if (getenv('HTTP_FORWARDED'))
+			return getenv('HTTP_FORWARDED');
+
+		if (getenv('REMOTE_ADDR'))
+			return getenv('REMOTE_ADDR');
+
+		return 'UNKNOWN';
 	}
 
 	/**
@@ -501,12 +498,11 @@ class Request
 	{
 		if (is_null($data))
 			return null;
-		else {
-			if (is_array($data))
-				return $filter === true ? array_map([$this, 'xssClean'], $data) : array_map('trim', $data);
-			else
-				return $filter === true ? $this->xssClean($data) : trim($data);
-		}
+
+        if (is_array($data))
+            return $filter === true ? array_map([$this, 'xssClean'], $data) : array_map('trim', $data);
+
+        return $filter === true ? $this->xssClean($data) : trim($data);
 	}
 
 	/**

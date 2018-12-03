@@ -48,12 +48,11 @@ class Model
 
 		if (array_key_exists($key, $this->modelCollection))
 			return $this->modelCollection[$key];
-		else {
-			$db = Import::model($key);
-			$this->modelCollection[$key] = $db;
 
-			return $this->modelCollection[$key];
-		}
+        $db = Import::model($key);
+        $this->modelCollection[$key] = $db;
+
+        return $this->modelCollection[$key];
 	}
 
 	/**

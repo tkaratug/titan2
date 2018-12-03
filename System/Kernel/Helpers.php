@@ -74,7 +74,7 @@ if (!function_exists('set_lang')) {
  * @param string $change
  * @return string
  */
-if ( ! function_exists('lang') ) {
+if (!function_exists('lang') ) {
     function lang($file = '', $key = '', $change = '')
     {
         global $lang;

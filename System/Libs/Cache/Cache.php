@@ -215,13 +215,13 @@ class Cache
 	 */
 	private function _getCacheDir($filename = null)
 	{
-		if ($this->_checkCacheDir() === true) {
-			if (is_null($filename))
-				$filename = preg_replace('/[^0-9a-z\.\_\-]/i', '', strtolower($this->getFileName()));
-			return $this->getPath() . '/' . $this->_hashFile($filename) . $this->getExtension();
-		} else {
-			return false;
-		}
+        if ($this->_checkCacheDir() !== true)
+            return false;
+
+        if (is_null($filename))
+            $filename = preg_replace('/[^0-9a-z\.\_\-]/i', '', strtolower($this->getFileName()));
+
+        return $this->getPath() . '/' . $this->_hashFile($filename) . $this->getExtension();
 	}
 
 	/**
@@ -231,16 +231,15 @@ class Cache
 	 */
 	private function _loadCache($filename = null)
 	{
-		if ($this->_getCacheDir() !== false) {
-			if(file_exists($this->_getCacheDir($filename))) {
-				$file = file_get_contents($this->_getCacheDir($filename));
-				return json_decode($file, true);
-			} else {
-				return false;
-			}
-		} else {
-			return false;
-		}
+        if ($this->_getCacheDir() === false)
+            return false;
+
+        if (!file_exists($this->_getCacheDir($filename)))
+            return false;
+
+        $file = file_get_contents($this->_getCacheDir($filename));
+
+        return json_decode($file, true);
 	}
 
 	/**
@@ -252,15 +251,10 @@ class Cache
 	 */
 	private function _isExpired($time, $expiration)
 	{
-		if ($expiration !== 0) {
-			$time_diff = time() - $time;
-			if($time_diff > $expiration)
-				return true;
-			else
-				return false;
-		} else {
-			return false;
-		}
+        if ($expiration === 0)
+            return false;
+
+        return time() - $time > $expiration;
 	}
 
 	/**
