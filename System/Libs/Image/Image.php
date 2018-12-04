@@ -260,11 +260,12 @@
          if (is_array($rgb)) {
              $this->rgb = $rgb;
              return $this;
-         } else if ($this->_hexToRgb($rgb)) {
-             return $this;
-         } else {
-             return false;
          }
+
+         if ($this->_hexToRgb($rgb))
+             return $this;
+
+         return false;
      }
 
      /**
@@ -556,15 +557,15 @@
          if (isset($options['truetype']) && $options['truetype']) {
              $textDimensions = imagettfbbox($options['size'], 0, $options['font'], $text);
              return [$textDimensions[4], $options['size']];
-         } else {
-             if ($options['size'] > 5)
-                $options['size'] = 5;
-
-             return [
-                 'width'    => imagefontwidth($options['size']) * strlen($text),
-                 'height'   => imagefontheight($options['size'])
-             ];
          }
+
+         if ($options['size'] > 5)
+             $options['size'] = 5;
+
+         return [
+             'width'    => imagefontwidth($options['size']) * strlen($text),
+             'height'   => imagefontheight($options['size'])
+         ];
      }
 
      /**
@@ -709,9 +710,9 @@
          if (!is_dir(dirname(public_path($destination)))) {
              $this->error = lang('image', 'invalid_destination');
              return false;
-         } else {
-             return $this->_outputImage($destination);
          }
+
+         return $this->_outputImage($destination);
      }
 
      /**
@@ -724,12 +725,12 @@
          if (headers_sent()) {
              $this->error = lang('image', 'headers_sent');
              return false;
-         } else {
-             header("Content-type: image/{$this->extension}");
-             $this->_outputImage();
-             imagedestroy($this->image);
-             exit;
          }
+
+         header("Content-type: image/{$this->extension}");
+         $this->_outputImage();
+         imagedestroy($this->image);
+         exit;
      }
 
      /**

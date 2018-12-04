@@ -227,12 +227,12 @@ class Upload
 		if (!file_exists($this->uploadPath)) {
 			$this->error = lang('upload', 'wrong_upload_path_error', $this->uploadPath);
 			return false;
-		} else {
-			if (!is_writable($this->uploadPath)) {
-				$this->error = lang('upload', 'permission_error');
-				return false;
-			}
 		}
+
+        if (!is_writable($this->uploadPath)) {
+            $this->error = lang('upload', 'permission_error');
+            return false;
+        }
 
 		return true;
 	}

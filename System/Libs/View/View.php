@@ -55,11 +55,10 @@ class View
 	 */
 	public function theme($theme)
 	{
-		if (file_exists(APP_DIR . 'Views/' . $theme)) {
-			$this->theme = $theme;
-		} else {
-			throw new \System\Libs\Exception\ExceptionHandler("Hata", "Tema dizini bulunamadı. { $theme }");
-		}
+		if (!file_exists(APP_DIR . 'Views/' . $theme))
+            throw new \System\Libs\Exception\ExceptionHandler("Hata", "Tema dizini bulunamadı. { $theme }");
+
+        $this->theme = $theme;
 
 		return $this;
 	}

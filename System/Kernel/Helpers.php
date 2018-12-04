@@ -36,12 +36,12 @@ if (!function_exists('get_lang')) {
     {
         $lang = config('app.general.default_lang');
 
-        if (!Session::has(md5('lang'))) {
-            Session::set(md5('lang'), $lang);
-            return $lang;
-        } else {
+        if (Session::has(md5('lang')))
             return Session::get(md5('lang'));
-        }
+
+        Session::set(md5('lang'), $lang);
+
+        return $lang;
     }
 }
 
@@ -97,34 +97,36 @@ if (!function_exists('lang') ) {
         $zone = strtolower($file);
 
         if (array_key_exists($key, $lang[$zone])) {
+
             $str = $lang[$zone][$key];
 
             // Change special words
             if (!is_array($change)) {
-                if (!empty($change)) {
+
+                if (!empty($change))
                     return str_replace('%s', $change, $str);
-                } else {
-                    return $str;
-                }
-            } else {
-                if (!empty($change)) {
-                    $keys = [];
-                    $vals = [];
 
-                    foreach($change as $key => $value) {
-                        $keys[] = $key;
-                        $vals[] = $value;
-                    }
-
-                    return str_replace($keys, $vals, $str);
-                } else {
-                    return $str;
-                }
+                return $str;
             }
 
-        } else {
-            return false;
+            if (!empty($change)) {
+
+                $keys = [];
+                $vals = [];
+
+                foreach($change as $key => $value) {
+                    $keys[] = $key;
+                    $vals[] = $value;
+                }
+
+                return str_replace($keys, $vals, $str);
+            }
+
+            return $str;
+
         }
+
+        return false;
     }
 }
 
@@ -185,10 +187,10 @@ if (!function_exists('csrf_check')) {
 if (!function_exists('get_asset')) {
     function get_asset($file, $version = null)
     {
-        if (file_exists(ROOT_DIR . '/Public/' . $file))
-            return (is_null($version)) ? PUBLIC_DIR . $file : PUBLIC_DIR . $file . '?' . $version;
-        else
+        if (!file_exists(ROOT_DIR . '/Public/' . $file))
             throw new System\Libs\Exception\ExceptionHandler('Dosya bulunamadı', '<b>Asset : </b> ' . $file);
+
+        return (is_null($version)) ? PUBLIC_DIR . $file : PUBLIC_DIR . $file . '?' . $version;
     }
 }
 
@@ -202,10 +204,10 @@ if (!function_exists('public_path')) {
     function public_path($file = null)
     {
         if ($file !== null) {
-            if (file_exists(ROOT_DIR . '/Public/' . $file))
-                return ROOT_DIR . '/Public/' . $file;
-            else
+            if (!file_exists(ROOT_DIR . '/Public/' . $file))
                 throw new System\Libs\Exception\ExceptionHandler('Dosya bulunamadı', '<b>Public : </b> ' . $file);
+
+            return ROOT_DIR . '/Public/' . $file;
         }
         
         return ROOT_DIR . '/Public/';
@@ -228,8 +230,8 @@ if (!function_exists('base_url')) {
 
         if (is_null($url))
             return $protocol . "://" . $_SERVER['HTTP_HOST'];
-        else
-            return $protocol . "://" . rtrim($_SERVER['HTTP_HOST'], '/') . '/' . $url;
+
+        return $protocol . "://" . rtrim($_SERVER['HTTP_HOST'], '/') . '/' . $url;
     }
 }
 
@@ -277,18 +279,17 @@ if (!function_exists('request')) {
             default         : $request = Request::all();
         }
 
-        if (is_null($params)) {
+        if (is_null($params))
             return $request;
-        } else {
-            if (is_array($params)) {
-                foreach ($params as $param) {
-                    $data[$param] = $request[$param];
-                }
-                return $data;
-            } else {
-                return $request[$params];
+
+        if (is_array($params)) {
+            foreach ($params as $param) {
+                $data[$param] = $request[$param];
             }
+            return $data;
         }
+
+        return $request[$params];
     }
 }
 

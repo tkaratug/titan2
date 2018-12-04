@@ -165,8 +165,8 @@ class Validation
 
 		if (count($this->errors) > 0)
             return false;
-        else
-            return true;
+
+        return true;
 	}
 
 	/**
@@ -179,12 +179,13 @@ class Validation
     {
         if (!is_array($data)) {
             return filter_var(trim($data), FILTER_SANITIZE_STRING);
-        } else {
-            foreach ($data as $key => $value) {
-                $data[$key] = filter_var($value, FILTER_SANITIZE_STRING);
-            }
-            return $data;
         }
+
+        foreach ($data as $key => $value) {
+            $data[$key] = filter_var($value, FILTER_SANITIZE_STRING);
+        }
+
+        return $data;
     }
 
     /**
@@ -445,7 +446,7 @@ class Validation
             $total += $digit;
         }
 
-        return ($total % 10 == 0) ? true : false;
+        return $total % 10 == 0;
     }
 
     /**
