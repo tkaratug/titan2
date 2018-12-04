@@ -94,7 +94,7 @@ class Cache
 	 */
 	public function delete($key)
 	{
-		$cacheContent = $this->load_cache();
+		$cacheContent = $this->_loadCache();
 
 		if (is_array($cacheContent)) {
 			if (isset($cacheContent[$key])) {

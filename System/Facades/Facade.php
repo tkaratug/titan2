@@ -18,10 +18,10 @@ abstract class Facade
 	protected static $applications;
 
 	// Resolved instances of objects in Facade array
-	protected static $reselovedInstance;
+	protected static $reselovedInstance = [];
 
 	// Created instances of objects in Facade array
-	protected static $createdInstances = [];
+	protected static $createdInstances 	= [];
 
 	/**
 	 * Resolved Instance
@@ -62,16 +62,6 @@ abstract class Facade
 	public static function clearResolvedInstance($facadeName)
 	{
 		unset(static::$reselovedInstance[$facadeName]);
-	}
-
-	/**
-	 * Clear All Resolved Instances
-	 *
-	 * @return void
-	 */
-	public static function clearResolvedInstances()
-	{
-		static::$reselovedInstance = [];
 	}
 
 	/**

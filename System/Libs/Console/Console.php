@@ -67,12 +67,11 @@ class Console
         if (!$this->params) {
             return $this->help();
         } else {
-            if ($params[0] == '-h')
+            if ($params[0] == '-h') {
                 return $this->help();
-            else if ($params[0] == '-v') {
+            } else if ($params[0] == '-v') {
                 return $this->version();
-            }
-            else if (strpos($params[0], ':') !== false) {
+            } else if (strpos($params[0], ':') !== false) {
                 $slice = explode(':', $params[0]);
 
                 if ($slice[0] == 'make') {
@@ -134,8 +133,7 @@ class Console
      */
     private function make($command, $params = null)
     {
-        switch ($command)
-        {
+        switch ($command) {
             case 'controller'   : return $this->createController($params); break;
             case 'model'        : return $this->createModel($params); break;
             case 'middleware'   : return $this->createMiddleware($params); break;
@@ -153,8 +151,7 @@ class Console
      */
     private function clear($params)
     {
-        switch ($params)
-        {
+        switch ($params) {
             case 'cache'        : return $this->clearCache(); break;
             case 'logs'         : return $this->clearLogs(); break;
             default             : return $this->getColoredString('"clear" komutu icin gecersiz parametre. "' . $params . '"', 'white', 'red');
@@ -337,7 +334,8 @@ class Console
 		// Check if given foreground color found
 		if (isset($this->foreground_colors[$foreground_color])) {
 			$colored_string .= "\e[" . $this->foreground_colors[$foreground_color] . "m";
-		}
+        }
+        
 		// Check if given background color found
 		if (isset($this->background_colors[$background_color])) {
 			$colored_string .= "\e[" . $this->background_colors[$background_color] . "m";

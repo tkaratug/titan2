@@ -79,9 +79,9 @@ class Upload
 				if (is_null($this->filename))
 					$this->filename = $this->file['name'];
 
-				if (move_uploaded_file($this->file['tmp_name'], $this->uploadPath . '/' . $this->filename))
+				if (move_uploaded_file($this->file['tmp_name'], $this->uploadPath . '/' . $this->filename)) {
 					return true;
-				else {
+				} else {
 					$this->error = lang('upload', 'upload_error');
 					return false;
 				}

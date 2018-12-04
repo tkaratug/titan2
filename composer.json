@@ -16,7 +16,7 @@
 	"require": {
         "php": ">=7.0.0",
 		"filp/whoops": "^2.1",
-		"windwalker/edge": "~3.0",
+		"windwalker/edge": "3.4.7",
 		"phpmailer/phpmailer": "~6.0"
     },
 	"autoload": {

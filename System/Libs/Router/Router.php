@@ -199,9 +199,9 @@ class Router
      */
     public static function route($method, $pattern, $callback)
     {
-        if ($pattern == '/')
+        if ($pattern == '/') {
             $pattern    = self::$baseRoute . trim($pattern, '/');
-        else {
+        } else {
             if (self::$baseRoute == '/')
                 $pattern    = self::$baseRoute . trim($pattern, '/');
             else

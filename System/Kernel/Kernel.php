@@ -59,7 +59,6 @@ class Kernel
 		$app = Import::config('services');
 
 		// Prepare Facades
-		Facade::clearResolvedInstances();
 		Facade::setFacadeApplication($app);
 
 		// Create Aliases
