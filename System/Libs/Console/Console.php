@@ -217,16 +217,15 @@ class Console
 
         $location   = 'App/Models/' . $model . '.php';
 
-        if (file_exists($location)) {
+        if (file_exists($location))
             return $this->getColoredString('Model zaten mevcut:', 'red') . "\t" . $this->getColoredString($location);
-        } else {
-            $file       = fopen ($location, 'w');
-            $content    = "<?php\nnamespace $namespace;\n\nuse DB;\n\nclass $class\n{\n\n\t\n\n}";
-            fwrite ($file, $content);
-            fclose($file);
 
-            return $this->getColoredString('Model basariyla olusturuldu: ', 'light_blue') . "\t" . $this->getColoredString($location);
-        }
+        $file       = fopen ($location, 'w');
+        $content    = "<?php\nnamespace $namespace;\n\nuse DB;\n\nclass $class\n{\n\n\t\n\n}";
+        fwrite ($file, $content);
+        fclose($file);
+
+        return $this->getColoredString('Model basariyla olusturuldu: ', 'light_blue') . "\t" . $this->getColoredString($location);
     }
 
     /**
@@ -242,16 +241,15 @@ class Console
 
         $location   = 'App/Middlewares/' . $middleware . '.php';
 
-        if (file_exists($location)) {
+        if (file_exists($location))
             return $this->getColoredString('Middleware zaten mevcut:', 'red') . "\t" . $this->getColoredString($location);
-        } else {
-            $file       = fopen ($location, 'w');
-            $content    = "<?php\nnamespace $namespace;\n\nclass $class\n{\n\n\tpublic static function handle()\n\t{\n\t\t\n\t}\n\n}";
-            fwrite ($file, $content);
-            fclose($file);
 
-            return $this->getColoredString('Middleware basariyla olusturuldu: ', 'light_blue') . "\t" . $this->getColoredString($location);
-        }
+        $file       = fopen ($location, 'w');
+        $content    = "<?php\nnamespace $namespace;\n\nclass $class\n{\n\n\tpublic static function handle()\n\t{\n\t\t\n\t}\n\n}";
+        fwrite ($file, $content);
+        fclose($file);
+
+        return $this->getColoredString('Middleware basariyla olusturuldu: ', 'light_blue') . "\t" . $this->getColoredString($location);
     }
 
     /**
@@ -267,16 +265,15 @@ class Console
 
         $location   = 'App/Listeners/' . $listener . '.php';
 
-        if (file_exists($location)) {
+        if (file_exists($location))
             return $this->getColoredString('Listener zaten mevcut:', 'red') . "\t" . $this->getColoredString($location);
-        } else {
-            $file       = fopen ($location, 'w');
-            $content    = "<?php\nnamespace $namespace;\n\nclass $class\n{\n\n\tpublic function handle()\n\t{\n\t\t\n\t}\n\n}";
-            fwrite ($file, $content);
-            fclose($file);
 
-            return $this->getColoredString('Listener basariyla olusturuldu: ', 'light_blue') . "\t" . $this->getColoredString($location);
-        }
+        $file       = fopen ($location, 'w');
+        $content    = "<?php\nnamespace $namespace;\n\nclass $class\n{\n\n\tpublic function handle()\n\t{\n\t\t\n\t}\n\n}";
+        fwrite ($file, $content);
+        fclose($file);
+
+        return $this->getColoredString('Listener basariyla olusturuldu: ', 'light_blue') . "\t" . $this->getColoredString($location);
     }
 
     /**

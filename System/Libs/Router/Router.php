@@ -317,14 +317,14 @@ class Router
     private static function checkDomain($params)
     {
         if (array_key_exists('domain', $params)) {
-            if ($params['domain'] !== trim(str_replace('www.', '', $_SERVER['SERVER_NAME']), '/')) {
+
+            if ($params['domain'] !== trim(str_replace('www.', '', $_SERVER['SERVER_NAME']), '/'))
                 return false;
-            } else {
-                return true;
-            }
-        } else {
+
             return true;
         }
+
+        return true;
     }
 
     /**
@@ -335,11 +335,10 @@ class Router
      */
     private static function checkMethod($params)
     {
-        if ($params['method'] !== self::getRequestMethod()) {
+        if ($params['method'] !== self::getRequestMethod())
             return false;
-        } else {
-            return true;
-        }
+
+        return true;
     }
 
     /**
@@ -351,20 +350,25 @@ class Router
     private static function checkIp($params)
     {
         if (array_key_exists('ip', $params)) {
+
             if (is_array($params['ip'])) {
+
                 if (!in_array($_SERVER['REMOTE_ADDR'], $params['ip']))
                     return false;
-                else
-                    return true;
+
+                return true;
+
             } else {
+
                 if ($_SERVER['REMOTE_ADDR'] != $params['ip'])
                     return false;
-                else
-                    return true;
+
+                return true;
+
             }
-        } else {
-            return true;
         }
+
+        return true;
     }
 
     /**
@@ -376,13 +380,15 @@ class Router
     private static function checkSSL($params)
     {
         if (array_key_exists('ssl', $params) && $params['ssl'] === true) {
+
             if ($_SERVER['REQUEST_SCHEME'] !== 'https')
                 return false;
-            else
-                return true;
-        } else {
+
             return true;
+
         }
+
+        return true;
     }
 
     /**

@@ -82,8 +82,8 @@ class Session
 	{
 		if (is_null($storage))
 			return $_SESSION;
-		else
-			return $_SESSION[$storage];
+
+        return $_SESSION[$storage];
 	}
 
 	/**
@@ -170,8 +170,8 @@ class Session
 	{
 		if (array_key_exists('REMOTE_ADDR', $_SERVER) && array_key_exists('HTTP_USER_AGENT', $_SERVER))
 			return md5(sha1(md5($_SERVER['REMOTE_ADDR'] . $this->config['encryption_key'] . $_SERVER['HTTP_USER_AGENT'])));
-		else
-			return md5(sha1(md5($this->config['encryption_key'])));
+
+        return md5(sha1(md5($this->config['encryption_key'])));
 	}
 
 }

@@ -28,12 +28,11 @@ class Import
 	{
 		$filePath = VIEW_DIR . $file . '.php';
 
-		if (file_exists($filePath)) {
-			extract($data);
-			require_once $filePath;
-		} else {
-			throw new ExceptionHandler('Dosya bulunamadı.', '<b>View : </b>' . $file);
-		}
+		if (!file_exists($filePath))
+            throw new ExceptionHandler('Dosya bulunamadı.', '<b>View : </b>' . $file);
+
+        extract($data);
+        require_once $filePath;
 	}
 
 	/**
@@ -46,10 +45,10 @@ class Import
 	{
 		$filePath = APP_DIR . 'Helpers/' . ucfirst($file) . '.php';
 
-		if (file_exists($filePath))
-			require_once $filePath;
-		else
-			throw new ExceptionHandler('Dosya bulunamadı.', '<b>Helper : </b>' . ucfirst($file));
+		if (!file_exists($filePath))
+            throw new ExceptionHandler('Dosya bulunamadı.', '<b>Helper : </b>' . ucfirst($file));
+
+        require_once $filePath;
 
 	}
 
@@ -74,12 +73,11 @@ class Import
 			$class 		= 'App\\Models\\' . ucfirst($file);
 		}
 
-		if (file_exists($filePath)) {
-			require_once $filePath;
-			return new $class;
-		} else
-			throw new ExceptionHandler('Dosya bulunamadı.', '<b>Model : </b>' . ucfirst($file));
+		if (!file_exists($filePath))
+            throw new ExceptionHandler('Dosya bulunamadı.', '<b>Model : </b>' . ucfirst($file));
 
+        require_once $filePath;
+        return new $class;
 	}
 
 	/**
@@ -90,12 +88,10 @@ class Import
 	 */
 	public static function file($file)
 	{
-		if (file_exists($file . '.php'))
-			return require $file . '.php';
-		else
-			throw new ExceptionHandler('Dosya bulunamadı.', '<b>File : </b>' . $file . '.php');
+		if (!file_exists($file . '.php'))
+            throw new ExceptionHandler('Dosya bulunamadı.', '<b>File : </b>' . $file . '.php');
 
-
+		return require $file . '.php';
 	}
 
 	/**
@@ -106,11 +102,10 @@ class Import
 	 */
 	public static function config($file)
 	{
-		if (file_exists(APP_DIR . 'Config/' . ucwords($file) . '.php'))
-			return require APP_DIR . 'Config/' . ucwords($file) . '.php';
-		else
-			throw new ExceptionHandler('Dosya bulunamadı.', '<b>Config : </b>' . APP_DIR . 'Config/' . ucfirst($file) . '.php');
+		if (!file_exists(APP_DIR . 'Config/' . ucwords($file) . '.php'))
+            throw new ExceptionHandler('Dosya bulunamadı.', '<b>Config : </b>' . APP_DIR . 'Config/' . ucfirst($file) . '.php');
 
+		return require APP_DIR . 'Config/' . ucwords($file) . '.php';
 	}
 
 }

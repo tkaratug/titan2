@@ -27,10 +27,10 @@ class Restful
      */
     public function get($url, $data = [])
     {
-        if (!is_null($url))
-            Curl::get($url, $data);
-        else
+        if (is_null($url))
             throw new ExceptionHandler("Parametre hatası", "URL bilgisi gerekli.");
+
+        Curl::get($url, $data);
     }
 
     /**
@@ -42,10 +42,10 @@ class Restful
      */
     public function post($url, $data = [])
     {
-        if (!is_null($url))
-            Curl::post($url, $data);
-        else
+        if (is_null($url))
             throw new ExceptionHandler("Parametre hatası", "URL bilgisi gerekli.");
+
+        Curl::post($url, $data);
     }
 
     /**
@@ -57,10 +57,10 @@ class Restful
      */
     public function put($url, $data = [])
     {
-        if (!is_null($url))
-            Curl::put($url, $data);
-        else
+        if (is_null($url))
             throw new ExceptionHandler("Parametre hatası", "URL bilgisi gerekli.");
+
+        Curl::put($url, $data);
     }
 
     /**
@@ -72,10 +72,10 @@ class Restful
      */
     public function delete($url, $data = [])
     {
-        if (!is_null($url))
-            Curl::delete($url, $data);
-        else
+        if (is_null($url))
             throw new ExceptionHandler("Parametre hatası", "URL bilgisi gerekli.");
+
+        Curl::delete($url, $data);
     }
 
     /**
@@ -86,10 +86,10 @@ class Restful
      */
     public function setHeader($header, $value = null)
     {
-        if (!is_null($header))
-            Curl::setHeader($header, $value);
-        else
+        if (is_null($header))
             throw new ExceptionHandler("Parametre hatası", "Header bilgisi gerekli.");
+
+        Curl::setHeader($header, $value);
 
         return $this;
     }
