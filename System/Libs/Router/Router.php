@@ -19,7 +19,10 @@ class Router
 
     // Middlewares
     private static $middlewares = [];
-
+    
+    // Prefix
+    private static $prefix = [];
+    
     // Base Route
     private static $baseRoute   = '/';
 
@@ -114,6 +117,9 @@ class Router
 
             // Reset SSL
             self::$ssl          = false;
+            
+            // Reset Prefix
+            self::$prefix = [];
         }
     }
 
@@ -153,8 +159,9 @@ class Router
      */
     public static function prefix($prefix)
     {
+        self::$prefix[] = $prefix;
         // Set Base Route
-        self::$baseRoute    = '/' . $prefix;
+       self::$baseRoute    = '/' . implode('/',self::$prefix);
 
         return new self;
     }
