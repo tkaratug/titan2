@@ -82,7 +82,8 @@ class Router
             'namespace'     => self::$namespace,
             'domain'        => self::$domain,
             'ip'            => self::$ip,
-            'ssl'           => self::$ssl
+            'ssl'           => self::$ssl,
+            'prefix'      => self::$prefix
         ];
 
         // Call the Callable
@@ -95,6 +96,7 @@ class Router
             self::$domain       = self::$groups[self::$groupped-1]['domain'];
             self::$ip           = self::$groups[self::$groupped-1]['ip'];
             self::$ssl          = self::$groups[self::$groupped-1]['ssl'];
+            self::$prefix      = self::$groups[self::$groupped-1]['prefix'];
         }
 
         self::$groupped--;
