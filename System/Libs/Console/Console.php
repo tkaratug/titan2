@@ -173,16 +173,18 @@ class Console
             $class      = end($parts);
             array_pop($parts);
             $namespace  = 'App\\Controllers\\' . implode('\\', $parts);
+            $location   = 'App/Controllers/' . implode('/', $parts);
         } else {
             $namespace  = 'App\\Controllers';
             $class      = $controller;
+            $location   = 'App/Controllers/' . $controller;
         }
-
-        $location   = 'App/Controllers/' . $controller . '.php';
 
         if (file_exists($location)) {
             return $this->getColoredString('Controller zaten mevcut:', 'red') . "\t" . $this->getColoredString($location);
         } else {
+            $this->makeDir($location);
+            $location   = $location . '/' . $class . '.php';
             $file       = fopen ($location, 'w');
             $content    = "<?php\nnamespace $namespace;\n\nuse System\\Kernel\\Controller;\nuse View;\n\nclass $class extends Controller\n{\n\n\tpublic function index()\n\t{\n\t\t\n\t}\n\n}";
             fwrite ($file, $content);
@@ -207,16 +209,18 @@ class Console
             $class      = end($parts);
             array_pop($parts);
             $namespace  = 'App\\Models\\' . implode('\\', $parts);
+            $location   = 'App/Models/' . implode('/', $parts);
         } else {
             $namespace  = 'App\\Models';
             $class      = $model;
+            $location   = 'App/Models';
         }
-
-        $location   = 'App/Models/' . $model . '.php';
 
         if (file_exists($location))
             return $this->getColoredString('Model zaten mevcut:', 'red') . "\t" . $this->getColoredString($location);
 
+        $this->makeDir($location);
+        $location   = $location . '/' . $class . '.php';
         $file       = fopen ($location, 'w');
         $content    = "<?php\nnamespace $namespace;\n\nuse DB;\n\nclass $class\n{\n\n\t\n\n}";
         fwrite ($file, $content);
@@ -361,6 +365,16 @@ class Console
      */
 	private function getBackgroundColors() {
 		return array_keys($this->background_colors);
-	}
+    }
+    
+    /**
+     * Create directories recursively
+     * @param string $path
+     * @param int $permissions
+     * @return bool
+     */
+    private function makeDir($path, $permissions = 0755) {
+        return is_dir($path) || mkdir($path, $permissions, true);
+    }
 
 }
