@@ -22,7 +22,7 @@ class DB
 	public $pdo 		= null;
 
 	// Select statement
-	protected $select 	= '*';
+	protected $select 	= null;
 
 	// Table name
 	protected $table	= null;
@@ -122,10 +122,13 @@ class DB
 	 */
 	public function select($select = null)
 	{
-		if (!is_null($select))
-			$this->select = $select;
+		if (is_null($this->select)) {
+            $this->select = $select;
+        } else {
+            $this->select .= ',' . $select;
+        }
 
-		return $this;
+        return $this;
 	}
 
 	/**
@@ -696,7 +699,7 @@ class DB
 	private function _prepare()
 	{
 		if (is_null($this->custom))
-			$this->sql = rtrim('SELECT ' . $this->select . ' FROM ' . $this->table . ' ' . $this->join . ' ' . $this->where . ' ' . $this->groupBy . ' ' . $this->having . ' ' . $this->orderBy . ' ' . $this->limit);
+			$this->sql = rtrim('SELECT ' .(is_null($this->select) ? '*' : $this->select)  . ' FROM ' . $this->table . ' ' . $this->join . ' ' . $this->where . ' ' . $this->groupBy . ' ' . $this->having . ' ' . $this->orderBy . ' ' . $this->limit);
 	}
 
 	/**
