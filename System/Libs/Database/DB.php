@@ -1000,7 +1000,7 @@ class DB
 	 */
 	private function _reset()
 	{
-		$this->select 		= '*';
+		$this->select 		= null;
 		$this->table		= null;
 		$this->where		= null;
 		$this->limit		= null;
