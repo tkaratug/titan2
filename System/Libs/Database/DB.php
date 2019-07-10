@@ -18,6 +18,9 @@ use System\Libs\Exception\ExceptionHandler;
 
 class DB
 {
+    // Default connection
+    protected $con      = 'primary';
+
 	// PDO instance
 	public $pdo 		= null;
 
@@ -72,46 +75,72 @@ class DB
 	/**
 	 * Initializing
 	 *
-	 * @return object
-	 */
+     * @throws \Exception
+     */
 	public function __construct()
 	{
 		// Getting db config items
-		$this->config = config('database');
+		$this->config = config('database.' . $this->con);
 
-		$this->config['db_driver']		= ($this->config['db_driver']) ? $this->config['db_driver'] : 'mysql';
-		$this->config['db_host']		= ($this->config['db_host']) ? $this->config['db_host'] : 'localhost';
-		$this->config['db_charset']		= ($this->config['db_charset']) ? $this->config['db_charset'] : 'utf8';
-		$this->config['db_collation']	= ($this->config['db_collation']) ? $this->config['db_collation'] : 'utf8_general_ci';
-		$this->config['db_prefix']		= ($this->config['db_prefix']) ? $this->config['db_prefix'] : '';
+		$this->connect();
+	}
 
-		// Setting prefix
-		$this->prefix = $this->config['db_prefix'];
+    /**
+     * Select a connection
+     *
+     * @param string $connection
+     * @return $this
+     * @throws \Exception
+     */
+    public function connection($connection)
+    {
+        $this->con = $connection;
+        $this->connect();
 
-		$dsn = '';
-		// Setting connection string
-		if ($this->config['db_driver'] == 'mysql' || $this->config['db_driver'] == 'pgsql' || $this->config['db_driver'] == '') {
-			$dsn = $this->config['db_driver'] . ':host=' . $this->config['db_host'] . ';dbname=' . $this->config['db_name'];
-		} elseif ($this->config['db_driver'] == 'sqlite') {
-			$dsn = 'sqlite:' . $this->config['db_name'];
-		} elseif ($this->config['db_driver'] == 'oracle') {
-			$dsn = 'oci:dbname=' . $this->config['db_host'] . '/' . $this->config['db_name'];
-		}
+        return $this;
+	}
 
-		// Connecting to server
-		try
-		{
-			$this->pdo = new PDO($dsn, $this->config['db_user'], $this->config['db_pass']);
-			$this->pdo->exec("SET NAMES '" . $this->config['db_charset'] . "' COLLATE '" . $this->config['db_collation'] . "'");
-			$this->pdo->exec("SET CHARACTER SET '" . $this->config['db_charset'] . "'");
-			$this->pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
-		}
-		catch(PDOException $e)
-		{
-			throw new ExceptionHandler("DB error", "Can not connect to Database with PDO.<br><br>" . $e->getMessage());
-		}
+    /**
+     * Connect
+     *
+     * @return PDO|null
+     * @throws \Exception
+     */
+    public function connect()
+    {
+        $this->config['db_driver']		= ($this->config['db_driver']) ? $this->config['db_driver'] : 'mysql';
+        $this->config['db_host']		= ($this->config['db_host']) ? $this->config['db_host'] : 'localhost';
+        $this->config['db_charset']		= ($this->config['db_charset']) ? $this->config['db_charset'] : 'utf8';
+        $this->config['db_collation']	= ($this->config['db_collation']) ? $this->config['db_collation'] : 'utf8_general_ci';
+        $this->config['db_prefix']		= ($this->config['db_prefix']) ? $this->config['db_prefix'] : '';
 
-		return $this->pdo;
+        // Setting prefix
+        $this->prefix = $this->config['db_prefix'];
+
+        $dsn = '';
+        // Setting connection string
+        if ($this->config['db_driver'] == 'mysql' || $this->config['db_driver'] == 'pgsql' || $this->config['db_driver'] == '') {
+            $dsn = $this->config['db_driver'] . ':host=' . $this->config['db_host'] . ';dbname=' . $this->config['db_name'];
+        } elseif ($this->config['db_driver'] == 'sqlite') {
+            $dsn = 'sqlite:' . $this->config['db_name'];
+        } elseif ($this->config['db_driver'] == 'oracle') {
+            $dsn = 'oci:dbname=' . $this->config['db_host'] . '/' . $this->config['db_name'];
+        }
+
+        // Connecting to server
+        try
+        {
+            $this->pdo = new PDO($dsn, $this->config['db_user'], $this->config['db_pass']);
+            $this->pdo->exec("SET NAMES '" . $this->config['db_charset'] . "' COLLATE '" . $this->config['db_collation'] . "'");
+            $this->pdo->exec("SET CHARACTER SET '" . $this->config['db_charset'] . "'");
+            $this->pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
+        }
+        catch(PDOException $e)
+        {
+            throw new ExceptionHandler("DB error", "Can not connect to Database with PDO.<br><br>" . $e->getMessage());
+        }
+
+        return $this->pdo;
 	}
 
 	/**

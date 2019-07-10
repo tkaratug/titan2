@@ -12,13 +12,15 @@
  *************************************************/
 return [
 
-	'db_driver'		=> 'mysql',
-	'db_host'		=> 'localhost',
-	'db_user'		=> '',
-	'db_pass'		=> '',
-	'db_name'		=> '',
-	'db_charset'	=> 'utf8',
-	'db_collation'	=> 'utf8_general_ci',
-	'db_prefix'		=> ''
+    'primary' => [
+        'db_driver'		=> 'mysql',
+        'db_host'		=> 'localhost',
+        'db_user'		=> '',
+        'db_pass'		=> '',
+        'db_name'		=> '',
+        'db_charset'	=> 'utf8',
+        'db_collation'	=> 'utf8_general_ci',
+        'db_prefix'		=> ''
+    ],
 
 ];
