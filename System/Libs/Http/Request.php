@@ -308,11 +308,11 @@ class Request
 	 * Get specified segment from URL
 	 *
 	 * @param int $index
-	 * @return string
+	 * @return string|null
 	 */
 	public function getSegment($index)
 	{
-		return $this->segments()[$index];
+		return isset($this->segments()[$index]) ? $this->segments()[$index] : null;
 	}
 
 	/**

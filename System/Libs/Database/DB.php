@@ -79,9 +79,7 @@ class DB
      */
 	public function __construct()
 	{
-		// Getting db config items
-		$this->config = config('database.' . $this->con);
-
+        // Connect
 		$this->connect();
 	}
 
@@ -108,6 +106,9 @@ class DB
      */
     public function connect()
     {
+        // Getting db config items
+        $this->config                   = config('database.' . $this->con);
+
         $this->config['db_driver']		= ($this->config['db_driver']) ? $this->config['db_driver'] : 'mysql';
         $this->config['db_host']		= ($this->config['db_host']) ? $this->config['db_host'] : 'localhost';
         $this->config['db_charset']		= ($this->config['db_charset']) ? $this->config['db_charset'] : 'utf8';
