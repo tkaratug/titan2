@@ -5,9 +5,9 @@
  *
  * Author 	: Turan Karatuğ
  * Web 		: http://www.titanphp.com
- * Docs 	: http://kilavuz.titanphp.com 
+ * Docs 	: http://kilavuz.titanphp.com
  * Github	: http://github.com/tkaratug/titan2
- * License	: MIT	
+ * License	: MIT
  *
  *************************************************/
 return [
@@ -48,6 +48,7 @@ return [
 	 */
 	'cache'			=> [
 		'path'						=> 'Storage/Cache',
+        'filename'                  => 'default-cache',
 		'extension'					=> '.cache',
 		'expire'					=> 604800,
 	],

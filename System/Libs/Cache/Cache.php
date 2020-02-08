@@ -38,6 +38,7 @@ class Cache
 		$this->path 		= APP_DIR . $config['path'];
 		$this->extension 	= $config['extension'];
 		$this->expire 		= $config['expire'];
+		$this->filename     = $config['filename'];
 	}
 
 	/**
