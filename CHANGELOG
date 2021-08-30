@@ -1,4 +1,4 @@
-v2.3.0
+v2.4.0
 	- [Düzeltme] `Request` kütüphanesinde bulunan `getQueryString()` methodundaki hata giderildi.
 	- [Yeni] `Request` kütüphanesine `makeQueryString()` methodu eklendi.
 v2.2.1
