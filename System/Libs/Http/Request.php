@@ -72,10 +72,11 @@ class Request
 	 */
 	public function server($param = null)
 	{
-		if (is_null($param))
+		if (is_null($param)) {
 			return $this->serverVars;
-		else
-			return $this->serverVars[$param] ?? null;
+		}
+		
+		return $this->serverVars[$param] ?? null;
 	}
 
 	/**
@@ -88,8 +89,9 @@ class Request
 	{
 		$headers = getallheaders();
 
-		if (is_null($param))
+		if (is_null($param)) {
 			return getallheaders();
+		}
 
         $headerResponse = [];
 
@@ -119,8 +121,9 @@ class Request
 	 */
 	public function get($param = null, $filter = true)
 	{
-		if (is_null($param))
+		if (is_null($param)) {
 			return $this->getVars;
+		}
 
         return isset($this->getVars[$param]) ? $this->filter($this->getVars[$param], $filter) : false;
 	}
@@ -133,8 +136,9 @@ class Request
 	 */
 	public function post($param = null, $filter = true)
 	{
-		if (is_null($param))
+		if (is_null($param)) {
 			return $this->postVars;
+		}
 
         return isset($this->postVars[$param]) ? $this->filter($this->postVars[$param], $filter) : false;
 	}
@@ -149,8 +153,9 @@ class Request
 	{
 		parse_str(file_get_contents("php://input"), $_PUT);
 
-		if ($param == null)
+		if ($param == null) {
 			return $_PUT;
+		}
 
         return isset($_PUT[$param]) ? $this->filter($_PUT[$param], $filter) : false;
 	}
@@ -166,8 +171,9 @@ class Request
 	{
 		parse_str(file_get_contents('php://input'), $_PATCH);
 
-		if ($param == null)
+		if ($param == null) {
 			return $_PATCH;
+		}
 
         return isset($_PATCH[$param]) ? $this->filter($_PATCH[$param], $filter) : false;
 	}
@@ -182,8 +188,9 @@ class Request
 	{
 		parse_str(file_get_contents("php://input"), $_DELETE);
 
-		if ($param == null)
+		if ($param == null) {
 			return $_DELETE;
+		}
 
         return isset($_DELETE[$param]) ? $this->filter($_DELETE[$param], $filter) : false;
 	}
@@ -196,8 +203,9 @@ class Request
 	 */
 	public function cookie($param = null)
 	{
-		if (is_null($param))
+		if (is_null($param)) {
 			return $this->cookieVars;
+		}
 
         return isset($this->cookieVars[$param]) ? $this->cookieVars[$param] : false;
 	}
@@ -210,8 +218,9 @@ class Request
 	 */
 	public function files($param = null)
 	{
-		if (is_null($param))
+		if (is_null($param)) {
 			return $this->filesVars;
+		}
 
         return isset($this->filesVars[$param]) ? $this->filesVars[$param] : false;
 	}
@@ -224,8 +233,9 @@ class Request
 	 */
 	public function globals($param = null)
 	{
-		if (is_null($param))
+		if (is_null($param)) {
 			return $this->globalVars;
+		}
 
         return isset($this->globalVars[$param]) ? $this->globalVars[$param] : false;
 	}
@@ -288,8 +298,9 @@ class Request
 	 */
 	public function baseUrl($url = null)
 	{
- 		if (is_null($url))
+ 		if (is_null($url)) {
 	    	return $this->getScheme() . '://' . $this->getHost();
+ 		}
 
         return $this->getScheme() . '://' . rtrim($this->getHost(), '/') . '/' . $url;
 	}
@@ -334,18 +345,40 @@ class Request
 	 */
 	public function getQueryString($array = false)
 	{
-		if ($array === false)
+		if ($array === false) {
 			return $this->server('QUERY_STRING');
+		}
 
         $qsParts	= explode('&', $this->server('QUERY_STRING'));
         $qsArray 	= [];
 
-        foreach ($qsParts as $key => $value) {
-            $qsItems 				= explode('=', $value);
-            $qsArray[$qsItems[0]] 	= $qsItems[1];
-        }
+        if (!empty(array_filter($qsParts))) {
+	        foreach ($qsParts as $key => $value) {
+	            $qsItems 				= explode('=', $value);
+	            $qsArray[$qsItems[0]] 	= $qsItems[1];
+	        }
+	    }
 
         return $qsArray;
+	}
+
+	/**
+	 * Make query string from a multi-dimensional array.
+	 * 
+	 * @param array $array
+	 * @return string|null
+	 */
+	public function makeQueryString($array) {
+		if (!is_array($array)) {
+			return null;
+		}
+
+		$queryString = '';
+		foreach ($array as $key => $val) {
+			$queryString .= "{$key}={$val}&";
+		}
+
+		return rtrim($queryString, '&');
 	}
 
 	/**
@@ -407,11 +440,13 @@ class Request
 	 */
 	public function isSecure()
 	{
-		if (null !== $this->server('HTTPS'))
+		if (null !== $this->server('HTTPS')) {
             return true;
+		}
 
-        if (null !== $this->server('HTTP_X_FORWARDED_PROTO') && $this->server('HTTP_X_FORWARDED_PROTO') == 'https')
+        if (null !== $this->server('HTTP_X_FORWARDED_PROTO') && $this->server('HTTP_X_FORWARDED_PROTO') == 'https') {
             return true;
+        }
 
         return false;
 	}
@@ -443,8 +478,9 @@ class Request
 	 */
 	public function isReferral()
 	{
-		if (null !== $this->server('HTTP_REFERER') || $this->server('HTTP_REFERER') == '')
+		if (null !== $this->server('HTTP_REFERER') || $this->server('HTTP_REFERER') == '') {
 			return false;
+		}
 
         return true;
 	}
@@ -466,23 +502,29 @@ class Request
 	 */
 	public function getIp()
 	{
-		if (getenv('HTTP_CLIENT_IP'))
+		if (getenv('HTTP_CLIENT_IP')) {
 			return getenv('HTTP_CLIENT_IP');
+		}
 
-		if (getenv('HTTP_X_FORWARDED_FOR'))
+		if (getenv('HTTP_X_FORWARDED_FOR')) {
 			return getenv('HTTP_X_FORWARDED_FOR');
+		}
 
-		if (getenv('HTTP_X_FORWARDED'))
+		if (getenv('HTTP_X_FORWARDED')) {
 			return getenv('HTTP_X_FORWARDED');
+		}
 
-		if (getenv('HTTP_FORWARDED_FOR'))
+		if (getenv('HTTP_FORWARDED_FOR')) {
 			return getenv('HTTP_FORWARDED_FOR');
+		}
 
-		if (getenv('HTTP_FORWARDED'))
+		if (getenv('HTTP_FORWARDED')) {
 			return getenv('HTTP_FORWARDED');
+		}
 
-		if (getenv('REMOTE_ADDR'))
+		if (getenv('REMOTE_ADDR')) {
 			return getenv('REMOTE_ADDR');
+		}
 
 		return 'UNKNOWN';
 	}
@@ -496,11 +538,13 @@ class Request
 	 */
 	public function filter($data = null, $filter = false)
 	{
-		if (is_null($data))
+		if (is_null($data)) {
 			return null;
+		}
 
-        if (is_array($data))
+        if (is_array($data)) {
             return $filter === true ? array_map([$this, 'xssClean'], $data) : array_map('trim', $data);
+        }
 
         return $filter === true ? $this->xssClean($data) : trim($data);
 	}

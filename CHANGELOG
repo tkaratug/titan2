@@ -1,3 +1,6 @@
+v2.3.0
+	- [Düzeltme] `Request` kütüphanesinde bulunan `getQueryString()` methodundaki hata giderildi.
+	- [Yeni] `Request` kütüphanesine `makeQueryString()` methodu eklendi.
 v2.2.1
 	- [Düzeltme] public_path() fonksiyonuna parametre verilmezse, Public pathini döndürmesi sağlandı.
 	- [Düzeltme] Image kütüphanesinde, default değerleri resetleyen düzenleme yapıldı.
