@@ -1,3 +1,6 @@
+v2.4.1
+	- [Düzeltme] Model ve Controller oluşturma komutlarındaki hata giderildi.
+
 v2.4.0
 	- [Düzeltme] `Request` kütüphanesinde bulunan `getQueryString()` methodundaki hata giderildi.
 	- [Yeni] `Request` kütüphanesine `makeQueryString()` methodu eklendi.

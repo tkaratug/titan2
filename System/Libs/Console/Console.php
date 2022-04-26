@@ -180,8 +180,10 @@ class Console
             $location   = 'App/Controllers/' . $controller;
         }
 
-        if (file_exists($location)) {
-            return $this->getColoredString('Controller zaten mevcut:', 'red') . "\t" . $this->getColoredString($location);
+        $file = "{$location}/{$class}.php";
+
+        if (file_exists($file)) {
+            return $this->getColoredString('Controller zaten mevcut:', 'red') . "\t" . $this->getColoredString($file);
         } else {
             $this->makeDir($location);
             $location   = $location . '/' . $class . '.php';
@@ -216,8 +218,10 @@ class Console
             $location   = 'App/Models';
         }
 
-        if (file_exists($location))
-            return $this->getColoredString('Model zaten mevcut:', 'red') . "\t" . $this->getColoredString($location);
+        $file = "{$location}/{$class}.php";
+
+        if (file_exists($file))
+            return $this->getColoredString('Model zaten mevcut:', 'red') . "\t" . $this->getColoredString($file);
 
         $this->makeDir($location);
         $location   = $location . '/' . $class . '.php';
