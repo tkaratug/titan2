@@ -19,7 +19,10 @@ class Router
 
     // Middlewares
     private static $middlewares = [];
-
+    
+    // Prefix
+    private static $prefix = [];
+    
     // Base Route
     private static $baseRoute   = '/';
 
@@ -79,7 +82,8 @@ class Router
             'namespace'     => self::$namespace,
             'domain'        => self::$domain,
             'ip'            => self::$ip,
-            'ssl'           => self::$ssl
+            'ssl'           => self::$ssl,
+            'prefix'      => self::$prefix
         ];
 
         // Call the Callable
@@ -92,6 +96,7 @@ class Router
             self::$domain       = self::$groups[self::$groupped-1]['domain'];
             self::$ip           = self::$groups[self::$groupped-1]['ip'];
             self::$ssl          = self::$groups[self::$groupped-1]['ssl'];
+            self::$prefix      = self::$groups[self::$groupped-1]['prefix'];
         }
 
         self::$groupped--;
@@ -114,6 +119,9 @@ class Router
 
             // Reset SSL
             self::$ssl          = false;
+            
+            // Reset Prefix
+            self::$prefix = [];
         }
     }
 
@@ -153,8 +161,9 @@ class Router
      */
     public static function prefix($prefix)
     {
+        self::$prefix[] = $prefix;
         // Set Base Route
-        self::$baseRoute    = '/' . $prefix;
+       self::$baseRoute    = '/' . implode('/',self::$prefix);
 
         return new self;
     }
